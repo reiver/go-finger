@@ -147,7 +147,7 @@ func (receiver Switch) Get() (string, bool) {
 //	fmt.Printf("swtch = %#v", swtch)
 //
 //	// Output:
-//	// swtch = finger.SomeSwitch("once twice thrice fource")
+//	// swtch = finger.SomeSwitch("W")
 //
 // Also, for example:
 //
