@@ -164,5 +164,5 @@ func (receiver Switch) GoString() string {
 		return "finger.NoSwitch()"
 	}
 
-	return fmt.Sprintf("opt.SomeSwitch(%#v)", receiver.value)
+	return fmt.Sprintf("finger.SomeSwitch(%#v)", receiver.value)
 }

@@ -129,5 +129,5 @@ func (receiver Target) GoString() string {
 		return "finger.NoTarget()"
 	}
 
-	return fmt.Sprintf("opt.SomeTarget(%#v)", receiver.value)
+	return fmt.Sprintf("finger.SomeTarget(%#v)", receiver.value)
 }
