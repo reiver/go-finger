@@ -11,7 +11,7 @@ import (
 // Here is an example:
 //
 //	func (receiver *MyFingerHandler) HandleFinger(rw finger.ResponseWriter, request finger.Request) {
-		
+//		
 //		// ...
 //		
 //		defer rw.Close()

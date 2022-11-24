@@ -5,5 +5,6 @@ import (
 )
 
 const (
-	errNilWriter = fck.Error("nil writer")
+	errNilConnection = fck.Error("nil connection")
+	errNilWriter     = fck.Error("nil writer")
 )
