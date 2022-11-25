@@ -24,7 +24,7 @@ import (
 //		
 //		// ...
 //		
-//		swtch, something := request.Switch.Get()
+//		swtch, something := request.Switch.Unwrap()
 //		
 //		// ...
 //		
@@ -47,7 +47,7 @@ import (
 //	
 //	// ...
 //	
-//	value, something := swtch.Get()
+//	value, something := swtch.Unwrap()
 //	if something {
 //		// a value was set for the finger.Switch
 //	} else {
@@ -124,14 +124,14 @@ func SomeSwitch(value string) Switch {
 	}
 }
 
-// Get is used to unwrap a finger.Switch.
+// Unwrap is used to unwrap a finger.Switch.
 //
-//	value, something := swtch.Get()
+//	value, something := swtch.Unwrap()
 //
 // If finger.Switch is holding something, then ‘something’ (in the code above) is ‘true’.
 //
 // If finger.Switch is holding nothing, then ‘something’ (in the code above) is ‘false’.
-func (receiver Switch) Get() (string, bool) {
+func (receiver Switch) Unwrap() (string, bool) {
 	return receiver.value, receiver.something
 }
 

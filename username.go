@@ -33,7 +33,7 @@ import (
 //	
 //	// ...
 //	
-//	value, something := username.Get()
+//	value, something := username.Unwrap()
 //	if something {
 //		// a value was set for the finger.UserName
 //	} else {
@@ -59,18 +59,18 @@ func SomeUserName(value string) UserName {
 	}
 }
 
-// Get is used to unwrap a finger.UserName.
+// Unwrap is used to unwrap a finger.UserName.
 //
 //	var username finger.UserName
 //	
 //	// ...
 //	
-//	value, something := username.Get()
+//	value, something := username.Unwrap()
 //
 // If finger.UserName is holding something, then ‘something’ (in the code above) is ‘true’.
 //
 // If finger.UserName is holding nothing, then ‘something’ (in the code above) is ‘false’.
-func (receiver UserName) Get() (string, bool) {
+func (receiver UserName) Unwrap() (string, bool) {
 	return receiver.value, receiver.something
 }
 

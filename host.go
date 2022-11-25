@@ -33,7 +33,7 @@ import (
 //	
 //	// ...
 //	
-//	value, something := host.Get()
+//	value, something := host.Unwrap()
 //	if something {
 //		// a value was set for the finger.Host
 //	} else {
@@ -59,18 +59,18 @@ func SomeHost(value string) Host {
 	}
 }
 
-// Get is used to unwrap a finger.Host.
+// Unwrap is used to unwrap a finger.Host.
 //
 //	var host finger.Host
 //	
 //	// ...
 //	
-//	value, something := host.Get()
+//	value, something := host.Unwrap()
 //
 // If finger.Host is holding something, then ‘something’ (in the code above) is ‘true’.
 //
 // If finger.Host is holding nothing, then ‘something’ (in the code above) is ‘false’.
-func (receiver Host) Get() (string, bool) {
+func (receiver Host) Unwrap() (string, bool) {
 	return receiver.value, receiver.something
 }
 

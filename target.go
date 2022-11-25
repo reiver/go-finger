@@ -24,7 +24,7 @@ import (
 //		
 //		// ...
 //		
-//		target, something := request.Target.Get()
+//		target, something := request.Target.Unwrap()
 //		
 //		// ...
 //		
@@ -47,7 +47,7 @@ import (
 //	
 //	// ...
 //	
-//	value, something := target.Get()
+//	value, something := target.Unwrap()
 //	if something {
 //		// a value was set for the finger.Target
 //	} else {
@@ -89,14 +89,14 @@ func SomeTarget(value string) Target {
 	}
 }
 
-// Get is used to unwrap a finger.Target.
+// Unwrap is used to unwrap a finger.Target.
 //
-//	value, something := target.Get()
+//	value, something := target.Unwrap()
 //
 // If finger.Target is holding something, then ‘something’ (in the code above) is ‘true’.
 //
 // If finger.Target is holding nothing, then ‘something’ (in the code above) is ‘false’.
-func (receiver Target) Get() (string, bool) {
+func (receiver Target) Unwrap() (string, bool) {
 	return receiver.value, receiver.something
 }
 
