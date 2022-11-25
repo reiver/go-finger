@@ -2,6 +2,7 @@ package finger
 
 import (
 	"fmt"
+	"strconv"
 )
 
 // Port represents a finger-protocol port.
@@ -47,6 +48,28 @@ type Port struct {
 	something bool
 }
 
+// ParsePort parses a string for a (numeric) port.
+func ParsePort(s string) (Port, error) {
+	if "" == s {
+		return NoPort(), nil
+	}
+
+	const base int = 10
+	const bitsize int = 16
+
+	var u16 uint16
+	{
+		u64, err := strconv.ParseUint(s, base, bitsize)
+		if nil != err {
+			return NoPort(), fmt.Errorf("problem parsing finger-protocol port: %w", err)
+		}
+
+		u16 = uint16(u64)
+	}
+
+	return SomePort(u16), nil
+}
+
 // NoPort is used to create a finger.Port with nothing in it.
 func NoPort() Port {
 	return Port{}
@@ -60,11 +83,16 @@ func SomePort(value uint16) Port {
 	}
 }
 
+// DefaultPort is used to create a finger.Port with the value of 79 in it.
+// 79 is the default finger-protocol port.
 func DefaultPort() Port {
-	return Port{
-		value:79,
-		something:true,
-	}
+	return SomePort(79)
+}
+
+// AlternativePort is used to create a finger.Port with the value of 1971 in it.
+// 1971 is an alternative port that can be used by the finger-protocol.
+func AlternativePort() Port {
+	return SomePort(1971)
 }
 
 // Unwrap is used to unwrap a finger.Port.
@@ -111,5 +139,5 @@ func (receiver Port) GoString() string {
 		return "finger.NoPort()"
 	}
 
-	return fmt.Sprintf("finger.SomePort(%#v)", receiver.value)
+	return fmt.Sprintf("finger.SomePort(%d)", receiver.value)
 }
