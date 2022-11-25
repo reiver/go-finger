@@ -116,7 +116,7 @@ func NoSwitch() Switch {
 	return Switch{}
 }
 
-// NoSwitch is used to create a finger.Switch with something in it.
+// SomeSwitch is used to create a finger.Switch with something in it.
 func SomeSwitch(value string) Switch {
 	return Switch{
 		value:value,

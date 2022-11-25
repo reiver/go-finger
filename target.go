@@ -81,7 +81,7 @@ func NoTarget() Target {
 	return Target{}
 }
 
-// NoTarget is used to create a finger.Target with something in it.
+// SomeTarget is used to create a finger.Target with something in it.
 func SomeTarget(value string) Target {
 	return Target{
 		value:value,
