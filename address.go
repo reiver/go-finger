@@ -38,6 +38,17 @@ type Address struct {
 	Port Port
 }
 
+// ParseAddress parses a finger-protocol address (as a string).
+//
+// Some example addresses include:
+//
+//	""
+//
+//	"example.com"
+//
+//	":1971"
+//
+//	"example.com:1971"
 func ParseAddress(s string) (Address, error) {
 
 	if "" == s {
@@ -73,21 +84,25 @@ func (receiver Address) Resolve() string {
 }
 
 func (receiver Address) String() string {
-
 	host, hostIsSomething := receiver.Host.Unwrap()
-	if !hostIsSomething {
+	port, portIsSomething := receiver.Port.Unwrap()
+
+	if !hostIsSomething && !portIsSomething {
 		return ""
 	}
 
-	port, portIsSomething := receiver.Port.Unwrap()
-
 	var buffer strings.Builder
 	{
-		buffer.WriteString(host)
+		if hostIsSomething {
+			buffer.WriteString(host)
+		}
 
 		if portIsSomething {
 			buffer.WriteRune(':')
-			buffer.WriteString(strconv.FormatUint(uint64(port), 10))
+
+			const base int = 10
+
+			buffer.WriteString(strconv.FormatUint(uint64(port), base))
 		}
 	}
 
