@@ -68,6 +68,10 @@ func ParseAddress(s string) (Address, error) {
 	return address, nil
 }
 
+func (receiver Address) Resolve() string {
+	return fmt.Sprintf("%s:%d", receiver.Host.Resolve(), receiver.Port.Resolve())
+}
+
 func (receiver Address) String() string {
 
 	host, hostIsSomething := receiver.Host.Unwrap()

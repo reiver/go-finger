@@ -5,6 +5,10 @@ import (
 	"strconv"
 )
 
+const (
+	defaultPort = 79
+)
+
 // Port represents a finger-protocol port.
 // A “port” in this context is is also known as a “TCP port”.
 //
@@ -86,28 +90,13 @@ func SomePort(value uint16) Port {
 // DefaultPort is used to create a finger.Port with the value of 79 in it.
 // 79 is the default finger-protocol port.
 func DefaultPort() Port {
-	return SomePort(79)
+	return SomePort(defaultPort)
 }
 
 // AlternativePort is used to create a finger.Port with the value of 1971 in it.
 // 1971 is an alternative port that can be used by the finger-protocol.
 func AlternativePort() Port {
 	return SomePort(1971)
-}
-
-// Unwrap is used to unwrap a finger.Port.
-//
-//	var port finger.Port
-//	
-//	// ...
-//	
-//	value, something := port.Unwrap()
-//
-// If finger.Port is holding something, then ‘something’ (in the code above) is ‘true’.
-//
-// If finger.Port is holding nothing, then ‘something’ (in the code above) is ‘false’.
-func (receiver Port) Unwrap() (uint16, bool) {
-	return receiver.value, receiver.something
 }
 
 // GoString makes it so that when the fmt.Fprintf(), fmt.Printf(), and fmt.Sprintf() family of functions
@@ -141,3 +130,27 @@ func (receiver Port) GoString() string {
 
 	return fmt.Sprintf("finger.SomePort(%d)", receiver.value)
 }
+
+func (receiver Port) Resolve() uint16 {
+	if !receiver.something {
+		return defaultPort
+	}
+
+	return receiver.value
+}
+
+// Unwrap is used to unwrap a finger.Port.
+//
+//	var port finger.Port
+//	
+//	// ...
+//	
+//	value, something := port.Unwrap()
+//
+// If finger.Port is holding something, then ‘something’ (in the code above) is ‘true’.
+//
+// If finger.Port is holding nothing, then ‘something’ (in the code above) is ‘false’.
+func (receiver Port) Unwrap() (uint16, bool) {
+	return receiver.value, receiver.something
+}
+

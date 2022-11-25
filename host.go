@@ -4,6 +4,10 @@ import (
 	"fmt"
 )
 
+const (
+	defaultHost = "127.0.0.1"
+)
+
 // Host represents a finger-protocol host.
 //
 // For example, in this finger-protocol request:
@@ -59,21 +63,6 @@ func SomeHost(value string) Host {
 	}
 }
 
-// Unwrap is used to unwrap a finger.Host.
-//
-//	var host finger.Host
-//	
-//	// ...
-//	
-//	value, something := host.Unwrap()
-//
-// If finger.Host is holding something, then ‘something’ (in the code above) is ‘true’.
-//
-// If finger.Host is holding nothing, then ‘something’ (in the code above) is ‘false’.
-func (receiver Host) Unwrap() (string, bool) {
-	return receiver.value, receiver.something
-}
-
 // GoString makes it so that when the fmt.Fprintf(), fmt.Printf(), and fmt.Sprintf() family of functions
 // renders this type with the %#v verb, that it will be easier to understand.
 //
@@ -104,4 +93,27 @@ func (receiver Host) GoString() string {
 	}
 
 	return fmt.Sprintf("finger.SomeHost(%#v)", receiver.value)
+}
+
+func (receiver Host) Resolve() string {
+	if !receiver.something {
+		return defaultHost
+	}
+
+	return receiver.value
+}
+
+// Unwrap is used to unwrap a finger.Host.
+//
+//	var host finger.Host
+//	
+//	// ...
+//	
+//	value, something := host.Unwrap()
+//
+// If finger.Host is holding something, then ‘something’ (in the code above) is ‘true’.
+//
+// If finger.Host is holding nothing, then ‘something’ (in the code above) is ‘false’.
+func (receiver Host) Unwrap() (string, bool) {
+	return receiver.value, receiver.something
 }
