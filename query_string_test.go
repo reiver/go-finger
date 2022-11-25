@@ -25,11 +25,16 @@ func TestQuery_String(t *testing.T) {
 			},
 			Expected: "dariush",
 		},
+
+
+
 		{
 			Query: finger.Query{
 				UserName: finger.SomeUserName("dariush"),
-				Hosts: []finger.Host{
-					finger.SomeHost("example.com"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+					},
 				},
 			},
 			Expected: "dariush@example.com",
@@ -37,70 +42,215 @@ func TestQuery_String(t *testing.T) {
 		{
 			Query: finger.Query{
 				UserName: finger.SomeUserName("dariush"),
-				Hosts: []finger.Host{
-					finger.SomeHost("example.com"),
-					finger.SomeHost("something.social"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+						Port: finger.SomePort(1971),
+					},
 				},
 			},
-			Expected: "dariush@example.com@something.social",
+			Expected: "dariush@example.com:1971",
 		},
 
 
 
 		{
 			Query: finger.Query{
-				Hosts: []finger.Host{
-					finger.SomeHost("example.com"),
+				UserName: finger.SomeUserName("dariush"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("something.social"),
+					},
+				},
+			},
+			Expected: "dariush@example.com@something.social",
+		},
+		{
+			Query: finger.Query{
+				UserName: finger.SomeUserName("dariush"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+						Port: finger.SomePort(1971),
+					},
+					finger.Address{
+						Host: finger.SomeHost("something.social"),
+					},
+				},
+			},
+			Expected: "dariush@example.com:1971@something.social",
+		},
+		{
+			Query: finger.Query{
+				UserName: finger.SomeUserName("dariush"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("something.social"),
+						Port: finger.SomePort(1234),
+					},
+				},
+			},
+			Expected: "dariush@example.com@something.social:1234",
+		},
+		{
+			Query: finger.Query{
+				UserName: finger.SomeUserName("dariush"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+						Port: finger.SomePort(1971),
+					},
+					finger.Address{
+						Host: finger.SomeHost("something.social"),
+						Port: finger.SomePort(1234),
+					},
+				},
+			},
+			Expected: "dariush@example.com:1971@something.social:1234",
+		},
+
+
+
+		{
+			Query: finger.Query{
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+					},
 				},
 			},
 			Expected: "@example.com",
 		},
 		{
 			Query: finger.Query{
-				Hosts: []finger.Host{
-					finger.SomeHost("example.com"),
-					finger.SomeHost("something.social"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+						Port: finger.SomePort(1971),
+					},
+				},
+			},
+			Expected: "@example.com:1971",
+		},
+		{
+			Query: finger.Query{
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("something.social"),
+					},
 				},
 			},
 			Expected: "@example.com@something.social",
+		},
+		{
+			Query: finger.Query{
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+						Port: finger.SomePort(1971),
+					},
+					finger.Address{
+						Host: finger.SomeHost("something.social"),
+					},
+				},
+			},
+			Expected: "@example.com:1971@something.social",
+		},
+		{
+			Query: finger.Query{
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("something.social"),
+						Port: finger.SomePort(1234),
+					},
+				},
+			},
+			Expected: "@example.com@something.social:1234",
+		},
+		{
+			Query: finger.Query{
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("example.com"),
+						Port: finger.SomePort(1971),
+					},
+					finger.Address{
+						Host: finger.SomeHost("something.social"),
+						Port: finger.SomePort(1234),
+					},
+				},
+			},
+			Expected: "@example.com:1971@something.social:1234",
 		},
 
 
 
 		{
 			Query: finger.Query{
-				Hosts: []finger.Host{
-					finger.SomeHost("once"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("once"),
+					},
 				},
 			},
 			Expected: "@once",
 		},
 		{
 			Query: finger.Query{
-				Hosts: []finger.Host{
-					finger.SomeHost("once"),
-					finger.SomeHost("twice"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("once"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("twice"),
+					},
 				},
 			},
 			Expected: "@once@twice",
 		},
 		{
 			Query: finger.Query{
-				Hosts: []finger.Host{
-					finger.SomeHost("once"),
-					finger.SomeHost("twice"),
-					finger.SomeHost("thrice"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("once"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("twice"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("thrice"),
+					},
 				},
 			},
 			Expected: "@once@twice@thrice",
 		},
 		{
 			Query: finger.Query{
-				Hosts: []finger.Host{
-					finger.SomeHost("once"),
-					finger.SomeHost("twice"),
-					finger.SomeHost("thrice"),
-					finger.SomeHost("fource"),
+				Addresses: []finger.Address{
+					finger.Address{
+						Host: finger.SomeHost("once"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("twice"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("thrice"),
+					},
+					finger.Address{
+						Host: finger.SomeHost("fource"),
+					},
 				},
 			},
 			Expected: "@once@twice@thrice@fource",

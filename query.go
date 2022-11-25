@@ -1,12 +1,13 @@
 package finger
 
 import (
+	"fmt"
 	"strings"
 )
 
 type Query struct {
 	UserName UserName
-	Hosts []Host
+	Addresses []Address
 }
 
 func ParseQuery(query string) (Query, error) {
@@ -45,18 +46,28 @@ func ParseQuery(query string) (Query, error) {
 
 			var index int = strings.IndexRune(query, '@')
 
-			var host Host
+			var address Address
 			{
+				var s string
+
 				switch {
 				case index < 0:
-					host = SomeHost(query)
+					s = query
+					query = ""
 				default:
-					host = SomeHost(query[:index])
+					s = query[:index]
 					query = query[index:]
+				}
+
+				var err error
+
+				address, err = ParseAddress(s)
+				if nil != err {
+					return Query{}, fmt.Errorf("problem parsing finger-protocol query: %w", err)
 				}
 			}
 
-			q.Hosts = append(q.Hosts, host)
+			q.Addresses = append(q.Addresses, address)
 		}
 	}
 
@@ -76,11 +87,10 @@ func (receiver Query) String() string {
 	}
 
 	{
-		for _, host := range receiver.Hosts {
+		for _, address := range receiver.Addresses {
 			buffer.WriteRune('@')
 
-			s, _ := host.Unwrap()
-			buffer.WriteString(s)
+			buffer.WriteString(address.String())
 		}
 	}
 
