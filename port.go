@@ -60,6 +60,13 @@ func SomePort(value uint16) Port {
 	}
 }
 
+func DefaultPort() Port {
+	return Port{
+		value:79,
+		something:true,
+	}
+}
+
 // Unwrap is used to unwrap a finger.Port.
 //
 //	var port finger.Port
