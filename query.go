@@ -75,6 +75,18 @@ func ParseQuery(query string) (Query, error) {
 
 }
 
+func (receiver Query) ServingAddress() Address {
+	var addresses []Address = receiver.Addresses
+
+	length := len(addresses)
+
+	if length < 1 {
+		return DefaultAddress()
+	}
+
+	return addresses[length-1]
+}
+
 func (receiver Query) String() string {
 
 	var buffer strings.Builder

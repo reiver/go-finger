@@ -63,6 +63,10 @@ func SomeHost(value string) Host {
 	}
 }
 
+func DefaultHost() Host {
+	return SomeHost(defaultHost)
+}
+
 // GoString makes it so that when the fmt.Fprintf(), fmt.Printf(), and fmt.Sprintf() family of functions
 // renders this type with the %#v verb, that it will be easier to understand.
 //

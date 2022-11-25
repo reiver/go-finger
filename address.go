@@ -38,6 +38,13 @@ type Address struct {
 	Port Port
 }
 
+func DefaultAddress() Address {
+	return Address{
+		Host: DefaultHost(),
+		Port: DefaultPort(),
+	}
+}
+
 // ParseAddress parses a finger-protocol address (as a string).
 //
 // Some example addresses include:
