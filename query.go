@@ -5,11 +5,29 @@ import (
 	"strings"
 )
 
+// A Query represents a parsed finger-protocol target.
+//
+// For example, consider the following finger-protocol request:
+//
+//	"/W dariush@changelog.ca@example.com\r\n"
+//
+// When left as just an uninterpreted string, the finger-protocol target is:
+//
+//	"dariush@changelog.ca@example.com"
+//
+// Interpretting this finger-protocol target string, and separating out the:
+//
+// • user (i.e,. "dariush")
+//
+// • addresses (i.e., "changelog.ca" and "example.com")
+//
+// Is what makes it a finger-protocol query.
 type Query struct {
 	UserName UserName
 	Addresses []Address
 }
 
+// ParseQuery parses a (target) string for a finger-protocol query.
 func ParseQuery(query string) (Query, error) {
 
 	if "" == query {
@@ -75,16 +93,21 @@ func ParseQuery(query string) (Query, error) {
 
 }
 
-func (receiver Query) ServingAddress() Address {
+// ClientParameters returns the information need for a finger-protocol client
+// to make a finger-protocol request.
+func (receiver Query) ClientParameters() (Address, Query) {
 	var addresses []Address = receiver.Addresses
 
 	length := len(addresses)
 
 	if length < 1 {
-		return DefaultAddress()
+		return DefaultAddress(), receiver
 	}
 
-	return addresses[length-1]
+	return addresses[length-1], Query{
+		UserName: receiver.UserName,
+		Addresses: addresses[:length-1],
+	}
 }
 
 func (receiver Query) String() string {
@@ -107,4 +130,13 @@ func (receiver Query) String() string {
 	}
 
 	return buffer.String()
+}
+
+// Targets returns the equivalent finger.Target to finger.Query.
+func (receiver Query) Target() Target {
+	if NoUserName() == receiver.UserName && len(receiver.Addresses) < 1 {
+		return NoTarget()
+	}
+
+	return SomeTarget(receiver.String())
 }

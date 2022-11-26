@@ -34,9 +34,7 @@ func TestParseQuery(t *testing.T) {
 			QueryString: "@example.com",
 			Expected: finger.Query{
 				Addresses: []finger.Address{
-					finger.Address{
-						Host: finger.SomeHost("example.com"),
-					},
+					finger.SomeAddressHost("example.com"),
 				},
 			},
 		},
@@ -44,12 +42,8 @@ func TestParseQuery(t *testing.T) {
 			QueryString: "@example.com@something.social",
 			Expected: finger.Query{
 				Addresses: []finger.Address{
-					finger.Address{
-						Host: finger.SomeHost("example.com"),
-					},
-					finger.Address{
-						Host: finger.SomeHost("something.social"),
-					},
+					finger.SomeAddressHost("example.com"),
+					finger.SomeAddressHost("something.social"),
 				},
 			},
 		},
@@ -60,10 +54,7 @@ func TestParseQuery(t *testing.T) {
 			QueryString: "@example.com:1971",
 			Expected: finger.Query{
 				Addresses: []finger.Address{
-					finger.Address{
-						Host: finger.SomeHost("example.com"),
-						Port: finger.SomePort(1971),
-					},
+					finger.SomeAddress("example.com", 1971),
 				},
 			},
 		},
@@ -71,13 +62,8 @@ func TestParseQuery(t *testing.T) {
 			QueryString: "@example.com:1971@something.social",
 			Expected: finger.Query{
 				Addresses: []finger.Address{
-					finger.Address{
-						Host: finger.SomeHost("example.com"),
-						Port: finger.SomePort(1971),
-					},
-					finger.Address{
-						Host: finger.SomeHost("something.social"),
-					},
+					finger.SomeAddress("example.com", 1971),
+					finger.SomeAddressHost("something.social"),
 				},
 			},
 		},
@@ -85,13 +71,8 @@ func TestParseQuery(t *testing.T) {
 			QueryString: "@example.com@something.social:79",
 			Expected: finger.Query{
 				Addresses: []finger.Address{
-					finger.Address{
-						Host: finger.SomeHost("example.com"),
-					},
-					finger.Address{
-						Host: finger.SomeHost("something.social"),
-						Port: finger.SomePort(79),
-					},
+					finger.SomeAddressHost("example.com"),
+					finger.SomeAddress("something.social", 79),
 				},
 			},
 		},
@@ -99,14 +80,8 @@ func TestParseQuery(t *testing.T) {
 			QueryString: "@example.com:1971@something.social:79",
 			Expected: finger.Query{
 				Addresses: []finger.Address{
-					finger.Address{
-						Host: finger.SomeHost("example.com"),
-						Port: finger.SomePort(1971),
-					},
-					finger.Address{
-						Host: finger.SomeHost("something.social"),
-						Port: finger.SomePort(79),
-					},
+					finger.SomeAddress("example.com", 1971),
+					finger.SomeAddress("something.social", 79),
 				},
 			},
 		},
@@ -118,9 +93,7 @@ func TestParseQuery(t *testing.T) {
 			Expected: finger.Query{
 				UserName: finger.SomeUserName("dariush"),
 				Addresses: []finger.Address{
-					finger.Address{
-						Host: finger.SomeHost("example.com"),
-					},
+					finger.SomeAddressHost("example.com"),
 				},
 			},
 		},
@@ -129,12 +102,8 @@ func TestParseQuery(t *testing.T) {
 			Expected: finger.Query{
 				UserName: finger.SomeUserName("dariush"),
 				Addresses: []finger.Address{
-					finger.Address{
-						Host: finger.SomeHost("example.com"),
-					},
-					finger.Address{
-						Host: finger.SomeHost("something.social"),
-					},
+					finger.SomeAddressHost("example.com"),
+					finger.SomeAddressHost("something.social"),
 				},
 			},
 		},

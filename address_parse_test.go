@@ -21,67 +21,45 @@ func TestParseAddress(t *testing.T) {
 
 		{
 			AddressString: "example.com",
-			Expected: finger.Address{
-				Host: finger.SomeHost("example.com"),
-			},
+			Expected: finger.SomeAddressHost("example.com"),
 		},
 
 
 
 		{
 			AddressString: "once.com",
-			Expected: finger.Address{
-				Host: finger.SomeHost("once.com"),
-			},
+			Expected: finger.SomeAddressHost("once.com"),
 		},
 		{
 			AddressString: "twice.net",
-			Expected: finger.Address{
-				Host: finger.SomeHost("twice.net"),
-			},
+			Expected: finger.SomeAddressHost("twice.net"),
 		},
 		{
 			AddressString: "thrice.org",
-			Expected: finger.Address{
-				Host: finger.SomeHost("thrice.org"),
-			},
+			Expected: finger.SomeAddressHost("thrice.org"),
 		},
 		{
 			AddressString: "fource.dev",
-			Expected: finger.Address{
-				Host: finger.SomeHost("fource.dev"),
-			},
+			Expected: finger.SomeAddressHost("fource.dev"),
 		},
 
 
 
 		{
 			AddressString: "once.com:79",
-			Expected: finger.Address{
-				Host: finger.SomeHost("once.com"),
-				Port: finger.SomePort(79),
-			},
+			Expected: finger.SomeAddress("once.com", 79),
 		},
 		{
 			AddressString: "twice.net:1079",
-			Expected: finger.Address{
-				Host: finger.SomeHost("twice.net"),
-				Port: finger.SomePort(1079),
-			},
+			Expected: finger.SomeAddress("twice.net", 1079),
 		},
 		{
 			AddressString: "thrice.org:1971",
-			Expected: finger.Address{
-				Host: finger.SomeHost("thrice.org"),
-				Port: finger.SomePort(1971),
-			},
+			Expected: finger.SomeAddress("thrice.org", 1971),
 		},
 		{
 			AddressString: "fource.dev:7979",
-			Expected: finger.Address{
-				Host: finger.SomeHost("fource.dev"),
-				Port: finger.SomePort(7979),
-			},
+			Expected: finger.SomeAddress("fource.dev", 7979),
 		},
 	}
 

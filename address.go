@@ -34,14 +34,37 @@ import (
 //	"dariush@changelog.ca@once.com:54321@twice.net@thrice.org:1212@fource.dev"
 //	// finger-protocol addresses -> "changelog.ca", "once.com:54321", "twice.net", "thrice.org:1212", "fource.dev"
 type Address struct {
-	Host Host
-	Port Port
+	host Host
+	port Port
+}
+
+func NoAddress() Address {
+	return Address{}
+}
+
+func SomeAddress(host string, port uint16) Address {
+	return Address {
+		host: SomeHost(host),
+		port: SomePort(port),
+	}
+}
+
+func SomeAddressHost(host string) Address {
+	return Address {
+		host: SomeHost(host),
+	}
+}
+
+func SomeAddressPort(port uint16) Address {
+	return Address {
+		port: SomePort(port),
+	}
 }
 
 func DefaultAddress() Address {
 	return Address{
-		Host: DefaultHost(),
-		Port: DefaultPort(),
+		host: DefaultHost(),
+		port: DefaultPort(),
 	}
 }
 
@@ -66,7 +89,7 @@ func ParseAddress(s string) (Address, error) {
 
 	if index < 0 {
 		return Address{
-			Host: SomeHost(s),
+			host: SomeHost(s),
 		}, nil
 	}
 
@@ -74,10 +97,10 @@ func ParseAddress(s string) (Address, error) {
 	{
 		var host string = s[:index]
 
-		address.Host = SomeHost(host)
+		address.host = SomeHost(host)
 
 		var err error
-		address.Port, err = ParsePort(s[1+index:])
+		address.port, err = ParsePort(s[1+index:])
 		if nil != err {
 			return address, fmt.Errorf("problem parsing finger-protocol port: %w", err)
 		}
@@ -87,12 +110,12 @@ func ParseAddress(s string) (Address, error) {
 }
 
 func (receiver Address) Resolve() string {
-	return fmt.Sprintf("%s:%d", receiver.Host.Resolve(), receiver.Port.Resolve())
+	return fmt.Sprintf("%s:%d", receiver.host.Resolve(), receiver.port.Resolve())
 }
 
 func (receiver Address) String() string {
-	host, hostIsSomething := receiver.Host.Unwrap()
-	port, portIsSomething := receiver.Port.Unwrap()
+	host, hostIsSomething := receiver.host.Unwrap()
+	port, portIsSomething := receiver.port.Unwrap()
 
 	if !hostIsSomething && !portIsSomething {
 		return ""

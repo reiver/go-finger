@@ -6,15 +6,15 @@ import (
 	"testing"
 )
 
-func TestQuery_String(t *testing.T) {
+func TestQuery_Target(t *testing.T) {
 
 	tests := []struct{
 		Query finger.Query
-		Expected string
+		Expected finger.Target
 	}{
 		{
 			Query: finger.Query{},
-			Expected: "",
+			Expected: finger.NoTarget(),
 		},
 
 
@@ -23,7 +23,7 @@ func TestQuery_String(t *testing.T) {
 			Query: finger.Query{
 				UserName: finger.SomeUserName("dariush"),
 			},
-			Expected: "dariush",
+			Expected: finger.SomeTarget("dariush"),
 		},
 
 
@@ -35,7 +35,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("example.com"),
 				},
 			},
-			Expected: "dariush@example.com",
+			Expected: finger.SomeTarget("dariush@example.com"),
 		},
 		{
 			Query: finger.Query{
@@ -44,7 +44,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddress("example.com", 1971),
 				},
 			},
-			Expected: "dariush@example.com:1971",
+			Expected: finger.SomeTarget("dariush@example.com:1971"),
 		},
 
 
@@ -57,7 +57,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("something.social"),
 				},
 			},
-			Expected: "dariush@example.com@something.social",
+			Expected: finger.SomeTarget("dariush@example.com@something.social"),
 		},
 		{
 			Query: finger.Query{
@@ -67,7 +67,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("something.social"),
 				},
 			},
-			Expected: "dariush@example.com:1971@something.social",
+			Expected: finger.SomeTarget("dariush@example.com:1971@something.social"),
 		},
 		{
 			Query: finger.Query{
@@ -77,7 +77,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddress("something.social", 1234),
 				},
 			},
-			Expected: "dariush@example.com@something.social:1234",
+			Expected: finger.SomeTarget("dariush@example.com@something.social:1234"),
 		},
 		{
 			Query: finger.Query{
@@ -87,7 +87,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddress("something.social", 1234),
 				},
 			},
-			Expected: "dariush@example.com:1971@something.social:1234",
+			Expected: finger.SomeTarget("dariush@example.com:1971@something.social:1234"),
 		},
 
 
@@ -98,7 +98,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("example.com"),
 				},
 			},
-			Expected: "@example.com",
+			Expected: finger.SomeTarget("@example.com"),
 		},
 		{
 			Query: finger.Query{
@@ -106,7 +106,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddress("example.com", 1971),
 				},
 			},
-			Expected: "@example.com:1971",
+			Expected: finger.SomeTarget("@example.com:1971"),
 		},
 		{
 			Query: finger.Query{
@@ -115,7 +115,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("something.social"),
 				},
 			},
-			Expected: "@example.com@something.social",
+			Expected: finger.SomeTarget("@example.com@something.social"),
 		},
 		{
 			Query: finger.Query{
@@ -124,7 +124,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("something.social"),
 				},
 			},
-			Expected: "@example.com:1971@something.social",
+			Expected: finger.SomeTarget("@example.com:1971@something.social"),
 		},
 		{
 			Query: finger.Query{
@@ -133,7 +133,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddress("something.social", 1234),
 				},
 			},
-			Expected: "@example.com@something.social:1234",
+			Expected: finger.SomeTarget("@example.com@something.social:1234"),
 		},
 		{
 			Query: finger.Query{
@@ -142,7 +142,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddress("something.social", 1234),
 				},
 			},
-			Expected: "@example.com:1971@something.social:1234",
+			Expected: finger.SomeTarget("@example.com:1971@something.social:1234"),
 		},
 
 
@@ -153,7 +153,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("once"),
 				},
 			},
-			Expected: "@once",
+			Expected: finger.SomeTarget("@once"),
 		},
 		{
 			Query: finger.Query{
@@ -162,7 +162,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("twice"),
 				},
 			},
-			Expected: "@once@twice",
+			Expected: finger.SomeTarget("@once@twice"),
 		},
 		{
 			Query: finger.Query{
@@ -172,7 +172,7 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("thrice"),
 				},
 			},
-			Expected: "@once@twice@thrice",
+			Expected: finger.SomeTarget("@once@twice@thrice"),
 		},
 		{
 			Query: finger.Query{
@@ -183,19 +183,19 @@ func TestQuery_String(t *testing.T) {
 					finger.SomeAddressHost("fource"),
 				},
 			},
-			Expected: "@once@twice@thrice@fource",
+			Expected: finger.SomeTarget("@once@twice@thrice@fource"),
 		},
 	}
 
 	for testNumber, test := range tests {
 
-		var expected string = test.Expected
-		var actual   string = test.Query.String()
+		var expected finger.Target = test.Expected
+		var actual   finger.Target = test.Query.Target()
 
 		if expected != actual {
 			t.Errorf("For test #%d, the actual query string value is not what was expected.", testNumber)
-			t.Logf("EXPECTED: %q", expected)
-			t.Logf("ACTUAL:   %q", actual)
+			t.Logf("EXPECTED: %#v", expected)
+			t.Logf("ACTUAL:   %#v", actual)
 			continue
 		}
 
