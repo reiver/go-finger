@@ -23,8 +23,104 @@ import (
 //
 // Is what makes it a finger-protocol query.
 type Query struct {
-	User User
-	Addresses []Address
+	user User
+	addresses []Address
+}
+
+func NoQuery() Query {
+	return Query{}
+}
+
+func SomeQueryAddresses(addresses ...Address) Query {
+	return Query{
+		addresses: addresses,
+	}
+}
+
+func SomeQueryHost(host string) Query {
+	return Query{
+		addresses: []Address{
+			SomeAddressHost(host),
+		},
+	}
+}
+
+func SomeQueryHostPort(host string, port uint16) Query {
+	return Query{
+		addresses: []Address{
+			SomeAddress(host, port),
+		},
+	}
+}
+
+func SomeQueryHosts(hosts ...string) Query {
+	var addresses []Address
+
+	for _, hostString := range hosts {
+
+		var address Address
+
+		if "" != hostString {
+			address = SomeAddressHost(hostString)
+		}
+
+		addresses = append(addresses, address)
+	}
+
+	return Query{
+		addresses: addresses,
+	}
+}
+
+func SomeQueryUser(user string) Query {
+	return Query{
+		user: SomeUser(user),
+	}
+}
+
+func SomeQueryUserAddresses(user string, addresses ...Address) Query {
+	return Query{
+		user: SomeUser(user),
+		addresses: addresses,
+	}
+}
+
+func SomeQueryUserHost(user string, host string) Query {
+	return Query{
+		user: SomeUser(user),
+		addresses: []Address{
+			SomeAddressHost(host),
+		},
+	}
+}
+
+func SomeQueryUserHosts(user string, hosts ...string) Query {
+	var addresses []Address
+
+	for _, hostString := range hosts {
+
+		var address Address
+
+		if "" != hostString {
+			address = SomeAddressHost(hostString)
+		}
+
+		addresses = append(addresses, address)
+	}
+
+	return Query{
+		user: SomeUser(user),
+		addresses: addresses,
+	}
+}
+
+func SomeQueryUserHostPort(user string, host string, port uint16) Query {
+	return Query{
+		user: SomeUser(user),
+		addresses: []Address{
+			SomeAddress(host, port),
+		},
+	}
 }
 
 // ParseQuery parses a (target) string for a finger-protocol query.
@@ -43,9 +139,9 @@ func ParseQuery(query string) (Query, error) {
 
 			switch {
 			case index < 0 && "" != query:
-				q.User = SomeUser(query)
+				q.user = SomeUser(query)
 			default:
-				q.User = SomeUser(query[:index])
+				q.user = SomeUser(query[:index])
 				query = query[index:]
 			}
 		}
@@ -85,18 +181,17 @@ func ParseQuery(query string) (Query, error) {
 				}
 			}
 
-			q.Addresses = append(q.Addresses, address)
+			q.addresses = append(q.addresses, address)
 		}
 	}
 
 	return q, nil
-
 }
 
 // ClientParameters returns the information need for a finger-protocol client
 // to make a finger-protocol request.
 func (receiver Query) ClientParameters() (Address, Query) {
-	var addresses []Address = receiver.Addresses
+	var addresses []Address = receiver.addresses
 
 	length := len(addresses)
 
@@ -105,8 +200,8 @@ func (receiver Query) ClientParameters() (Address, Query) {
 	}
 
 	return addresses[length-1], Query{
-		User: receiver.User,
-		Addresses: addresses[:length-1],
+		user: receiver.user,
+		addresses: addresses[:length-1],
 	}
 }
 
@@ -115,14 +210,14 @@ func (receiver Query) String() string {
 	var buffer strings.Builder
 
 	{
-		user, userIsSomething := receiver.User.Unwrap()
+		user, userIsSomething := receiver.user.Unwrap()
 		if userIsSomething {
 			buffer.WriteString(user)
 		}
 	}
 
 	{
-		for _, address := range receiver.Addresses {
+		for _, address := range receiver.addresses {
 			buffer.WriteRune('@')
 
 			buffer.WriteString(address.String())
@@ -134,7 +229,7 @@ func (receiver Query) String() string {
 
 // Targets returns the equivalent finger.Target to finger.Query.
 func (receiver Query) Target() Target {
-	if NoUser() == receiver.User && len(receiver.Addresses) < 1 {
+	if NoUser() == receiver.user && len(receiver.addresses) < 1 {
 		return NoTarget()
 	}
 
