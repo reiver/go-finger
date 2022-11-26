@@ -30,6 +30,13 @@ func TestAddress_String(t *testing.T) {
 			Address: finger.CreateAddressPort(1971),
 			Expected: ":1971",
 		},
+
+
+
+		{
+			Address: finger.EmptyAddress,
+			Expected: "",
+		},
 	}
 
 	for testNumber, test := range tests {

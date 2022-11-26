@@ -208,6 +208,40 @@ func (receiver Address) Resolve() string {
 	return fmt.Sprintf("%s:%d", receiver.host.Resolve(), receiver.port.Resolve())
 }
 
+// String returns the address in the format as it was created.
+//
+// NOTE THAT THE OUTPUT OF finger.Address.String() SHOULD NOT BE USED WITH net.Dial().
+// INSTEAD USE THE OUTPUT OF finger.AddressResolve() WITH net.Dial().
+//
+// ⁂
+//
+// Here are some examples:
+//
+//	var address finger.Address = finger.CreateAddress("example.com", 79)
+//	
+//	var s string = address.String()
+//	// s = "example.com:79"
+//
+// .
+//
+//	var address finger.Address = finger.CreateAddressHost("example.com")
+//	
+//	var s string = address.String()
+//	// s = "example.com"
+//
+// .
+//
+//	var address finger.Address = finger.CreateAddressPort(79)
+//	
+//	var s string = address.String()
+//	// s = ":79"
+//
+// .
+//
+//	var address finger.Address = finger.EmptyAddress()
+//	
+//	var s string = address.String()
+//	// s = ""
 func (receiver Address) String() string {
 	host, hostIsSomething := receiver.host.Unwrap()
 	port, portIsSomething := receiver.port.Unwrap()
