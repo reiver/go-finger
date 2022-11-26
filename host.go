@@ -50,8 +50,8 @@ type Host struct {
 	something bool
 }
 
-// NoHost is used to create a finger.Host with nothing in it.
-func NoHost() Host {
+// EmptyHost is used to create a finger.Host with nothing in it.
+func EmptyHost() Host {
 	return Host{}
 }
 
@@ -83,17 +83,17 @@ func DefaultHost() Host {
 //
 // Also, for example:
 //
-//	var host finger.Host = finger.NoHost()
+//	var host finger.Host = finger.EmptyHost()
 //	
 //	// ...
 //	
 //	fmt.Printf("host = %#v", host)
 //
 //	// Output:
-//	// host = finger.NoHost()
+//	// host = finger.EmptyHost()
 func (receiver Host) GoString() string {
 	if !receiver.something {
-		return "finger.NoHost()"
+		return "finger.EmptyHost()"
 	}
 
 	return fmt.Sprintf("finger.SomeHost(%#v)", receiver.value)
