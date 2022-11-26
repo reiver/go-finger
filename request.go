@@ -49,6 +49,15 @@ type Request struct {
 	target Target
 }
 
+// AssembleRequest assembles a finger.Request from a finger.Switch and a finger.Target.
+//
+// For example:
+//
+//	var request finger.Request = finger.AssembleRequest("W", "joeblow")
+//
+// This example is the equivalent of the (raw) finger-protocol request:
+//
+//	"/W joeblow\r\n"
 func AssembleRequest(swtch Switch, target Target) Request {
 	return Request{
 		swtch: swtch,
@@ -56,12 +65,30 @@ func AssembleRequest(swtch Switch, target Target) Request {
 	}
 }
 
+// AssembleRequest assembles a finger.Request from a finger.Switch.
+//
+// For example:
+//
+//	var request finger.Request = finger.AssembleRequest("W")
+//
+// This example is the equivalent of the (raw) finger-protocol request:
+//
+//	"/W\r\n"
 func AssembleRequestSwitch(swtch Switch) Request {
 	return Request{
 		swtch: swtch,
 	}
 }
 
+// AssembleRequest assembles a finger.Request from a finger.Target.
+//
+// For example:
+//
+//	var request finger.Request = finger.AssembleRequest("joeblow")
+//
+// This example is the equivalent of the (raw) finger-protocol request:
+//
+//	"joeblow\r\n"
 func AssembleRequestTarget(target Target) Request {
 	return Request{
 		target: target,
@@ -70,6 +97,14 @@ func AssembleRequestTarget(target Target) Request {
 
 // EmptyRequest is used to create an empty finger.Request.
 // I.e., with no finger-protocol request user or finger-protocol request target.
+//
+// For example:
+//
+//	var request finger.Request = finger.EmptyRequest()
+//
+// This example is the equivalent of the (raw) finger-protocol request:
+//
+//	"\r\n"
 func EmptyRequest() Request {
 	return Request{}
 }
