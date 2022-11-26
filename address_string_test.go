@@ -34,7 +34,7 @@ func TestAddress_String(t *testing.T) {
 
 
 		{
-			Address: finger.EmptyAddress,
+			Address: finger.EmptyAddress(),
 			Expected: "",
 		},
 	}
