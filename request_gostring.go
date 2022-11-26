@@ -13,11 +13,11 @@ func (receiver Request) GoString() string {
 
 	switch {
 	case swtchIsSomething && targetIsSomething:
-		return fmt.Sprintf("finger.SomeRequest(%q, %q)", swtch, target)
+		return fmt.Sprintf("finger.CreateRequest(%q, %q)", swtch, target)
 	case swtchIsSomething && !targetIsSomething:
-		return fmt.Sprintf("finger.SomeRequestSwitch(%q)", swtch)
+		return fmt.Sprintf("finger.CreateRequestSwitch(%q)", swtch)
 	case !swtchIsSomething && targetIsSomething:
-		return fmt.Sprintf("finger.SomeRequestTarget(%q)", target)
+		return fmt.Sprintf("finger.CreateRequestTarget(%q)", target)
 	default:
 		return "finger.EmptyRequest()"
 	}

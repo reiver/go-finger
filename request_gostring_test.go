@@ -20,67 +20,67 @@ func TestRequest_GoString(t *testing.T) {
 
 
 		{
-			FingerRequest: finger.SomeRequestSwitch("W"),
-			Expected:     `finger.SomeRequestSwitch("W")`,
+			FingerRequest: finger.CreateRequestSwitch("W"),
+			Expected:     `finger.CreateRequestSwitch("W")`,
 		},
 		{
-			FingerRequest: finger.SomeRequestSwitch("PULL"),
-			Expected:     `finger.SomeRequestSwitch("PULL")`,
-		},
-
-
-
-		{
-			FingerRequest: finger.SomeRequestTarget("joeblow"),
-			Expected:     `finger.SomeRequestTarget("joeblow")`,
-		},
-		{
-			FingerRequest: finger.SomeRequestTarget("dariush"),
-			Expected:     `finger.SomeRequestTarget("dariush")`,
+			FingerRequest: finger.CreateRequestSwitch("PULL"),
+			Expected:     `finger.CreateRequestSwitch("PULL")`,
 		},
 
 
 
 		{
-			FingerRequest: finger.SomeRequestTarget("joeblow@example.com"),
-			Expected:     `finger.SomeRequestTarget("joeblow@example.com")`,
+			FingerRequest: finger.CreateRequestTarget("joeblow"),
+			Expected:     `finger.CreateRequestTarget("joeblow")`,
 		},
 		{
-			FingerRequest: finger.SomeRequestTarget("dariush@changelog.ca"),
-			Expected:     `finger.SomeRequestTarget("dariush@changelog.ca")`,
-		},
-
-
-
-		{
-			FingerRequest: finger.SomeRequestTarget("joeblow@example.com@something.social"),
-			Expected:     `finger.SomeRequestTarget("joeblow@example.com@something.social")`,
-		},
-		{
-			FingerRequest: finger.SomeRequestTarget("dariush@changelog.ca@example.dev"),
-			Expected:     `finger.SomeRequestTarget("dariush@changelog.ca@example.dev")`,
+			FingerRequest: finger.CreateRequestTarget("dariush"),
+			Expected:     `finger.CreateRequestTarget("dariush")`,
 		},
 
 
 
 		{
-			FingerRequest: finger.SomeRequest("W", "joeblow"),
-			Expected:     `finger.SomeRequest("W", "joeblow")`,
+			FingerRequest: finger.CreateRequestTarget("joeblow@example.com"),
+			Expected:     `finger.CreateRequestTarget("joeblow@example.com")`,
 		},
 		{
-			FingerRequest: finger.SomeRequest("W", "dariush"),
-			Expected:     `finger.SomeRequest("W", "dariush")`,
+			FingerRequest: finger.CreateRequestTarget("dariush@changelog.ca"),
+			Expected:     `finger.CreateRequestTarget("dariush@changelog.ca")`,
 		},
 
 
 
 		{
-			FingerRequest: finger.SomeRequest("PULL", "joeblow"),
-			Expected:     `finger.SomeRequest("PULL", "joeblow")`,
+			FingerRequest: finger.CreateRequestTarget("joeblow@example.com@something.social"),
+			Expected:     `finger.CreateRequestTarget("joeblow@example.com@something.social")`,
 		},
 		{
-			FingerRequest: finger.SomeRequest("PULL", "dariush"),
-			Expected:     `finger.SomeRequest("PULL", "dariush")`,
+			FingerRequest: finger.CreateRequestTarget("dariush@changelog.ca@example.dev"),
+			Expected:     `finger.CreateRequestTarget("dariush@changelog.ca@example.dev")`,
+		},
+
+
+
+		{
+			FingerRequest: finger.CreateRequest("W", "joeblow"),
+			Expected:     `finger.CreateRequest("W", "joeblow")`,
+		},
+		{
+			FingerRequest: finger.CreateRequest("W", "dariush"),
+			Expected:     `finger.CreateRequest("W", "dariush")`,
+		},
+
+
+
+		{
+			FingerRequest: finger.CreateRequest("PULL", "joeblow"),
+			Expected:     `finger.CreateRequest("PULL", "joeblow")`,
+		},
+		{
+			FingerRequest: finger.CreateRequest("PULL", "dariush"),
+			Expected:     `finger.CreateRequest("PULL", "dariush")`,
 		},
 	}
 
