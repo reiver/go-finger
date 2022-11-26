@@ -111,8 +111,8 @@ type Switch struct {
 	something bool
 }
 
-// NoSwitch is used to create a finger.Switch with nothing in it.
-func NoSwitch() Switch {
+// EmptySwitch is used to create a finger.Switch with nothing in it.
+func EmptySwitch() Switch {
 	return Switch{}
 }
 
@@ -151,17 +151,17 @@ func (receiver Switch) Unwrap() (string, bool) {
 //
 // Also, for example:
 //
-//	var swtch finger.Switch = finger.NoSwitch()
+//	var swtch finger.Switch = finger.EmptySwitch()
 //	
 //	// ...
 //	
 //	fmt.Printf("swtch = %#v", swtch)
 //
 //	// Output:
-//	// swtch = finger.NoSwitch()
+//	// swtch = finger.EmptySwitch()
 func (receiver Switch) GoString() string {
 	if !receiver.something {
-		return "finger.NoSwitch()"
+		return "finger.EmptySwitch()"
 	}
 
 	return fmt.Sprintf("finger.SomeSwitch(%#v)", receiver.value)
