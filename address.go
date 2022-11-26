@@ -8,13 +8,62 @@ import (
 
 // An Address represents a finger-protocol address that is part of a finger-protocol query.
 //
-// Here are some example finger-protocol queries and a list of each of their finger-protocol addresses:
+// Address is important because it is used to create a TCP connection using the net.Dial() function.
+//
+// I.e.,:
+//
+//	var address finger.Address
+//	
+//	// ...
+//	
+//	conn, err := net.Dial("tcp", address.Resolve())
+//
+// Note that we call the Resolve() method on finger.Address to give us a proper address-string that the net.Dial() can use.
+//
+// ⁂
+//
+// A finger-protocol client will likely get a finger.Address (that it can use to make a TCP-connection with the net.Dial() function)
+// from the finger.Query.ClientParameters() method.
+//
+// For example:
+//
+//	var query finger.Query
+//
+//	// ...
+//
+//	address, query := query.ClientParameters()
+//
+//	// ...
+//
+//	conn, err := net.Dial("tcp", address.Resolve())
+//
+// Again notice that we called the Resolve() method on finger.Address to give us a proper address-string that the net.Dial() can use.
+//
+// ⁂
+//
+// Here are some example finger-protocol queries with just a finger-protocol user and a single finger-protocol host:
 //
 //	"joeblow@example.com"
 //	// finger-protocol address -> "example.com"
+//	//
+//	// TCP-port not explicitly provided, but defaults to 79 — i.e., is equivalent of "example.com:79"
 //
 //	"dariush@changelog.ca"
 //	// finger-protocol address -> "changelog.ca"
+//	//
+//	// TCP-port not explicitly provided, but defaults to 79 — i.e., is equivalent of "changelog.ca:79"
+//
+//	"someone@127.0.0.1"
+//	// finger-protocol address -> "127.0.0.1"
+//	//
+//	// TCP-port not explicitly provided, but defaults to 79 — i.e., is equivalent of "127.0.0.1:79"
+//
+//	"janedoe@12.23.34.45"
+//	// finger-protocol address -> "12.23.34.45"
+//	//
+//	// TCP-port not explicitly provided, but defaults to 79 — i.e., is equivalent of "12.23.34.45:79"
+//
+// Here are some example finger-protocol queries with just a finger-protocol user, a single finger-protocol host, and a TCP-port:
 //
 //	"joeblow@example.com:1971"
 //	// finger-protocol address -> "example.com:1971"
@@ -22,14 +71,30 @@ import (
 //	"dariush@changelog.ca:12345"
 //	// finger-protocol address -> "changelog.ca:12345"
 //
+//	"someone@127.0.0.1:7979"
+//	// finger-protocol address -> "127.0.0.1:7979"
+//
+//	"janedoe@12.23.34.45:79"
+//	// finger-protocol address -> "12.23.34.45:79"
+//
+// Here are some example finger-protocol queries with just a finger-protocol user, and two finger-protocol host:
+//
 //	"joeblow@example.com@something.social"
 //	// finger-protocol addresses -> "example.com", "something.social"
+//
+//	"dariush@changelog.ca@example.com
+//	// finger-protocol addresses -> "changelog.ca", "example.com"
+//
+//	"janedoe@12.23.34.45:79:111.222.3.4:7979"
+//	// finger-protocol address -> "12.23.34.45:79", "111.222.3.4:7979"
+//
+// Here are more example finger-protocol queries with various forms:
 //
 //	"dariush@changelog.ca@once.com@twice.net@thrice.org@fource.dev"
 //	// finger-protocol addresses -> "changelog.ca", "once.com", "twice.net", "thrice.org", "fource.dev"
 //
 //	"joeblow@example.com:1971@something.social"
-//	// finger-protocol addresses -> "example.com", "something.social"
+//	// finger-protocol addresses -> "example.com:1971", "something.social"
 //
 //	"dariush@changelog.ca@once.com:54321@twice.net@thrice.org:1212@fource.dev"
 //	// finger-protocol addresses -> "changelog.ca", "once.com:54321", "twice.net", "thrice.org:1212", "fource.dev"
@@ -38,7 +103,7 @@ import (
 //
 // With the finger-protocol, if a TCP-port isn't specified, then it defaults to TCP-port 79.
 //
-// To have the TCP-port explicitly added in, use the Resolve method.
+// To have the TCP-port explicitly added in (which is needed for net.Dial()), use the Resolve method.
 // For example:
 //
 //	address, err := finger.ParseAddress("example.com")
