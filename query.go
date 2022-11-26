@@ -27,7 +27,7 @@ type Query struct {
 	addresses []Address
 }
 
-func NoQuery() Query {
+func EmptyQuery() Query {
 	return Query{}
 }
 
