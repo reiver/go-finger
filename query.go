@@ -31,13 +31,26 @@ func EmptyQuery() Query {
 	return Query{}
 }
 
-func SomeQueryAddresses(addresses ...Address) Query {
+func AssembleQueryAddresses(addresses ...Address) Query {
 	return Query{
 		addresses: addresses,
 	}
 }
 
-func SomeQueryHost(host string) Query {
+func AssembleQueryUser(user User) Query {
+	return Query{
+		user: user,
+	}
+}
+
+func AssembleQueryUserAddresses(user User, addresses ...Address) Query {
+	return Query{
+		user: user,
+		addresses: addresses,
+	}
+}
+
+func CreateQueryHost(host string) Query {
 	return Query{
 		addresses: []Address{
 			CreateAddressHost(host),
@@ -45,7 +58,7 @@ func SomeQueryHost(host string) Query {
 	}
 }
 
-func SomeQueryHostPort(host string, port uint16) Query {
+func CreateQueryHostPort(host string, port uint16) Query {
 	return Query{
 		addresses: []Address{
 			CreateAddress(host, port),
@@ -53,7 +66,7 @@ func SomeQueryHostPort(host string, port uint16) Query {
 	}
 }
 
-func SomeQueryHosts(hosts ...string) Query {
+func CreateQueryHosts(hosts ...string) Query {
 	var addresses []Address
 
 	for _, hostString := range hosts {
@@ -72,20 +85,13 @@ func SomeQueryHosts(hosts ...string) Query {
 	}
 }
 
-func SomeQueryUser(user string) Query {
+func CreateQueryUser(user string) Query {
 	return Query{
 		user: CreateUser(user),
 	}
 }
 
-func SomeQueryUserAddresses(user string, addresses ...Address) Query {
-	return Query{
-		user: CreateUser(user),
-		addresses: addresses,
-	}
-}
-
-func SomeQueryUserHost(user string, host string) Query {
+func CreateQueryUserHost(user string, host string) Query {
 	return Query{
 		user: CreateUser(user),
 		addresses: []Address{
@@ -94,7 +100,7 @@ func SomeQueryUserHost(user string, host string) Query {
 	}
 }
 
-func SomeQueryUserHosts(user string, hosts ...string) Query {
+func CreateQueryUserHosts(user string, hosts ...string) Query {
 	var addresses []Address
 
 	for _, hostString := range hosts {
@@ -114,7 +120,7 @@ func SomeQueryUserHosts(user string, hosts ...string) Query {
 	}
 }
 
-func SomeQueryUserHostPort(user string, host string, port uint16) Query {
+func CreateQueryUserHostPort(user string, host string, port uint16) Query {
 	return Query{
 		user: CreateUser(user),
 		addresses: []Address{

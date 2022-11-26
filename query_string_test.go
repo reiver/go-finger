@@ -13,53 +13,53 @@ func TestQuery_String(t *testing.T) {
 		Expected string
 	}{
 		{
-			Query: finger.Query{},
+			Query: finger.EmptyQuery(),
 			Expected: "",
 		},
 
 
 
 		{
-			Query: finger.SomeQueryUser("dariush"),
+			Query: finger.CreateQueryUser("dariush"),
 			Expected: "dariush",
 		},
 
 
 
 		{
-			Query: finger.SomeQueryUserHost("dariush", "example.com"),
+			Query: finger.CreateQueryUserHost("dariush", "example.com"),
 			Expected: "dariush@example.com",
 		},
 		{
-			Query: finger.SomeQueryUserHostPort("dariush", "example.com", 1971),
+			Query: finger.CreateQueryUserHostPort("dariush", "example.com", 1971),
 			Expected: "dariush@example.com:1971",
 		},
 
 
 
 		{
-			Query: finger.SomeQueryUserHosts("dariush", "example.com", "something.social"),
+			Query: finger.CreateQueryUserHosts("dariush", "example.com", "something.social"),
 			Expected: "dariush@example.com@something.social",
 		},
 		{
-			Query: finger.SomeQueryUserAddresses(
-				"dariush",
+			Query: finger.AssembleQueryUserAddresses(
+				finger.CreateUser("dariush"),
 				finger.CreateAddress("example.com", 1971),
 				finger.CreateAddressHost("something.social"),
 			),
 			Expected: "dariush@example.com:1971@something.social",
 		},
 		{
-			Query: finger.SomeQueryUserAddresses(
-				"dariush",
+			Query: finger.AssembleQueryUserAddresses(
+				finger.CreateUser("dariush"),
 				finger.CreateAddressHost("example.com"),
 				finger.CreateAddress("something.social", 1234),
 			),
 			Expected: "dariush@example.com@something.social:1234",
 		},
 		{
-			Query: finger.SomeQueryUserAddresses(
-				"dariush",
+			Query: finger.AssembleQueryUserAddresses(
+				finger.CreateUser("dariush"),
 				finger.CreateAddress("example.com", 1971),
 				finger.CreateAddress("something.social", 1234),
 			),
@@ -69,33 +69,33 @@ func TestQuery_String(t *testing.T) {
 
 
 		{
-			Query: finger.SomeQueryHost("example.com"),
+			Query: finger.CreateQueryHost("example.com"),
 			Expected: "@example.com",
 		},
 		{
-			Query: finger.SomeQueryHostPort("example.com", 1971),
+			Query: finger.CreateQueryHostPort("example.com", 1971),
 			Expected: "@example.com:1971",
 		},
 		{
-			Query: finger.SomeQueryHosts("example.com", "something.social"),
+			Query: finger.CreateQueryHosts("example.com", "something.social"),
 			Expected: "@example.com@something.social",
 		},
 		{
-			Query: finger.SomeQueryAddresses(
+			Query: finger.AssembleQueryAddresses(
 				finger.CreateAddress("example.com", 1971),
 				finger.CreateAddressHost("something.social"),
 			),
 			Expected: "@example.com:1971@something.social",
 		},
 		{
-			Query: finger.SomeQueryAddresses(
+			Query: finger.AssembleQueryAddresses(
 				finger.CreateAddressHost("example.com"),
 				finger.CreateAddress("something.social", 1234),
 			),
 			Expected: "@example.com@something.social:1234",
 		},
 		{
-			Query: finger.SomeQueryAddresses(
+			Query: finger.AssembleQueryAddresses(
 				finger.CreateAddress("example.com", 1971),
 				finger.CreateAddress("something.social", 1234),
 			),
@@ -105,19 +105,19 @@ func TestQuery_String(t *testing.T) {
 
 
 		{
-			Query: finger.SomeQueryHosts("once"),
+			Query: finger.CreateQueryHosts("once"),
 			Expected: "@once",
 		},
 		{
-			Query: finger.SomeQueryHosts("once", "twice"),
+			Query: finger.CreateQueryHosts("once", "twice"),
 			Expected: "@once@twice",
 		},
 		{
-			Query: finger.SomeQueryHosts("once", "twice", "thrice"),
+			Query: finger.CreateQueryHosts("once", "twice", "thrice"),
 			Expected: "@once@twice@thrice",
 		},
 		{
-			Query: finger.SomeQueryHosts("once", "twice", "thrice", "fource"),
+			Query: finger.CreateQueryHosts("once", "twice", "thrice", "fource"),
 			Expected: "@once@twice@thrice@fource",
 		},
 	}
