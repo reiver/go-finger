@@ -204,6 +204,52 @@ func ParseAddress(s string) (Address, error) {
 //	// ...
 //	
 //	conn, err := net.Dial("tcp", address.Resolve())
+//
+// ⁂
+//
+// Here are some examples:
+//
+//	var address finger.Address = finger.CreateAddress("example.com", 79)
+//	
+//	var s string = address.String()
+//	// s = "example.com:79"
+//	
+//	var r string = address.Resolve()
+//	// r = "example.com:79"
+//
+// .
+//
+//	var address finger.Address = finger.CreateAddressHost("example.com")
+//	
+//	var s string = address.String()
+//	// s = "example.com"
+//	
+//	var r string = address.Resolve()
+//	// r = "example.com:79"
+//
+// .
+//
+//	var address finger.Address = finger.CreateAddressPort(79)
+//	
+//	var s string = address.String()
+//	// s = ":79"
+//	
+//	var r string = address.Resolve()
+//	// r = "127.0.0.1:79"
+//
+// .
+//
+//	var address finger.Address = finger.EmptyAddress()
+//	
+//	var s string = address.String()
+//	// s = ""
+//	
+//	var r string = address.Resolve()
+//	// r = "127.0.0.1:79"
+//
+// Notice that when the host was not specified, when it was resolved it was defaulted to "127.0.0.1".
+//
+// And also notice that when the port was not specified, when it was resolved it was defaulted to "79".
 func (receiver Address) Resolve() string {
 	return fmt.Sprintf("%s:%d", receiver.host.Resolve(), receiver.port.Resolve())
 }
