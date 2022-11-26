@@ -51,8 +51,8 @@ func EmptyUser() User {
 	return User{}
 }
 
-// SomeUser is used to create a finger.User with something in it.
-func SomeUser(value string) User {
+// CreateUser is used to create a finger.User with something in it.
+func CreateUser(value string) User {
 	return User{
 		value:value,
 		something:true,
@@ -79,14 +79,14 @@ func (receiver User) Unwrap() (string, bool) {
 //
 // For example:
 //
-//	var user finger.User = finger.SomeUser("dariush")
+//	var user finger.User = finger.CreateUser("dariush")
 //	
 //	// ...
 //	
 //	fmt.Printf("user = %#v", user)
 //
 //	// Output:
-//	// user = finger.SomeUser("dariush")
+//	// user = finger.CreateUser("dariush")
 //
 // Also, for example:
 //
@@ -103,5 +103,5 @@ func (receiver User) GoString() string {
 		return "finger.EmptyUser()"
 	}
 
-	return fmt.Sprintf("finger.SomeUser(%#v)", receiver.value)
+	return fmt.Sprintf("finger.CreateUser(%#v)", receiver.value)
 }

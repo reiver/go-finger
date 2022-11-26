@@ -74,20 +74,20 @@ func SomeQueryHosts(hosts ...string) Query {
 
 func SomeQueryUser(user string) Query {
 	return Query{
-		user: SomeUser(user),
+		user: CreateUser(user),
 	}
 }
 
 func SomeQueryUserAddresses(user string, addresses ...Address) Query {
 	return Query{
-		user: SomeUser(user),
+		user: CreateUser(user),
 		addresses: addresses,
 	}
 }
 
 func SomeQueryUserHost(user string, host string) Query {
 	return Query{
-		user: SomeUser(user),
+		user: CreateUser(user),
 		addresses: []Address{
 			SomeAddressHost(host),
 		},
@@ -109,14 +109,14 @@ func SomeQueryUserHosts(user string, hosts ...string) Query {
 	}
 
 	return Query{
-		user: SomeUser(user),
+		user: CreateUser(user),
 		addresses: addresses,
 	}
 }
 
 func SomeQueryUserHostPort(user string, host string, port uint16) Query {
 	return Query{
-		user: SomeUser(user),
+		user: CreateUser(user),
 		addresses: []Address{
 			SomeAddress(host, port),
 		},
@@ -139,9 +139,9 @@ func ParseQuery(query string) (Query, error) {
 
 			switch {
 			case index < 0 && "" != query:
-				q.user = SomeUser(query)
+				q.user = CreateUser(query)
 			default:
-				q.user = SomeUser(query[:index])
+				q.user = CreateUser(query[:index])
 				query = query[index:]
 			}
 		}
