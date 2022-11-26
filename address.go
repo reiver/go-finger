@@ -33,6 +33,22 @@ import (
 //
 //	"dariush@changelog.ca@once.com:54321@twice.net@thrice.org:1212@fource.dev"
 //	// finger-protocol addresses -> "changelog.ca", "once.com:54321", "twice.net", "thrice.org:1212", "fource.dev"
+//
+// Note that not all of these have a TCP-port.
+//
+// With the finger-protocol, if a TCP-port isn't specified, then it defaults to TCP-port 79.
+//
+// To have the TCP-port explicitly added in, use the Resolve method.
+// For example:
+//
+//	address, err := finger.ParseAddress("example.com")
+//	
+//	// ...
+//	
+//	resolvedAddress := address.Resolve()
+//	// resolvedAddress -> "example.com:79"
+//	
+//	conn, err := net.Dial("tcp", resolvedAddress)
 type Address struct {
 	host Host
 	port Port
@@ -114,6 +130,15 @@ func ParseAddress(s string) (Address, error) {
 	return address, nil
 }
 
+// Use what is returned from the Resolve method, to pass to net.Dial().
+//
+// For example:
+//
+//	var address finger.Address
+//	
+//	// ...
+//	
+//	conn, err := net.Dial("tcp", address.Resolve())
 func (receiver Address) Resolve() string {
 	return fmt.Sprintf("%s:%d", receiver.host.Resolve(), receiver.port.Resolve())
 }
