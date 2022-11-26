@@ -14,7 +14,7 @@ func TestQuery_Target(t *testing.T) {
 	}{
 		{
 			Query: finger.Query{},
-			Expected: finger.NoTarget(),
+			Expected: finger.EmptyTarget(),
 		},
 
 

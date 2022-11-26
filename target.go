@@ -76,8 +76,8 @@ type Target struct {
 	something bool
 }
 
-// NoTarget is used to create a finger.Target with nothing in it.
-func NoTarget() Target {
+// EmptyTarget is used to create a finger.Target with nothing in it.
+func EmptyTarget() Target {
 	return Target{}
 }
 
@@ -116,17 +116,17 @@ func (receiver Target) Unwrap() (string, bool) {
 //
 // Also, for example:
 //
-//	var target finger.Target = finger.NoTarget()
+//	var target finger.Target = finger.EmptyTarget()
 //	
 //	// ...
 //	
 //	fmt.Printf("target = %#v", target)
 //
 //	// Output:
-//	// target = finger.NoTarget()
+//	// target = finger.EmptyTarget()
 func (receiver Target) GoString() string {
 	if !receiver.something {
-		return "finger.NoTarget()"
+		return "finger.EmptyTarget()"
 	}
 
 	return fmt.Sprintf("finger.SomeTarget(%#v)", receiver.value)

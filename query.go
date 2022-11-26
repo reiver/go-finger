@@ -230,7 +230,7 @@ func (receiver Query) String() string {
 // Targets returns the equivalent finger.Target to finger.Query.
 func (receiver Query) Target() Target {
 	if EmptyUser() == receiver.user && len(receiver.addresses) < 1 {
-		return NoTarget()
+		return EmptyTarget()
 	}
 
 	return SomeTarget(receiver.String())
