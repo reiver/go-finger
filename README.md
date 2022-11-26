@@ -1,8 +1,8 @@
 # go-finger
 
-Package **finger** implements the **finger protocol**, for the Go programming language.
+Package **finger** implements the **finger-protocol**, for the Go programming language.
 
-General, what is defined in:
+I.e., generally, what is defined in:
 
 * IETF RFC-742 — https://datatracker.ietf.org/doc/html/rfc742
 * IETF RFC-1288 — https://datatracker.ietf.org/doc/html/rfc1288
