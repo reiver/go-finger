@@ -24,7 +24,7 @@ func TestParseQuery(t *testing.T) {
 		{
 			QueryString: "dariush",
 			Expected: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 			},
 		},
 
@@ -91,7 +91,7 @@ func TestParseQuery(t *testing.T) {
 		{
 			QueryString: "dariush@example.com",
 			Expected: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 				Addresses: []finger.Address{
 					finger.SomeAddressHost("example.com"),
 				},
@@ -100,7 +100,7 @@ func TestParseQuery(t *testing.T) {
 		{
 			QueryString: "dariush@example.com@something.social",
 			Expected: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 				Addresses: []finger.Address{
 					finger.SomeAddressHost("example.com"),
 					finger.SomeAddressHost("something.social"),

@@ -21,7 +21,7 @@ func TestQuery_Target(t *testing.T) {
 
 		{
 			Query: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 			},
 			Expected: finger.SomeTarget("dariush"),
 		},
@@ -30,7 +30,7 @@ func TestQuery_Target(t *testing.T) {
 
 		{
 			Query: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 				Addresses: []finger.Address{
 					finger.SomeAddressHost("example.com"),
 				},
@@ -39,7 +39,7 @@ func TestQuery_Target(t *testing.T) {
 		},
 		{
 			Query: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 				Addresses: []finger.Address{
 					finger.SomeAddress("example.com", 1971),
 				},
@@ -51,7 +51,7 @@ func TestQuery_Target(t *testing.T) {
 
 		{
 			Query: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 				Addresses: []finger.Address{
 					finger.SomeAddressHost("example.com"),
 					finger.SomeAddressHost("something.social"),
@@ -61,7 +61,7 @@ func TestQuery_Target(t *testing.T) {
 		},
 		{
 			Query: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 				Addresses: []finger.Address{
 					finger.SomeAddress("example.com", 1971),
 					finger.SomeAddressHost("something.social"),
@@ -71,7 +71,7 @@ func TestQuery_Target(t *testing.T) {
 		},
 		{
 			Query: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 				Addresses: []finger.Address{
 					finger.SomeAddressHost("example.com"),
 					finger.SomeAddress("something.social", 1234),
@@ -81,7 +81,7 @@ func TestQuery_Target(t *testing.T) {
 		},
 		{
 			Query: finger.Query{
-				UserName: finger.SomeUserName("dariush"),
+				User: finger.SomeUser("dariush"),
 				Addresses: []finger.Address{
 					finger.SomeAddress("example.com", 1971),
 					finger.SomeAddress("something.social", 1234),

@@ -23,7 +23,7 @@ import (
 //
 // Is what makes it a finger-protocol query.
 type Query struct {
-	UserName UserName
+	User User
 	Addresses []Address
 }
 
@@ -43,9 +43,9 @@ func ParseQuery(query string) (Query, error) {
 
 			switch {
 			case index < 0 && "" != query:
-				q.UserName = SomeUserName(query)
+				q.User = SomeUser(query)
 			default:
-				q.UserName = SomeUserName(query[:index])
+				q.User = SomeUser(query[:index])
 				query = query[index:]
 			}
 		}
@@ -105,7 +105,7 @@ func (receiver Query) ClientParameters() (Address, Query) {
 	}
 
 	return addresses[length-1], Query{
-		UserName: receiver.UserName,
+		User: receiver.User,
 		Addresses: addresses[:length-1],
 	}
 }
@@ -115,9 +115,9 @@ func (receiver Query) String() string {
 	var buffer strings.Builder
 
 	{
-		username, usernameIsSomething := receiver.UserName.Unwrap()
-		if usernameIsSomething {
-			buffer.WriteString(username)
+		user, userIsSomething := receiver.User.Unwrap()
+		if userIsSomething {
+			buffer.WriteString(user)
 		}
 	}
 
@@ -134,7 +134,7 @@ func (receiver Query) String() string {
 
 // Targets returns the equivalent finger.Target to finger.Query.
 func (receiver Query) Target() Target {
-	if NoUserName() == receiver.UserName && len(receiver.Addresses) < 1 {
+	if NoUser() == receiver.User && len(receiver.Addresses) < 1 {
 		return NoTarget()
 	}
 
