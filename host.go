@@ -55,8 +55,8 @@ func EmptyHost() Host {
 	return Host{}
 }
 
-// SomeHost is used to create a finger.Host with something in it.
-func SomeHost(value string) Host {
+// CreateHost is used to create a finger.Host with something in it.
+func CreateHost(value string) Host {
 	return Host{
 		value:value,
 		something:true,
@@ -64,7 +64,7 @@ func SomeHost(value string) Host {
 }
 
 func DefaultHost() Host {
-	return SomeHost(defaultHost)
+	return CreateHost(defaultHost)
 }
 
 // GoString makes it so that when the fmt.Fprintf(), fmt.Printf(), and fmt.Sprintf() family of functions
@@ -72,14 +72,14 @@ func DefaultHost() Host {
 //
 // For example:
 //
-//	var host finger.Host = finger.SomeHost("dariush")
+//	var host finger.Host = finger.CreateHost("dariush")
 //	
 //	// ...
 //	
 //	fmt.Printf("host = %#v", host)
 //
 //	// Output:
-//	// host = finger.SomeHost("dariush")
+//	// host = finger.CreateHost("dariush")
 //
 // Also, for example:
 //
@@ -96,7 +96,7 @@ func (receiver Host) GoString() string {
 		return "finger.EmptyHost()"
 	}
 
-	return fmt.Sprintf("finger.SomeHost(%#v)", receiver.value)
+	return fmt.Sprintf("finger.CreateHost(%#v)", receiver.value)
 }
 
 func (receiver Host) Resolve() string {
