@@ -78,7 +78,7 @@ func AssembleRequestTarget(target Target) Request {
 	}
 }
 
-func NoRequest() Request {
+func EmptyRequest() Request {
 	return Request{}
 }
 

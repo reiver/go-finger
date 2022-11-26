@@ -92,4 +92,3 @@ func (receiver Client) RemoteAddr() net.Addr {
 
 	return conn.RemoteAddr()
 }
-

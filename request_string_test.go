@@ -13,7 +13,7 @@ func TestRequest_String(t *testing.T) {
 		Expected string
 	}{
 		{
-			FingerRequest: finger.NoRequest(),
+			FingerRequest: finger.EmptyRequest(),
 			Expected: "\r\n",
 		},
 

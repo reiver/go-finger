@@ -19,6 +19,6 @@ func (receiver Request) GoString() string {
 	case !swtchIsSomething && targetIsSomething:
 		return fmt.Sprintf("finger.SomeRequestTarget(%q)", target)
 	default:
-		return "finger.NoRequest()"
+		return "finger.EmptyRequest()"
 	}
 }

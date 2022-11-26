@@ -14,7 +14,7 @@ func TestRequest_WriteTo(t *testing.T) {
 		Expected string
 	}{
 		{
-			FingerRequest: finger.NoRequest(),
+			FingerRequest: finger.EmptyRequest(),
 			Expected: "\r\n",
 		},
 
