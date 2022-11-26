@@ -1,6 +1,8 @@
 package finger
 
 import (
+	"github.com/reiver/go-fck"
+
 	"fmt"
 	"strconv"
 	"strings"
@@ -120,11 +122,19 @@ type Address struct {
 }
 
 // EmptyAddress is used to create a finger.Address with nothing in it.
+//
+// For example:
+//
+//	var address finger.Address = finger.EmptyAddress()
 func EmptyAddress() Address {
 	return Address{}
 }
 
 // CreateAddress is used to create a finger.Address with something in it.
+//
+// For example:
+//
+//	var address finger.Address = finger.CreateAddress("example.com", 1971)
 func CreateAddress(host string, port uint16) Address {
 	return Address {
 		host: CreateHost(host),
@@ -133,6 +143,10 @@ func CreateAddress(host string, port uint16) Address {
 }
 
 // CreateAddressHost is used to create a finger.Address with something in it.
+//
+// For example:
+//
+//	var address finger.Address = finger.CreateAddressHost("example.com")
 func CreateAddressHost(host string) Address {
 	return Address {
 		host: CreateHost(host),
@@ -140,6 +154,10 @@ func CreateAddressHost(host string) Address {
 }
 
 // CreateAddressPort is used to create a finger.Address with something in it.
+//
+// For example:
+//
+//	var address finger.Address = finger.CreateAddressPort(1971)
 func CreateAddressPort(port uint16) Address {
 	return Address {
 		port: CreatePort(port),
@@ -165,34 +183,136 @@ func DefaultAddress() Address {
 //	":1971"
 //
 //	"example.com:1971"
+//
+// Here are some more random examples:
+//
+//	"changelog.ca"
+//
+//	"changelog.ca:79"
+//
+//	"changelog.ca:1971"
+//
+//	"changelog.ca:7979"
+//
+//	"12.23.34.45"
+//
+//	"12.23.34.45:79"
+//
+//	"12.23.34.45:1971"
+//
+//	"12.23.34.45:7979"
 func ParseAddress(s string) (Address, error) {
 
 	if "" == s {
-		return Address{}, nil
+		return EmptyAddress(), nil
 	}
 
 	index := strings.IndexRune(s, ':')
 
 	if index < 0 {
-		return Address{
-			host: CreateHost(s),
-		}, nil
+		return CreateAddressHost(s), nil
 	}
 
-	var address Address
+	var host string = s[:index]
+
+	var port uint16
 	{
-		var host string = s[:index]
-
-		address.host = CreateHost(host)
-
-		var err error
-		address.port, err = ParsePort(s[1+index:])
+		p, err := ParsePort(s[1+index:])
 		if nil != err {
-			return address, fmt.Errorf("problem parsing finger-protocol port: %w", err)
+			return EmptyAddress(), fmt.Errorf("problem parsing finger-protocol port when parsing finger-protocol address: %w", err)
+		}
+
+		var something bool
+		port, something = p.Unwrap()
+		if !something {
+			return EmptyAddress(), fck.Error("unexpected problem when parsing finger-protocol address: empty port")
 		}
 	}
 
-	return address, nil
+	if "" == host {
+		return CreateAddressPort(port), nil
+	}
+
+	return CreateAddress(host, port), nil
+}
+
+// GoString makes it so that when the fmt.Fprintf(), fmt.Printf(), and fmt.Sprintf() family of functions
+// renders this type with the %#v verb, that it will be easier to understand.
+//
+// For example:
+//
+//	var addressString string = "12.23.34.45:1971"
+//	
+//	address, err := finger.ParseAddress(addressString)
+//	if nil != err {
+//		return err
+//	}
+//	
+//	// ...
+//	
+//	fmt.Printf("address = %#v", address)
+//	
+//	// Output:
+//	// address = finger.CreateAddress("12.23.34.45", 1971)
+//
+// And, for example:
+//
+//	var address finger.Address = finger.CreateAddress("example.com", 79)
+//	
+//	// ...
+//	
+//	fmt.Printf("address = %#v", address)
+//	
+//	// Output:
+//	// address = finger.CreateAddress("example.com", 79)
+//
+// Also, for example:
+//
+//	var address finger.Address = finger.EmptyAddress()
+//	
+//	// ...
+//	
+//	fmt.Printf("address = %#v", address)
+//	
+//	// Output:
+//	// address = finger.EmptyAddress()
+//
+// And, for example:
+//
+//	var address finger.Address = finger.CreateAddressHost("example.com")
+//	
+//	// ...
+//	
+//	fmt.Printf("address = %#v", address)
+//	
+//	// Output:
+//	// address = finger.CreateAddressHost("example.com")
+//
+// And again, for example:
+//
+//	var address finger.Address = finger.CreateAddressPort(79)
+//	
+//	// ...
+//	
+//	fmt.Printf("address = %#v", address)
+//	
+//	// Output:
+//	// address = finger.CreateAddressPort(79)
+func (receiver Address) GoString() string {
+
+	host, hostIsSomething := receiver.host.Unwrap()
+	port, portIsSomething := receiver.port.Unwrap()
+
+	switch {
+	case hostIsSomething && portIsSomething:
+		return fmt.Sprintf("finger.CreateAddress(%q, %d)", host, port)
+	case hostIsSomething && !portIsSomething:
+		return fmt.Sprintf("finger.CreateAddressHost(%q)", host)
+	case !hostIsSomething && portIsSomething:
+		return fmt.Sprintf("finger.CreateAddressPort(%d)", port)
+	default:
+		return "finger.EmptyAddress()"
+	}
 }
 
 // Use what is returned from the Resolve method, to pass to net.Dial().

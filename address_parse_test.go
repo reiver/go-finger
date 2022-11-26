@@ -14,7 +14,7 @@ func TestParseAddress(t *testing.T) {
 	}{
 		{
 			AddressString: "",
-			Expected: finger.Address{},
+			Expected: finger.EmptyAddress(),
 		},
 
 
@@ -60,6 +60,40 @@ func TestParseAddress(t *testing.T) {
 		{
 			AddressString: "fource.dev:7979",
 			Expected: finger.CreateAddress("fource.dev", 7979),
+		},
+
+
+
+		{
+			AddressString: "1.12.234.45",
+			Expected: finger.CreateAddressHost("1.12.234.45"),
+		},
+		{
+			AddressString: "1.12.234.45:7979",
+			Expected: finger.CreateAddress("1.12.234.45", 7979),
+		},
+
+
+
+		{
+			AddressString: ":0",
+			Expected: finger.CreateAddressPort(0),
+		},
+		{
+			AddressString: ":79",
+			Expected: finger.CreateAddressPort(79),
+		},
+		{
+			AddressString: ":1079",
+			Expected: finger.CreateAddressPort(1079),
+		},
+		{
+			AddressString: ":1971",
+			Expected: finger.CreateAddressPort(1971),
+		},
+		{
+			AddressString: ":7979",
+			Expected: finger.CreateAddressPort(7979),
 		},
 	}
 
