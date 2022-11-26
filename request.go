@@ -26,10 +26,7 @@ package finger
 // In Go code, these would become:
 //
 //	// "\r\n"
-//	var request finger.Request = finger.Request{
-//		Switch: finger.NoSwitch(),
-//		Target: finger.NoTarget(),
-//	}
+//	var request finger.Request = finger.EmptyRequest()
 //
 //	// "joeblow\r\n"
 //	var request finger.Request = finger.Request{
