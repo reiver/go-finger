@@ -157,3 +157,49 @@ func CreateRequestTarget(target string) Request {
 		target: CreateTarget(target),
 	}
 }
+
+// The Switch method returns the finger.Request's finger.Switch.
+//
+// For example:
+//
+//	var request finger.Request = finger.CreateRequest("W", "joeblow")
+//	
+//	var swtch finger.Switch = request.Switch()
+//
+//	fmt.Printf("switch = %#v", swtch)
+//	// Output: switch = finger.CreateSwitch("W")
+//
+// And also, example:
+//
+//	var request finger.Request = finger.CreateRequestTarget("joeblow")
+//	
+//	var swtch finger.Switch = request.Switch()
+//
+//	fmt.Printf("switch = %#v", swtch)
+//	// Output: switch = finger.EmptySwitch()
+func (receiver Request) Switch() Switch {
+	return receiver.swtch
+}
+
+// The Target method returns the finger.Request's finger.Target.
+//
+// For example:
+//
+//	var request finger.Request = finger.CreateRequest("W", "joeblow")
+//	
+//	var target finger.Target = request.Target()
+//
+//	fmt.Printf("target = %#v", target)
+//	// Output: target = finger.CreateTarget("joeblow")
+//
+// And also, example:
+//
+//	var request finger.Request = finger.CreateRequestSwitch("W")
+//	
+//	var target finger.Target = request.Target()
+//
+//	fmt.Printf("target = %#v", target)
+//	// Output: target = finger.EmptyTarget()
+func (receiver Request) Target() Target {
+	return receiver.target
+}
