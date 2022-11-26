@@ -233,5 +233,5 @@ func (receiver Query) Target() Target {
 		return EmptyTarget()
 	}
 
-	return SomeTarget(receiver.String())
+	return CreateTarget(receiver.String())
 }

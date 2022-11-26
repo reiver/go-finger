@@ -70,7 +70,7 @@ import (
 //
 // For each of these finger-protocol requests, what would be stored in the code (for finger.Target) is:
 //
-//	var target finger.Target = finger.SomeTarget("joeblow")
+//	var target finger.Target = finger.CreateTarget("joeblow")
 type Target struct {
 	value string
 	something bool
@@ -81,8 +81,8 @@ func EmptyTarget() Target {
 	return Target{}
 }
 
-// SomeTarget is used to create a finger.Target with something in it.
-func SomeTarget(value string) Target {
+// CreateTarget is used to create a finger.Target with something in it.
+func CreateTarget(value string) Target {
 	return Target{
 		value:value,
 		something:true,
@@ -105,14 +105,14 @@ func (receiver Target) Unwrap() (string, bool) {
 //
 // For example:
 //
-//	var target finger.Target = finger.SomeTarget("dariush")
+//	var target finger.Target = finger.CreateTarget("dariush")
 //	
 //	// ...
 //	
 //	fmt.Printf("target = %#v", target)
 //
 //	// Output:
-//	// target = finger.SomeTarget("dariush")
+//	// target = finger.CreateTarget("dariush")
 //
 // Also, for example:
 //
@@ -129,5 +129,5 @@ func (receiver Target) GoString() string {
 		return "finger.EmptyTarget()"
 	}
 
-	return fmt.Sprintf("finger.SomeTarget(%#v)", receiver.value)
+	return fmt.Sprintf("finger.CreateTarget(%#v)", receiver.value)
 }

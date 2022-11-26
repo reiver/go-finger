@@ -24,7 +24,7 @@ func TestQuery_ClientParameters(t *testing.T) {
 		{
 			QueryString: "dariush",
 			ExpectedAddress: finger.DefaultAddress(),
-			ExpectedTarget: finger.SomeTarget("dariush"),
+			ExpectedTarget: finger.CreateTarget("dariush"),
 		},
 
 
@@ -32,12 +32,12 @@ func TestQuery_ClientParameters(t *testing.T) {
 		{
 			QueryString: "dariush@example.com",
 			ExpectedAddress: finger.SomeAddressHost("example.com"),
-			ExpectedTarget: finger.SomeTarget("dariush"),
+			ExpectedTarget: finger.CreateTarget("dariush"),
 		},
 		{
 			QueryString: "dariush@example.com:1971",
 			ExpectedAddress: finger.SomeAddress("example.com", 1971),
-			ExpectedTarget: finger.SomeTarget("dariush"),
+			ExpectedTarget: finger.CreateTarget("dariush"),
 		},
 
 
@@ -45,22 +45,22 @@ func TestQuery_ClientParameters(t *testing.T) {
 		{
 			QueryString: "dariush@example.com@something.social",
 			ExpectedAddress: finger.SomeAddressHost("something.social"),
-			ExpectedTarget: finger.SomeTarget("dariush@example.com"),
+			ExpectedTarget: finger.CreateTarget("dariush@example.com"),
 		},
 		{
 			QueryString: "dariush@example.com:1971@something.social",
 			ExpectedAddress: finger.SomeAddressHost("something.social"),
-			ExpectedTarget: finger.SomeTarget("dariush@example.com:1971"),
+			ExpectedTarget: finger.CreateTarget("dariush@example.com:1971"),
 		},
 		{
 			QueryString: "dariush@example.com@something.social:1234",
 			ExpectedAddress: finger.SomeAddress("something.social", 1234),
-			ExpectedTarget: finger.SomeTarget("dariush@example.com"),
+			ExpectedTarget: finger.CreateTarget("dariush@example.com"),
 		},
 		{
 			QueryString: "dariush@example.com:1971@something.social:1234",
 			ExpectedAddress: finger.SomeAddress("something.social", 1234),
-			ExpectedTarget: finger.SomeTarget("dariush@example.com:1971"),
+			ExpectedTarget: finger.CreateTarget("dariush@example.com:1971"),
 		},
 
 
@@ -78,22 +78,22 @@ func TestQuery_ClientParameters(t *testing.T) {
 		{
 			QueryString: "@example.com@something.social",
 			ExpectedAddress: finger.SomeAddressHost("something.social"),
-			ExpectedTarget: finger.SomeTarget("@example.com"),
+			ExpectedTarget: finger.CreateTarget("@example.com"),
 		},
 		{
 			QueryString: "@example.com:1971@something.social",
 			ExpectedAddress: finger.SomeAddressHost("something.social"),
-			ExpectedTarget: finger.SomeTarget("@example.com:1971"),
+			ExpectedTarget: finger.CreateTarget("@example.com:1971"),
 		},
 		{
 			QueryString: "@example.com@something.social:1234",
 			ExpectedAddress: finger.SomeAddress("something.social", 1234),
-			ExpectedTarget: finger.SomeTarget("@example.com"),
+			ExpectedTarget: finger.CreateTarget("@example.com"),
 		},
 		{
 			QueryString: "@example.com:1971@something.social:1234",
 			ExpectedAddress: finger.SomeAddress("something.social", 1234),
-			ExpectedTarget: finger.SomeTarget("@example.com:1971"),
+			ExpectedTarget: finger.CreateTarget("@example.com:1971"),
 		},
 
 
@@ -106,17 +106,17 @@ func TestQuery_ClientParameters(t *testing.T) {
 		{
 			QueryString: "@once@twice",
 			ExpectedAddress: finger.SomeAddressHost("twice"),
-			ExpectedTarget: finger.SomeTarget("@once"),
+			ExpectedTarget: finger.CreateTarget("@once"),
 		},
 		{
 			QueryString: "@once@twice@thrice",
 			ExpectedAddress: finger.SomeAddressHost("thrice"),
-			ExpectedTarget: finger.SomeTarget("@once@twice"),
+			ExpectedTarget: finger.CreateTarget("@once@twice"),
 		},
 		{
 			QueryString: "@once@twice@thrice@fource",
 			ExpectedAddress: finger.SomeAddressHost("fource"),
-			ExpectedTarget: finger.SomeTarget("@once@twice@thrice"),
+			ExpectedTarget: finger.CreateTarget("@once@twice@thrice"),
 		},
 	}
 

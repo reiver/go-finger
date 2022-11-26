@@ -122,7 +122,7 @@ func EmptyRequest() Request {
 func CreateRequest(swtch string, target string) Request {
 	return Request{
 		swtch: SomeSwitch(swtch),
-		target: SomeTarget(target),
+		target: CreateTarget(target),
 	}
 }
 
@@ -154,6 +154,6 @@ func CreateRequestSwitch(swtch string) Request {
 //	"dariush\r\n"
 func CreateRequestTarget(target string) Request {
 	return Request{
-		target: SomeTarget(target),
+		target: CreateTarget(target),
 	}
 }

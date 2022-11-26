@@ -21,25 +21,25 @@ func TestQuery_Target(t *testing.T) {
 
 		{
 			Query: finger.SomeQueryUser("dariush"),
-			Expected: finger.SomeTarget("dariush"),
+			Expected: finger.CreateTarget("dariush"),
 		},
 
 
 
 		{
 			Query: finger.SomeQueryUserHost("dariush", "example.com"),
-			Expected: finger.SomeTarget("dariush@example.com"),
+			Expected: finger.CreateTarget("dariush@example.com"),
 		},
 		{
 			Query: finger.SomeQueryUserHostPort("dariush", "example.com", 1971),
-			Expected: finger.SomeTarget("dariush@example.com:1971"),
+			Expected: finger.CreateTarget("dariush@example.com:1971"),
 		},
 
 
 
 		{
 			Query: finger.SomeQueryUserHosts("dariush", "example.com", "something.social"),
-			Expected: finger.SomeTarget("dariush@example.com@something.social"),
+			Expected: finger.CreateTarget("dariush@example.com@something.social"),
 		},
 		{
 			Query: finger.SomeQueryUserAddresses(
@@ -47,7 +47,7 @@ func TestQuery_Target(t *testing.T) {
 				finger.SomeAddress("example.com", 1971),
 				finger.SomeAddressHost("something.social"),
 			),
-			Expected: finger.SomeTarget("dariush@example.com:1971@something.social"),
+			Expected: finger.CreateTarget("dariush@example.com:1971@something.social"),
 		},
 		{
 			Query: finger.SomeQueryUserAddresses(
@@ -55,7 +55,7 @@ func TestQuery_Target(t *testing.T) {
 				finger.SomeAddressHost("example.com"),
 				finger.SomeAddress("something.social", 1234),
 			),
-			Expected: finger.SomeTarget("dariush@example.com@something.social:1234"),
+			Expected: finger.CreateTarget("dariush@example.com@something.social:1234"),
 		},
 		{
 			Query: finger.SomeQueryUserAddresses(
@@ -63,62 +63,62 @@ func TestQuery_Target(t *testing.T) {
 				finger.SomeAddress("example.com", 1971),
 				finger.SomeAddress("something.social", 1234),
 			),
-			Expected: finger.SomeTarget("dariush@example.com:1971@something.social:1234"),
+			Expected: finger.CreateTarget("dariush@example.com:1971@something.social:1234"),
 		},
 
 
 
 		{
 			Query: finger.SomeQueryHost("example.com"),
-			Expected: finger.SomeTarget("@example.com"),
+			Expected: finger.CreateTarget("@example.com"),
 		},
 		{
 			Query: finger.SomeQueryHostPort("example.com", 1971),
-			Expected: finger.SomeTarget("@example.com:1971"),
+			Expected: finger.CreateTarget("@example.com:1971"),
 		},
 		{
 			Query: finger.SomeQueryHosts("example.com", "something.social"),
-			Expected: finger.SomeTarget("@example.com@something.social"),
+			Expected: finger.CreateTarget("@example.com@something.social"),
 		},
 		{
 			Query: finger.SomeQueryAddresses(
 				finger.SomeAddress("example.com", 1971),
 				finger.SomeAddressHost("something.social"),
 			),
-			Expected: finger.SomeTarget("@example.com:1971@something.social"),
+			Expected: finger.CreateTarget("@example.com:1971@something.social"),
 		},
 		{
 			Query: finger.SomeQueryAddresses(
 				finger.SomeAddressHost("example.com"),
 				finger.SomeAddress("something.social", 1234),
 			),
-			Expected: finger.SomeTarget("@example.com@something.social:1234"),
+			Expected: finger.CreateTarget("@example.com@something.social:1234"),
 		},
 		{
 			Query: finger.SomeQueryAddresses(
 				finger.SomeAddress("example.com", 1971),
 				finger.SomeAddress("something.social", 1234),
 			),
-			Expected: finger.SomeTarget("@example.com:1971@something.social:1234"),
+			Expected: finger.CreateTarget("@example.com:1971@something.social:1234"),
 		},
 
 
 
 		{
 			Query: finger.SomeQueryHost("once"),
-			Expected: finger.SomeTarget("@once"),
+			Expected: finger.CreateTarget("@once"),
 		},
 		{
 			Query: finger.SomeQueryHosts("once", "twice"),
-			Expected: finger.SomeTarget("@once@twice"),
+			Expected: finger.CreateTarget("@once@twice"),
 		},
 		{
 			Query: finger.SomeQueryHosts("once", "twice", "thrice"),
-			Expected: finger.SomeTarget("@once@twice@thrice"),
+			Expected: finger.CreateTarget("@once@twice@thrice"),
 		},
 		{
 			Query: finger.SomeQueryHosts("once", "twice", "thrice", "fource"),
-			Expected: finger.SomeTarget("@once@twice@thrice@fource"),
+			Expected: finger.CreateTarget("@once@twice@thrice@fource"),
 		},
 	}
 
