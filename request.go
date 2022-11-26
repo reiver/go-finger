@@ -59,6 +59,25 @@ type Request struct {
 	target Target
 }
 
+func AssembleRequest(swtch Switch, target Target) Request {
+	return Request{
+		swtch: swtch,
+		target: target,
+	}
+}
+
+func AssembleRequestSwitch(swtch Switch) Request {
+	return Request{
+		swtch: swtch,
+	}
+}
+
+func AssembleRequestTarget(target Target) Request {
+	return Request{
+		target: target,
+	}
+}
+
 func NoRequest() Request {
 	return Request{}
 }
