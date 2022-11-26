@@ -46,8 +46,8 @@ type User struct {
 	something bool
 }
 
-// NoUser is used to create a finger.User with nothing in it.
-func NoUser() User {
+// EmptyUser is used to create a finger.User with nothing in it.
+func EmptyUser() User {
 	return User{}
 }
 
@@ -90,17 +90,17 @@ func (receiver User) Unwrap() (string, bool) {
 //
 // Also, for example:
 //
-//	var user finger.User = finger.NoUser()
+//	var user finger.User = finger.EmptyUser()
 //	
 //	// ...
 //	
 //	fmt.Printf("user = %#v", user)
 //
 //	// Output:
-//	// user = finger.NoUser()
+//	// user = finger.EmptyUser()
 func (receiver User) GoString() string {
 	if !receiver.something {
-		return "finger.NoUser()"
+		return "finger.EmptyUser()"
 	}
 
 	return fmt.Sprintf("finger.SomeUser(%#v)", receiver.value)
