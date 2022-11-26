@@ -55,7 +55,7 @@ type Port struct {
 // ParsePort parses a string for a (numeric) port.
 func ParsePort(s string) (Port, error) {
 	if "" == s {
-		return NoPort(), nil
+		return EmptyPort(), nil
 	}
 
 	const base int = 10
@@ -65,22 +65,22 @@ func ParsePort(s string) (Port, error) {
 	{
 		u64, err := strconv.ParseUint(s, base, bitsize)
 		if nil != err {
-			return NoPort(), fmt.Errorf("problem parsing finger-protocol port: %w", err)
+			return EmptyPort(), fmt.Errorf("problem parsing finger-protocol port: %w", err)
 		}
 
 		u16 = uint16(u64)
 	}
 
-	return SomePort(u16), nil
+	return CreatePort(u16), nil
 }
 
-// NoPort is used to create a finger.Port with nothing in it.
-func NoPort() Port {
+// EmptyPort is used to create a finger.Port with nothing in it.
+func EmptyPort() Port {
 	return Port{}
 }
 
-// SomePort is used to create a finger.Port with something in it.
-func SomePort(value uint16) Port {
+// CreatePort is used to create a finger.Port with something in it.
+func CreatePort(value uint16) Port {
 	return Port{
 		value:value,
 		something:true,
@@ -90,13 +90,13 @@ func SomePort(value uint16) Port {
 // DefaultPort is used to create a finger.Port with the value of 79 in it.
 // 79 is the default finger-protocol port.
 func DefaultPort() Port {
-	return SomePort(defaultPort)
+	return CreatePort(defaultPort)
 }
 
 // AlternativePort is used to create a finger.Port with the value of 1971 in it.
 // 1971 is an alternative port that can be used by the finger-protocol.
 func AlternativePort() Port {
-	return SomePort(1971)
+	return CreatePort(1971)
 }
 
 // GoString makes it so that when the fmt.Fprintf(), fmt.Printf(), and fmt.Sprintf() family of functions
@@ -104,31 +104,31 @@ func AlternativePort() Port {
 //
 // For example:
 //
-//	var port finger.Port = finger.SomePort(79)
+//	var port finger.Port = finger.CreatePort(79)
 //	
 //	// ...
 //	
 //	fmt.Printf("port = %#v", port)
 //
 //	// Output:
-//	// port = finger.SomePort(79)
+//	// port = finger.CreatePort(79)
 //
 // Also, for example:
 //
-//	var port finger.Port = finger.NoPort()
+//	var port finger.Port = finger.EmptyPort()
 //	
 //	// ...
 //	
 //	fmt.Printf("port = %#v", port)
 //
 //	// Output:
-//	// port = finger.NoPort()
+//	// port = finger.EmptyPort()
 func (receiver Port) GoString() string {
 	if !receiver.something {
-		return "finger.NoPort()"
+		return "finger.EmptyPort()"
 	}
 
-	return fmt.Sprintf("finger.SomePort(%d)", receiver.value)
+	return fmt.Sprintf("finger.CreatePort(%d)", receiver.value)
 }
 
 func (receiver Port) Resolve() uint16 {

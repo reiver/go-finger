@@ -47,7 +47,7 @@ func NoAddress() Address {
 func SomeAddress(host string, port uint16) Address {
 	return Address {
 		host: CreateHost(host),
-		port: SomePort(port),
+		port: CreatePort(port),
 	}
 }
 
@@ -61,7 +61,7 @@ func SomeAddressHost(host string) Address {
 // SomeAddressPort is used to create a finger.Address with something in it.
 func SomeAddressPort(port uint16) Address {
 	return Address {
-		port: SomePort(port),
+		port: CreatePort(port),
 	}
 }
 
