@@ -38,28 +38,28 @@ type Address struct {
 	port Port
 }
 
-// NoAddress is used to create a finger.Address with nothing in it.
-func NoAddress() Address {
+// EmptyAddress is used to create a finger.Address with nothing in it.
+func EmptyAddress() Address {
 	return Address{}
 }
 
-// SomeAddress is used to create a finger.Address with something in it.
-func SomeAddress(host string, port uint16) Address {
+// CreateAddress is used to create a finger.Address with something in it.
+func CreateAddress(host string, port uint16) Address {
 	return Address {
 		host: CreateHost(host),
 		port: CreatePort(port),
 	}
 }
 
-// SomeAddressHost is used to create a finger.Address with something in it.
-func SomeAddressHost(host string) Address {
+// CreateAddressHost is used to create a finger.Address with something in it.
+func CreateAddressHost(host string) Address {
 	return Address {
 		host: CreateHost(host),
 	}
 }
 
-// SomeAddressPort is used to create a finger.Address with something in it.
-func SomeAddressPort(port uint16) Address {
+// CreateAddressPort is used to create a finger.Address with something in it.
+func CreateAddressPort(port uint16) Address {
 	return Address {
 		port: CreatePort(port),
 	}

@@ -13,21 +13,21 @@ func TestAddress_Resolve(t *testing.T) {
 		Expected string
 	}{
 		{
-			Address: finger.SomeAddress("example.com", 1971),
+			Address: finger.CreateAddress("example.com", 1971),
 			Expected: "example.com:1971",
 		},
 
 
 
 		{
-			Address: finger.SomeAddressHost("example.com"),
+			Address: finger.CreateAddressHost("example.com"),
 			Expected: "example.com:79",
 		},
 
 
 
 		{
-			Address: finger.SomeAddressPort(1971),
+			Address: finger.CreateAddressPort(1971),
 			Expected: "127.0.0.1:1971",
 		},
 	}

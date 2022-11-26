@@ -21,45 +21,45 @@ func TestParseAddress(t *testing.T) {
 
 		{
 			AddressString: "example.com",
-			Expected: finger.SomeAddressHost("example.com"),
+			Expected: finger.CreateAddressHost("example.com"),
 		},
 
 
 
 		{
 			AddressString: "once.com",
-			Expected: finger.SomeAddressHost("once.com"),
+			Expected: finger.CreateAddressHost("once.com"),
 		},
 		{
 			AddressString: "twice.net",
-			Expected: finger.SomeAddressHost("twice.net"),
+			Expected: finger.CreateAddressHost("twice.net"),
 		},
 		{
 			AddressString: "thrice.org",
-			Expected: finger.SomeAddressHost("thrice.org"),
+			Expected: finger.CreateAddressHost("thrice.org"),
 		},
 		{
 			AddressString: "fource.dev",
-			Expected: finger.SomeAddressHost("fource.dev"),
+			Expected: finger.CreateAddressHost("fource.dev"),
 		},
 
 
 
 		{
 			AddressString: "once.com:79",
-			Expected: finger.SomeAddress("once.com", 79),
+			Expected: finger.CreateAddress("once.com", 79),
 		},
 		{
 			AddressString: "twice.net:1079",
-			Expected: finger.SomeAddress("twice.net", 1079),
+			Expected: finger.CreateAddress("twice.net", 1079),
 		},
 		{
 			AddressString: "thrice.org:1971",
-			Expected: finger.SomeAddress("thrice.org", 1971),
+			Expected: finger.CreateAddress("thrice.org", 1971),
 		},
 		{
 			AddressString: "fource.dev:7979",
-			Expected: finger.SomeAddress("fource.dev", 7979),
+			Expected: finger.CreateAddress("fource.dev", 7979),
 		},
 	}
 

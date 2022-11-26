@@ -46,22 +46,22 @@ func TestParseQuery(t *testing.T) {
 		{
 			QueryString: "@example.com:1971@something.social",
 			Expected: finger.SomeQueryAddresses(
-				finger.SomeAddress("example.com", 1971),
-				finger.SomeAddressHost("something.social"),
+				finger.CreateAddress("example.com", 1971),
+				finger.CreateAddressHost("something.social"),
 			),
 		},
 		{
 			QueryString: "@example.com@something.social:79",
 			Expected: finger.SomeQueryAddresses(
-				finger.SomeAddressHost("example.com"),
-				finger.SomeAddress("something.social", 79),
+				finger.CreateAddressHost("example.com"),
+				finger.CreateAddress("something.social", 79),
 			),
 		},
 		{
 			QueryString: "@example.com:1971@something.social:79",
 			Expected: finger.SomeQueryAddresses(
-				finger.SomeAddress("example.com", 1971),
-				finger.SomeAddress("something.social", 79),
+				finger.CreateAddress("example.com", 1971),
+				finger.CreateAddress("something.social", 79),
 			),
 		},
 

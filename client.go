@@ -8,7 +8,7 @@ import (
 //
 // It handles sending a finger-protocol client request and receiving a finger-protocol server response.
 //
-//	var address finger.Address = finger.SomeAddress("example.com", 79)
+//	var address finger.Address = finger.CreateAddress("example.com", 79)
 //	
 //	// ...
 //	

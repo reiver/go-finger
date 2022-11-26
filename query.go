@@ -40,7 +40,7 @@ func SomeQueryAddresses(addresses ...Address) Query {
 func SomeQueryHost(host string) Query {
 	return Query{
 		addresses: []Address{
-			SomeAddressHost(host),
+			CreateAddressHost(host),
 		},
 	}
 }
@@ -48,7 +48,7 @@ func SomeQueryHost(host string) Query {
 func SomeQueryHostPort(host string, port uint16) Query {
 	return Query{
 		addresses: []Address{
-			SomeAddress(host, port),
+			CreateAddress(host, port),
 		},
 	}
 }
@@ -61,7 +61,7 @@ func SomeQueryHosts(hosts ...string) Query {
 		var address Address
 
 		if "" != hostString {
-			address = SomeAddressHost(hostString)
+			address = CreateAddressHost(hostString)
 		}
 
 		addresses = append(addresses, address)
@@ -89,7 +89,7 @@ func SomeQueryUserHost(user string, host string) Query {
 	return Query{
 		user: CreateUser(user),
 		addresses: []Address{
-			SomeAddressHost(host),
+			CreateAddressHost(host),
 		},
 	}
 }
@@ -102,7 +102,7 @@ func SomeQueryUserHosts(user string, hosts ...string) Query {
 		var address Address
 
 		if "" != hostString {
-			address = SomeAddressHost(hostString)
+			address = CreateAddressHost(hostString)
 		}
 
 		addresses = append(addresses, address)
@@ -118,7 +118,7 @@ func SomeQueryUserHostPort(user string, host string, port uint16) Query {
 	return Query{
 		user: CreateUser(user),
 		addresses: []Address{
-			SomeAddress(host, port),
+			CreateAddress(host, port),
 		},
 	}
 }

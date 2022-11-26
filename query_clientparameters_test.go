@@ -31,12 +31,12 @@ func TestQuery_ClientParameters(t *testing.T) {
 
 		{
 			QueryString: "dariush@example.com",
-			ExpectedAddress: finger.SomeAddressHost("example.com"),
+			ExpectedAddress: finger.CreateAddressHost("example.com"),
 			ExpectedTarget: finger.CreateTarget("dariush"),
 		},
 		{
 			QueryString: "dariush@example.com:1971",
-			ExpectedAddress: finger.SomeAddress("example.com", 1971),
+			ExpectedAddress: finger.CreateAddress("example.com", 1971),
 			ExpectedTarget: finger.CreateTarget("dariush"),
 		},
 
@@ -44,22 +44,22 @@ func TestQuery_ClientParameters(t *testing.T) {
 
 		{
 			QueryString: "dariush@example.com@something.social",
-			ExpectedAddress: finger.SomeAddressHost("something.social"),
+			ExpectedAddress: finger.CreateAddressHost("something.social"),
 			ExpectedTarget: finger.CreateTarget("dariush@example.com"),
 		},
 		{
 			QueryString: "dariush@example.com:1971@something.social",
-			ExpectedAddress: finger.SomeAddressHost("something.social"),
+			ExpectedAddress: finger.CreateAddressHost("something.social"),
 			ExpectedTarget: finger.CreateTarget("dariush@example.com:1971"),
 		},
 		{
 			QueryString: "dariush@example.com@something.social:1234",
-			ExpectedAddress: finger.SomeAddress("something.social", 1234),
+			ExpectedAddress: finger.CreateAddress("something.social", 1234),
 			ExpectedTarget: finger.CreateTarget("dariush@example.com"),
 		},
 		{
 			QueryString: "dariush@example.com:1971@something.social:1234",
-			ExpectedAddress: finger.SomeAddress("something.social", 1234),
+			ExpectedAddress: finger.CreateAddress("something.social", 1234),
 			ExpectedTarget: finger.CreateTarget("dariush@example.com:1971"),
 		},
 
@@ -67,32 +67,32 @@ func TestQuery_ClientParameters(t *testing.T) {
 
 		{
 			QueryString: "@example.com",
-			ExpectedAddress: finger.SomeAddressHost("example.com"),
+			ExpectedAddress: finger.CreateAddressHost("example.com"),
 			ExpectedTarget: finger.EmptyTarget(),
 		},
 		{
 			QueryString: "@example.com:1971",
-			ExpectedAddress: finger.SomeAddress("example.com", 1971),
+			ExpectedAddress: finger.CreateAddress("example.com", 1971),
 			ExpectedTarget: finger.EmptyTarget(),
 		},
 		{
 			QueryString: "@example.com@something.social",
-			ExpectedAddress: finger.SomeAddressHost("something.social"),
+			ExpectedAddress: finger.CreateAddressHost("something.social"),
 			ExpectedTarget: finger.CreateTarget("@example.com"),
 		},
 		{
 			QueryString: "@example.com:1971@something.social",
-			ExpectedAddress: finger.SomeAddressHost("something.social"),
+			ExpectedAddress: finger.CreateAddressHost("something.social"),
 			ExpectedTarget: finger.CreateTarget("@example.com:1971"),
 		},
 		{
 			QueryString: "@example.com@something.social:1234",
-			ExpectedAddress: finger.SomeAddress("something.social", 1234),
+			ExpectedAddress: finger.CreateAddress("something.social", 1234),
 			ExpectedTarget: finger.CreateTarget("@example.com"),
 		},
 		{
 			QueryString: "@example.com:1971@something.social:1234",
-			ExpectedAddress: finger.SomeAddress("something.social", 1234),
+			ExpectedAddress: finger.CreateAddress("something.social", 1234),
 			ExpectedTarget: finger.CreateTarget("@example.com:1971"),
 		},
 
@@ -100,22 +100,22 @@ func TestQuery_ClientParameters(t *testing.T) {
 
 		{
 			QueryString: "@once",
-			ExpectedAddress: finger.SomeAddressHost("once"),
+			ExpectedAddress: finger.CreateAddressHost("once"),
 			ExpectedTarget: finger.EmptyTarget(),
 		},
 		{
 			QueryString: "@once@twice",
-			ExpectedAddress: finger.SomeAddressHost("twice"),
+			ExpectedAddress: finger.CreateAddressHost("twice"),
 			ExpectedTarget: finger.CreateTarget("@once"),
 		},
 		{
 			QueryString: "@once@twice@thrice",
-			ExpectedAddress: finger.SomeAddressHost("thrice"),
+			ExpectedAddress: finger.CreateAddressHost("thrice"),
 			ExpectedTarget: finger.CreateTarget("@once@twice"),
 		},
 		{
 			QueryString: "@once@twice@thrice@fource",
-			ExpectedAddress: finger.SomeAddressHost("fource"),
+			ExpectedAddress: finger.CreateAddressHost("fource"),
 			ExpectedTarget: finger.CreateTarget("@once@twice@thrice"),
 		},
 	}
