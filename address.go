@@ -315,6 +315,14 @@ func (receiver Address) GoString() string {
 	}
 }
 
+func (receiver Address) Host() Host {
+	return receiver.host
+}
+
+func (receiver Address) Port() Port {
+	return receiver.port
+}
+
 // Use what is returned from the Resolve method, to pass to net.Dial().
 //
 // For example:
