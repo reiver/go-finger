@@ -18,8 +18,8 @@ func (receiver Request) WriteTo(writer io.Writer) (int64, error) {
 //@TODO: replace with a limited buffer.
 	var buffer strings.Builder
 	{
-		swtch, switchIsSomething  := receiver.Switch.Unwrap()
-		target, targetIsSomething := receiver.Target.Unwrap()
+		swtch, switchIsSomething  := receiver.swtch.Unwrap()
+		target, targetIsSomething := receiver.target.Unwrap()
 
 		if switchIsSomething {
 			buffer.WriteRune('/')

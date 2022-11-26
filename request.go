@@ -55,7 +55,40 @@ package finger
 //		Target: finger.SomeTarget("janedoe"),
 //	}
 type Request struct {
-	Switch Switch
-	Target Target
+	swtch Switch
+	target Target
 }
 
+func NoRequest() Request {
+	return Request{}
+}
+
+func SomeRequest(swtch string, target string) Request {
+	return Request{
+		swtch: SomeSwitch(swtch),
+		target: SomeTarget(target),
+	}
+}
+
+
+func SomeRequestSwitch(swtch string) Request {
+	return Request{
+		swtch: SomeSwitch(swtch),
+	}
+}
+
+// SomeRequestTarget is used to create a finger.Request with just a finger-protocol request target
+// (but no finger-protocol request switch).
+//
+// For example, a call like this:
+//
+//	var request finger.Request = finger.SomeRequestTarget("dariush")
+//
+// Is equivalent to the (raw) finger-protocol request:
+//
+//	"dariush\r\n"
+func SomeRequestTarget(target string) Request {
+	return Request{
+		target: SomeTarget(target),
+	}
+}

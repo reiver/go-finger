@@ -13,72 +13,74 @@ func TestRequest_GoString(t *testing.T) {
 		Expected string
 	}{
 		{
-			FingerRequest: finger.Request{},
-			Expected: `finger.Request{}`,
+			FingerRequest: finger.NoRequest(),
+			Expected:     `finger.NoRequest()`,
 		},
 
 
 
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("W"),
-			},
-			Expected: `finger.Request{ Switch: finger.SomeSwitch("W") }`,
+			FingerRequest: finger.SomeRequestSwitch("W"),
+			Expected:     `finger.SomeRequestSwitch("W")`,
 		},
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("PULL"),
-			},
-			Expected: `finger.Request{ Switch: finger.SomeSwitch("PULL") }`,
+			FingerRequest: finger.SomeRequestSwitch("PULL"),
+			Expected:     `finger.SomeRequestSwitch("PULL")`,
 		},
 
 
 
 		{
-			FingerRequest: finger.Request{
-				Target: finger.SomeTarget("joeblow"),
-			},
-			Expected: `finger.Request{ Target: finger.SomeTarget("joeblow") }`,
+			FingerRequest: finger.SomeRequestTarget("joeblow"),
+			Expected:     `finger.SomeRequestTarget("joeblow")`,
 		},
 		{
-			FingerRequest: finger.Request{
-				Target: finger.SomeTarget("dariush"),
-			},
-			Expected: `finger.Request{ Target: finger.SomeTarget("dariush") }`,
+			FingerRequest: finger.SomeRequestTarget("dariush"),
+			Expected:     `finger.SomeRequestTarget("dariush")`,
 		},
 
 
 
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("W"),
-				Target: finger.SomeTarget("joeblow"),
-			},
-			Expected: `finger.Request{ Switch: finger.SomeSwitch("W"), Target: finger.SomeTarget("joeblow") }`,
+			FingerRequest: finger.SomeRequestTarget("joeblow@example.com"),
+			Expected:     `finger.SomeRequestTarget("joeblow@example.com")`,
 		},
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("W"),
-				Target: finger.SomeTarget("dariush"),
-			},
-			Expected: `finger.Request{ Switch: finger.SomeSwitch("W"), Target: finger.SomeTarget("dariush") }`,
+			FingerRequest: finger.SomeRequestTarget("dariush@changelog.ca"),
+			Expected:     `finger.SomeRequestTarget("dariush@changelog.ca")`,
 		},
 
 
 
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("PULL"),
-				Target: finger.SomeTarget("joeblow"),
-			},
-			Expected: `finger.Request{ Switch: finger.SomeSwitch("PULL"), Target: finger.SomeTarget("joeblow") }`,
+			FingerRequest: finger.SomeRequestTarget("joeblow@example.com@something.social"),
+			Expected:     `finger.SomeRequestTarget("joeblow@example.com@something.social")`,
 		},
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("PULL"),
-				Target: finger.SomeTarget("dariush"),
-			},
-			Expected: `finger.Request{ Switch: finger.SomeSwitch("PULL"), Target: finger.SomeTarget("dariush") }`,
+			FingerRequest: finger.SomeRequestTarget("dariush@changelog.ca@example.dev"),
+			Expected:     `finger.SomeRequestTarget("dariush@changelog.ca@example.dev")`,
+		},
+
+
+
+		{
+			FingerRequest: finger.SomeRequest("W", "joeblow"),
+			Expected:     `finger.SomeRequest("W", "joeblow")`,
+		},
+		{
+			FingerRequest: finger.SomeRequest("W", "dariush"),
+			Expected:     `finger.SomeRequest("W", "dariush")`,
+		},
+
+
+
+		{
+			FingerRequest: finger.SomeRequest("PULL", "joeblow"),
+			Expected:     `finger.SomeRequest("PULL", "joeblow")`,
+		},
+		{
+			FingerRequest: finger.SomeRequest("PULL", "dariush"),
+			Expected:     `finger.SomeRequest("PULL", "dariush")`,
 		},
 	}
 

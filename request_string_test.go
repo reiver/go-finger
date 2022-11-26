@@ -13,71 +13,51 @@ func TestRequest_String(t *testing.T) {
 		Expected string
 	}{
 		{
-			FingerRequest: finger.Request{},
+			FingerRequest: finger.NoRequest(),
 			Expected: "\r\n",
 		},
 
 
 
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("W"),
-			},
+			FingerRequest: finger.SomeRequestSwitch("W"),
 			Expected: "/W\r\n",
 		},
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("PULL"),
-			},
+			FingerRequest: finger.SomeRequestSwitch("PULL"),
 			Expected: "/PULL\r\n",
 		},
 
 
 
 		{
-			FingerRequest: finger.Request{
-				Target: finger.SomeTarget("joeblow"),
-			},
+			FingerRequest: finger.SomeRequestTarget("joeblow"),
 			Expected: "joeblow\r\n",
 		},
 		{
-			FingerRequest: finger.Request{
-				Target: finger.SomeTarget("dariush"),
-			},
+			FingerRequest: finger.SomeRequestTarget("dariush"),
 			Expected: "dariush\r\n",
 		},
 
 
 
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("W"),
-				Target: finger.SomeTarget("joeblow"),
-			},
+			FingerRequest: finger.SomeRequest("W", "joeblow"),
 			Expected: "/W joeblow\r\n",
 		},
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("W"),
-				Target: finger.SomeTarget("dariush"),
-			},
+			FingerRequest: finger.SomeRequest("W", "dariush"),
 			Expected: "/W dariush\r\n",
 		},
 
 
 
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("PULL"),
-				Target: finger.SomeTarget("joeblow"),
-			},
+			FingerRequest: finger.SomeRequest("PULL", "joeblow"),
 			Expected: "/PULL joeblow\r\n",
 		},
 		{
-			FingerRequest: finger.Request{
-				Switch: finger.SomeSwitch("PULL"),
-				Target: finger.SomeTarget("dariush"),
-			},
+			FingerRequest: finger.SomeRequest("PULL", "dariush"),
 			Expected: "/PULL dariush\r\n",
 		},
 	}

@@ -7,6 +7,30 @@ import (
 // A Client is a finger-protocol client.
 //
 // It handles sending a finger-protocol client request and receiving a finger-protocol server response.
+//
+//	var address finger.Address = finger.SomeAddress("example.com", 79)
+//	
+//	// ...
+//	
+//	var conn net.Conn
+//	
+//	conn, err = net.Dial("tcp", address.Resolve())
+//	
+//	// ...
+//	
+//	var client finger.Client = finger.AssembleClient(conn)
+//	
+//	// ...
+//	
+//	var request finger.Request = finger.SomeRequestTarget("joeblow")
+//	
+//	// ...
+//	
+//	responseReader, err := client.Do(request)
+//	
+//	// ...
+//	
+//	io.Copy(os.Stdout, response)
 type Client struct {
 	conn net.Conn
 }

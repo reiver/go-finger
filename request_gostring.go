@@ -1,29 +1,24 @@
 package finger
 
 import (
-	"strings"
+	"fmt"
 )
 
 // GoString returns the Go code equivalent of the construction of a finger.Request.
 func (receiver Request) GoString() string {
-	var buffer strings.Builder
 
-	buffer.WriteString("finger.Request{")
-	if NoSwitch() != receiver.Switch {
-		buffer.WriteString(" Switch: ")
-		buffer.WriteString(receiver.Switch.GoString())
-	}
-	if NoSwitch() != receiver.Switch && NoTarget() != receiver.Target {
-		buffer.WriteRune(',')
-	}
-	if NoTarget() != receiver.Target {
-		buffer.WriteString(" Target: ")
-		buffer.WriteString(receiver.Target.GoString())
-	}
-	if NoSwitch() != receiver.Switch || NoTarget() != receiver.Target {
-		buffer.WriteRune(' ')
-	}
-	buffer.WriteString("}")
 
-	return buffer.String()
+	swtch,  swtchIsSomething  := receiver.swtch.Unwrap()
+	target, targetIsSomething := receiver.target.Unwrap()
+
+	switch {
+	case swtchIsSomething && targetIsSomething:
+		return fmt.Sprintf("finger.SomeRequest(%q, %q)", swtch, target)
+	case swtchIsSomething && !targetIsSomething:
+		return fmt.Sprintf("finger.SomeRequestSwitch(%q)", swtch)
+	case !swtchIsSomething && targetIsSomething:
+		return fmt.Sprintf("finger.SomeRequestTarget(%q)", target)
+	default:
+		return "finger.NoRequest()"
+	}
 }
