@@ -38,10 +38,12 @@ type Address struct {
 	port Port
 }
 
+// NoAddress is used to create a finger.Address with nothing in it.
 func NoAddress() Address {
 	return Address{}
 }
 
+// SomeAddress is used to create a finger.Address with something in it.
 func SomeAddress(host string, port uint16) Address {
 	return Address {
 		host: SomeHost(host),
@@ -49,18 +51,21 @@ func SomeAddress(host string, port uint16) Address {
 	}
 }
 
+// SomeAddressHost is used to create a finger.Address with something in it.
 func SomeAddressHost(host string) Address {
 	return Address {
 		host: SomeHost(host),
 	}
 }
 
+// SomeAddressPort is used to create a finger.Address with something in it.
 func SomeAddressPort(port uint16) Address {
 	return Address {
 		port: SomePort(port),
 	}
 }
 
+// DefaultAddress is used to create a finger.Port with the logical value of 127.0.0.1:79 in it.
 func DefaultAddress() Address {
 	return Address{
 		host: DefaultHost(),
