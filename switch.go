@@ -74,7 +74,7 @@ import (
 //
 // For each of these finger-protocol requests, what would be stored in the code (for finger.Switch) is:
 //
-//	var swtch finger.Switch = finger.SomeSwitch("W")
+//	var swtch finger.Switch = finger.CreateSwitch("W")
 //
 // Notice that only "W" is stored, and not the "/".
 //
@@ -90,7 +90,7 @@ import (
 //
 // Then Switch would logically be:
 //
-//	var swtch finger.Switch = finger.SomeSwitch("PULL")
+//	var swtch finger.Switch = finger.CreateSwitch("PULL")
 //
 // ⁂
 //
@@ -116,8 +116,8 @@ func EmptySwitch() Switch {
 	return Switch{}
 }
 
-// SomeSwitch is used to create a finger.Switch with something in it.
-func SomeSwitch(value string) Switch {
+// CreateSwitch is used to create a finger.Switch with something in it.
+func CreateSwitch(value string) Switch {
 	return Switch{
 		value:value,
 		something:true,
@@ -140,14 +140,14 @@ func (receiver Switch) Unwrap() (string, bool) {
 //
 // For example:
 //
-//	var swtch finger.Switch = finger.SomeSwitch("W")
+//	var swtch finger.Switch = finger.CreateSwitch("W")
 //	
 //	// ...
 //	
 //	fmt.Printf("swtch = %#v", swtch)
 //
 //	// Output:
-//	// swtch = finger.SomeSwitch("W")
+//	// swtch = finger.CreateSwitch("W")
 //
 // Also, for example:
 //
@@ -164,5 +164,5 @@ func (receiver Switch) GoString() string {
 		return "finger.EmptySwitch()"
 	}
 
-	return fmt.Sprintf("finger.SomeSwitch(%#v)", receiver.value)
+	return fmt.Sprintf("finger.CreateSwitch(%#v)", receiver.value)
 }
