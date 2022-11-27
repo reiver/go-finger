@@ -74,13 +74,11 @@ import (
 //
 // For each of these finger-protocol requests, what would be stored in the code (for finger.Switch) is:
 //
-//	var swtch finger.Switch = finger.CreateSwitch("W")
-//
-// Notice that only "W" is stored, and not the "/".
+//	var swtch finger.Switch = finger.CreateSwitch("/W")
 //
 // ⁂
 //
-// Although the IETF RFCs for finger only mentions the “W” finger-protocol
+// Although the IETF RFCs for finger only mentions the “/W” finger-protocol
 // request ‘switch’ — if an incoming finger-protocol request has a different
 // finger-protocol request ‘switch’, Switch can store it.
 //
@@ -90,7 +88,7 @@ import (
 //
 // Then Switch would logically be:
 //
-//	var swtch finger.Switch = finger.CreateSwitch("PULL")
+//	var swtch finger.Switch = finger.CreateSwitch("/PULL")
 //
 // ⁂
 //
@@ -167,12 +165,6 @@ func ParseSwitch(s string) (Switch, error) {
 		return EmptySwitch(), errSlashNotFound
 	}
 
-	s = s[1:]
-
-	if "" == s {
-		return EmptySwitch(), errEmptySwitch
-	}
-
 	return CreateSwitch(s), nil
 }
 
@@ -181,7 +173,7 @@ func (receiver Switch) String() string {
 		return ""
 	}
 
-	return fmt.Sprintf("/%s", receiver.value)
+	return fmt.Sprintf("%s", receiver.value)
 }
 
 // Unwrap is used to unwrap a finger.Switch.
@@ -200,14 +192,14 @@ func (receiver Switch) Unwrap() (string, bool) {
 //
 // For example:
 //
-//	var swtch finger.Switch = finger.CreateSwitch("W")
+//	var swtch finger.Switch = finger.CreateSwitch("/W")
 //	
 //	// ...
 //	
 //	fmt.Printf("swtch = %#v", swtch)
 //
 //	// Output:
-//	// swtch = finger.CreateSwitch("W")
+//	// swtch = finger.CreateSwitch("/W")
 //
 // Also, for example:
 //

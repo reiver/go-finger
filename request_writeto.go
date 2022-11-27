@@ -22,7 +22,6 @@ func (receiver Request) WriteTo(writer io.Writer) (int64, error) {
 		target, targetIsSomething := receiver.target.Unwrap()
 
 		if switchIsSomething {
-			buffer.WriteRune('/')
 			buffer.WriteString(swtch)
 		}
 

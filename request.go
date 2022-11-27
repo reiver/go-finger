@@ -37,13 +37,13 @@ package finger
 //	var request finger.Request = finger.CreateRequestTarget("janedoe")
 //
 //	// "/W joeblow\r\n"
-//	var request finger.Request = finger.CreateRequest("W", "joeblow")
+//	var request finger.Request = finger.CreateRequest("/W", "joeblow")
 //
 //	// "/W janedoe\r\n"
-//	var request finger.Request = finger.CreateRequest("W", "janedoe")
+//	var request finger.Request = finger.CreateRequest("/W", "janedoe")
 //
 //	// "/W\r\n"
-//	var request finger.Request = finger.CreateRequestSwitch("W")
+//	var request finger.Request = finger.CreateRequestSwitch("/W")
 type Request struct {
 	swtch Switch
 	target Target
@@ -53,7 +53,7 @@ type Request struct {
 //
 // For example:
 //
-//	var request finger.Request = finger.AssembleRequest("W", "joeblow")
+//	var request finger.Request = finger.AssembleRequest("/W", "joeblow")
 //
 // This example is the equivalent of the (raw) finger-protocol request:
 //
@@ -69,7 +69,7 @@ func AssembleRequest(swtch Switch, target Target) Request {
 //
 // For example:
 //
-//	var request finger.Request = finger.AssembleRequest("W")
+//	var request finger.Request = finger.AssembleRequest("/W")
 //
 // This example is the equivalent of the (raw) finger-protocol request:
 //
@@ -114,7 +114,7 @@ func EmptyRequest() Request {
 //
 // For example, a call like this:
 //
-//	var request finger.Request = finger.CreateRequest("W", "dariush")
+//	var request finger.Request = finger.CreateRequest("/W", "dariush")
 //
 // Is equivalent to the (raw) finger-protocol request:
 //
@@ -131,7 +131,7 @@ func CreateRequest(swtch string, target string) Request {
 //
 // For example, a call like this:
 //
-//	var request finger.Request = finger.CreateRequestSwitch("W")
+//	var request finger.Request = finger.CreateRequestSwitch("/W")
 //
 // Is equivalent to the (raw) finger-protocol request:
 //
@@ -162,19 +162,19 @@ func CreateRequestTarget(target string) Request {
 //
 // For example:
 //
-//	var request finger.Request = finger.CreateRequest("W", "joeblow")
+//	var request finger.Request = finger.CreateRequest("/W", "joeblow")
 //	
 //	var swtch finger.Switch = request.Switch()
-//
+//	
 //	fmt.Printf("switch = %#v", swtch)
-//	// Output: switch = finger.CreateSwitch("W")
+//	// Output: switch = finger.CreateSwitch("/W")
 //
 // And also, example:
 //
 //	var request finger.Request = finger.CreateRequestTarget("joeblow")
 //	
 //	var swtch finger.Switch = request.Switch()
-//
+//	
 //	fmt.Printf("switch = %#v", swtch)
 //	// Output: switch = finger.EmptySwitch()
 func (receiver Request) Switch() Switch {
@@ -185,19 +185,19 @@ func (receiver Request) Switch() Switch {
 //
 // For example:
 //
-//	var request finger.Request = finger.CreateRequest("W", "joeblow")
+//	var request finger.Request = finger.CreateRequest("/W", "joeblow")
 //	
 //	var target finger.Target = request.Target()
-//
+//	
 //	fmt.Printf("target = %#v", target)
 //	// Output: target = finger.CreateTarget("joeblow")
 //
 // And also, example:
 //
-//	var request finger.Request = finger.CreateRequestSwitch("W")
+//	var request finger.Request = finger.CreateRequestSwitch("/W")
 //	
 //	var target finger.Target = request.Target()
-//
+//	
 //	fmt.Printf("target = %#v", target)
 //	// Output: target = finger.EmptyTarget()
 func (receiver Request) Target() Target {

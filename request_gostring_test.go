@@ -20,12 +20,12 @@ func TestRequest_GoString(t *testing.T) {
 
 
 		{
-			FingerRequest: finger.CreateRequestSwitch("W"),
-			Expected:     `finger.CreateRequestSwitch("W")`,
+			FingerRequest: finger.CreateRequestSwitch("/W"),
+			Expected:     `finger.CreateRequestSwitch("/W")`,
 		},
 		{
-			FingerRequest: finger.CreateRequestSwitch("PULL"),
-			Expected:     `finger.CreateRequestSwitch("PULL")`,
+			FingerRequest: finger.CreateRequestSwitch("/PULL"),
+			Expected:     `finger.CreateRequestSwitch("/PULL")`,
 		},
 
 
@@ -64,23 +64,23 @@ func TestRequest_GoString(t *testing.T) {
 
 
 		{
-			FingerRequest: finger.CreateRequest("W", "joeblow"),
-			Expected:     `finger.CreateRequest("W", "joeblow")`,
+			FingerRequest: finger.CreateRequest("/W", "joeblow"),
+			Expected:     `finger.CreateRequest("/W", "joeblow")`,
 		},
 		{
-			FingerRequest: finger.CreateRequest("W", "dariush"),
-			Expected:     `finger.CreateRequest("W", "dariush")`,
+			FingerRequest: finger.CreateRequest("/W", "dariush"),
+			Expected:     `finger.CreateRequest("/W", "dariush")`,
 		},
 
 
 
 		{
-			FingerRequest: finger.CreateRequest("PULL", "joeblow"),
-			Expected:     `finger.CreateRequest("PULL", "joeblow")`,
+			FingerRequest: finger.CreateRequest("/PULL", "joeblow"),
+			Expected:     `finger.CreateRequest("/PULL", "joeblow")`,
 		},
 		{
-			FingerRequest: finger.CreateRequest("PULL", "dariush"),
-			Expected:     `finger.CreateRequest("PULL", "dariush")`,
+			FingerRequest: finger.CreateRequest("/PULL", "dariush"),
+			Expected:     `finger.CreateRequest("/PULL", "dariush")`,
 		},
 	}
 

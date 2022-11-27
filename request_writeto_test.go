@@ -21,11 +21,11 @@ func TestRequest_WriteTo(t *testing.T) {
 
 
 		{
-			FingerRequest: finger.CreateRequestSwitch("W"),
+			FingerRequest: finger.CreateRequestSwitch("/W"),
 			Expected: "/W\r\n",
 		},
 		{
-			FingerRequest: finger.CreateRequestSwitch("PULL"),
+			FingerRequest: finger.CreateRequestSwitch("/PULL"),
 			Expected: "/PULL\r\n",
 		},
 
@@ -43,23 +43,30 @@ func TestRequest_WriteTo(t *testing.T) {
 
 
 		{
-			FingerRequest: finger.CreateRequest("W", "joeblow"),
+			FingerRequest: finger.CreateRequest("/W", "joeblow"),
 			Expected: "/W joeblow\r\n",
 		},
 		{
-			FingerRequest: finger.CreateRequest("W", "dariush"),
+			FingerRequest: finger.CreateRequest("/W", "dariush"),
 			Expected: "/W dariush\r\n",
 		},
 
 
 
 		{
-			FingerRequest: finger.CreateRequest("PULL", "joeblow"),
+			FingerRequest: finger.CreateRequest("/PULL", "joeblow"),
 			Expected: "/PULL joeblow\r\n",
 		},
 		{
-			FingerRequest: finger.CreateRequest("PULL", "dariush"),
+			FingerRequest: finger.CreateRequest("/PULL", "dariush"),
 			Expected: "/PULL dariush\r\n",
+		},
+
+
+
+		{
+			FingerRequest: finger.CreateRequest("/once/twice/thrice/fource", "malekeh"),
+			Expected: "/once/twice/thrice/fource malekeh\r\n",
 		},
 	}
 
@@ -72,6 +79,7 @@ func TestRequest_WriteTo(t *testing.T) {
 			if nil != err {
 				t.Errorf("For test #%d, did not expect an error but actually got one.", testNumber)
 				t.Logf("ERROR: (%T) %q", err, err)
+				t.Logf("EXPECTED-REQUEST: %q", test.Expected)
 				continue
 			}
 
@@ -79,6 +87,8 @@ func TestRequest_WriteTo(t *testing.T) {
 				t.Errorf("For test #%d, the actual number of bytes written is not what was expected.", testNumber)
 				t.Logf("EXPECTED: %d", expected)
 				t.Logf("ACTUAL:   %d", actual)
+				t.Logf("EXPECTED-REQUEST: %q", test.Expected)
+				t.Logf("ACTUAL-REQUEST:   %q", storage.String())
 				continue
 			}
 		}

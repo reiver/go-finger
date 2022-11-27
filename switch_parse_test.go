@@ -13,15 +13,29 @@ func TestParseSwitch(t *testing.T) {
 		Expected finger.Switch
 	}{
 		{
-			SwitchString: "/W",
-			Expected: finger.CreateSwitch("W"),
+			SwitchString:                 "/W",
+			Expected: finger.CreateSwitch("/W"),
 		},
 
 
 
 		{
-			SwitchString: "/PULL",
-			Expected: finger.CreateSwitch("PULL"),
+			SwitchString:                 "/PULL",
+			Expected: finger.CreateSwitch("/PULL"),
+		},
+
+
+
+		{
+			SwitchString:                 "/once/twice/thrice/fource",
+			Expected: finger.CreateSwitch("/once/twice/thrice/fource"),
+		},
+
+
+
+		{
+			SwitchString:                 "/",
+			Expected: finger.CreateSwitch("/"),
 		},
 	}
 
