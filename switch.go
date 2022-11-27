@@ -176,6 +176,14 @@ func ParseSwitch(s string) (Switch, error) {
 	return CreateSwitch(s), nil
 }
 
+func (receiver Switch) String() string {
+	if !receiver.something {
+		return ""
+	}
+
+	return fmt.Sprintf("/%s", receiver.value)
+}
+
 // Unwrap is used to unwrap a finger.Switch.
 //
 //	value, something := swtch.Unwrap()
