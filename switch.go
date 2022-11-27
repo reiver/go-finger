@@ -124,6 +124,58 @@ func CreateSwitch(value string) Switch {
 	}
 }
 
+// ParseSwitch parses a finger-protocol swtch from a string.
+//
+// Example usage:
+//
+//	var swtichString string = "/W"
+//	
+//	swtch, err := finger.ParseSwitch(switchString)
+//
+// Anoter example usage:
+//
+//	var swtichString string = "/PULL"
+//	
+//	swtch, err := finger.ParseSwitch(switchString)
+//
+// Some example finger-protocol requests with switches are:
+//
+//	"/W\r\n"
+//
+//	"/W joeblow\r\n"
+//
+//	"/W dariush\r\n"
+//
+//	"/W joeblow@example.com\r\n"
+//
+//	"/W dariush@changelog.ca\r\n"
+//
+// Those examples all have the "/W" switch.
+//
+// The "/W" switch is the only switch that IETF RFC-742 and IEFT RFC-1288 specify.
+// But neither IETF RFC-742 and IEFT RFC-1288 prohibit other switches.
+//
+// Thus a finger-protocol client could send an alternative finger-protocol switch.
+//
+// And a finger-protocol server could handle an alternative finger-protocol switch.
+func ParseSwitch(s string) (Switch, error) {
+	if "" == s {
+		return EmptySwitch(), errSlashNotFound
+	}
+
+	if '/' != s[0] {
+		return EmptySwitch(), errSlashNotFound
+	}
+
+	s = s[1:]
+
+	if "" == s {
+		return EmptySwitch(), errEmptySwitch
+	}
+
+	return CreateSwitch(s), nil
+}
+
 // Unwrap is used to unwrap a finger.Switch.
 //
 //	value, something := swtch.Unwrap()
