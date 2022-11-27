@@ -9,7 +9,7 @@ I.e., generally, what is defined in:
 
 Although this package add some modernizations that are compatible with IETF RFC-742,
 and in the spirt of the finger-protocol,
-**that you can choose whether to use or not use**.
+_that you can choose whether to use or not use_.
 
 ## Documention
 
