@@ -8,7 +8,8 @@ I.e., generally, what is defined in:
 * IETF RFC-1288 — https://datatracker.ietf.org/doc/html/rfc1288
 
 Although this package add some modernizations that are compatible with IETF RFC-742,
-and the spirt of the finger-protocol.
+and in the spirt of the finger-protocol,
+**that you can choose whether to use or not use**.
 
 ## Documention
 
