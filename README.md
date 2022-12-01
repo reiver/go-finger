@@ -8,7 +8,7 @@ I.e., generally, what is defined in:
 * IETF RFC-1288 — https://datatracker.ietf.org/doc/html/rfc1288
 
 Although this package add some modernizations that are compatible with IETF RFC-742,
-and in the spirt of the finger-protocol,
+and in the spirt of the **finger-protocol**,
 _that you can choose whether to use or not use_.
 
 ## Documention
@@ -19,17 +19,17 @@ Online documentation, which includes examples, can be found at: http://godoc.org
 
 ## Simple Finger Client
 
-This is an example of how to create  very very very simple finger-protocol client using this package.
+This is an example of how to create very very very simple **finger-protocol** client using this package.
 
 It is meant for educational purposes.
-A more useful finger-protocol client would include a lot more features.
+A more useful **finger-protocol** client would include a lot more features.
 But anyway....
 
-We first need to decide what the finger-protocol target will be.
+We first need to decide what the **finger-protocol** target will be.
 
-What is a finger-protocol "target"‽
+What is a **finger-protocol** "target"‽
 
-Well, for example, if we were to run the finger program as:
+Well, for example, if we were to run the **finger** program as:
 
 ```
 finger joeblow@example.com
@@ -58,7 +58,7 @@ func main() {
 }
 ```
 
-Now we need to put the `target` inside of a finger-protocol request.
+Now we need to put the `target` inside of a **finger-protocol** request.
 
 We do that with the following code:
 
@@ -79,7 +79,7 @@ func main() {
 }
 ```
 
-Next, we need to figure out what is the TCP-address of the finger-protocol server our finger-protocol client will connect to.
+Next, we need to figure out what is the TCP-address of the **finger-protocol server** our **finger-protocol client** will connect to.
 
 TCP-addresses (as a string) look something like:
 
@@ -109,7 +109,7 @@ It cannot be just this:
 Since it doesn't include a TCP-port.
 
 But, as it turns out, this package can handle this situation.
-When the TCP-port (in the address) is missing, it defaults it to the default finger-protocol TCP-port.
+When the TCP-port (in the address) is missing, it defaults it to the default **finger-protocol** TCP-port.
 (Which is TCP-port 79.)
 
 So, now our code becomes:
@@ -167,7 +167,7 @@ func main() {
 }
 ```
 
-And now we need to create client that will use this TCP connection to make a finger-protocol request.
+And now we need to create client that will use this TCP connection to make a **finger-protocol request**.
 
 So, this will create the client:
 
@@ -202,7 +202,7 @@ func main() {
 }
 ```
 
-And then this will send the finger-protocol request.
+And then this will send the **finger-protocol request**.
 
 ```go
 package main
@@ -241,7 +241,7 @@ func main() {
 }
 ```
 
-And finally, this will send the finger-protocol response this program received from the finger-protocol server to STDOUT (so that we can see it):
+And finally, this will send the **finger-protocol response** this program received from the **finger-protocol server** to STDOUT (so that we can see it):
 
 ```go
 package main
