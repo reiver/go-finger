@@ -13,7 +13,7 @@ import (
 //
 // The returned value does not include the terminating "\r\n".
 //
-// So if  what is read from 'reader' (logically) is:
+// So if what is read from 'reader' (logically) is:
 //
 //	"/W joeblow\r\n"
 //
@@ -21,7 +21,7 @@ import (
 //
 //	"/W joeblow"
 //
-// Note that typically the return value from this would be given to ParseRequest.
+// Note that typically the value returned from ReadRequestLine would be given to ParseRequest.
 // For example:
 //
 //	var reader io.Reader
