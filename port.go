@@ -135,12 +135,31 @@ func (receiver Port) GoString() string {
 	return fmt.Sprintf("finger.CreatePort(%d)", receiver.value)
 }
 
+// Resolve resolves a finger.Port.
+//
+// If the finger.Port has a value, then Resolve returns that.
+//
+// Else if the finger.Port is empty, then Resolve returns the default finger TCP-port value,
+// which is 79.
 func (receiver Port) Resolve() uint16 {
 	if !receiver.something {
 		return defaultPort
 	}
 
 	return receiver.value
+}
+
+// Set sets the value of a finger.Port.
+//
+// Set mainly exists so that finger.Port can be as a flag.Value, and thus be used with functions
+// such as flag.Var().
+func (receiver *Port) Set(value string) error {
+	port, err := ParsePort(value)
+	if nil != err {
+		return err
+	}
+	*receiver = port
+	return nil
 }
 
 // String returns the value of a finger.Port.
