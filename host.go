@@ -99,6 +99,23 @@ func (receiver Host) GoString() string {
 	return fmt.Sprintf("finger.CreateHost(%#v)", receiver.value)
 }
 
+func (receiver *Host) Set(value string) error {
+	if nil == receiver {
+		return nil
+	}
+
+	*receiver = CreateHost(value)
+	return nil
+}
+
+func (receiver Host) String() string {
+	if !receiver.something {
+		return defaultHost
+	}
+
+	return receiver.value
+}
+
 func (receiver Host) Resolve() string {
 	if !receiver.something {
 		return defaultHost
