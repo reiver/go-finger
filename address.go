@@ -4,6 +4,7 @@ import (
 	"github.com/reiver/go-fck"
 
 	"fmt"
+	"net"
 	"strconv"
 	"strings"
 )
@@ -379,7 +380,10 @@ func (receiver Address) Port() Port {
 //
 // And also notice that when the port was not specified, when it was resolved it was defaulted to "79".
 func (receiver Address) Resolve() string {
-	return fmt.Sprintf("%s:%d", receiver.host.Resolve(), receiver.port.Resolve())
+	var host string = receiver.host.Resolve()
+	var port string = strconv.FormatUint(uint64(receiver.port.Resolve()), 10)
+
+	return net.JoinHostPort(host, port)
 }
 
 // String returns the address in the format as it was created.
