@@ -99,6 +99,10 @@ func (receiver Host) GoString() string {
 	return fmt.Sprintf("finger.CreateHost(%#v)", receiver.value)
 }
 
+// Set sets the value of a finger.Host.
+//
+// Set mainly exists so that finger.Host can be as a flag.Value, and thus be used with functions
+// such as flag.Var().
 func (receiver *Host) Set(value string) error {
 	if nil == receiver {
 		return nil
@@ -108,6 +112,13 @@ func (receiver *Host) Set(value string) error {
 	return nil
 }
 
+// String returns the value of a finger.Host.
+//
+// Note that if finger.Host is empty, then it returns the default finger Host,
+// which is 127.0.0.1.
+//
+// With String you cannot tell the difference between a finger.Host with a value of 127.0.0.1
+// and an empty finger.Host.
 func (receiver Host) String() string {
 	if !receiver.something {
 		return defaultHost
