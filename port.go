@@ -9,6 +9,10 @@ const (
 	defaultPort = 79
 )
 
+var (
+	defaultPortString = strconv.FormatUint(defaultPort, 10)
+)
+
 // Port represents a finger-protocol port.
 // A “port” in this context is is also known as a “TCP port”.
 //
@@ -137,6 +141,21 @@ func (receiver Port) Resolve() uint16 {
 	}
 
 	return receiver.value
+}
+
+// String returns the value of a finger.Port.
+//
+// Note that if finger.Port is empty, then it returns the default finger TCP-port,
+// which is 79.
+//
+// With String you cannot tell the difference between a finger.Port with a value of 79
+// and an empty finger.Port.
+func (receiver Port) String() string {
+	if !receiver.something {
+		return defaultPortString
+	}
+
+	return strconv.FormatUint(uint64(receiver.value), 10)
 }
 
 // Unwrap is used to unwrap a finger.Port.
