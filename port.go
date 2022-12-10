@@ -154,6 +154,10 @@ func (receiver Port) Resolve() uint16 {
 // Set mainly exists so that finger.Port can be as a flag.Value, and thus be used with functions
 // such as flag.Var().
 func (receiver *Port) Set(value string) error {
+	if nil == receiver {
+		return nil
+	}
+
 	port, err := ParsePort(value)
 	if nil != err {
 		return err
