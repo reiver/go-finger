@@ -127,6 +127,12 @@ func (receiver Host) String() string {
 	return receiver.value
 }
 
+// Resolve resolves a finger.Host.
+//
+// If the finger.Host has a value, then Resolve returns that.
+//
+// Else if the finger.Host is empty, then Resolve returns the default finger host value,
+// which is 127.0.0.1.
 func (receiver Host) Resolve() string {
 	if !receiver.something {
 		return defaultHost
