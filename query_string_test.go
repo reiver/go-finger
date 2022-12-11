@@ -27,12 +27,30 @@ func TestQuery_String(t *testing.T) {
 
 
 		{
+			Query: finger.CreateQueryUserPath("dariush", "/path/to/file.ext"),
+			Expected: "dariush/path/to/file.ext",
+		},
+
+
+
+		{
 			Query: finger.CreateQueryUserHost("dariush", "example.com"),
 			Expected: "dariush@example.com",
 		},
 		{
 			Query: finger.CreateQueryUserHostPort("dariush", "example.com", 1971),
 			Expected: "dariush@example.com:1971",
+		},
+
+
+
+		{
+			Query: finger.CreateQueryUserPathHost("dariush", "/path/to/file.ext", "example.com"),
+			Expected: "dariush/path/to/file.ext@example.com",
+		},
+		{
+			Query: finger.CreateQueryUserPathHostPort("dariush", "/path/to/file.ext", "example.com", 1971),
+			Expected: "dariush/path/to/file.ext@example.com:1971",
 		},
 
 

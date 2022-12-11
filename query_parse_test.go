@@ -16,7 +16,7 @@ func TestParseQuery(t *testing.T) {
 	}{
 		{
 			QueryString: "",
-			Expected: finger.Query{},
+			Expected: finger.EmptyQuery(),
 		},
 
 
@@ -75,6 +75,82 @@ func TestParseQuery(t *testing.T) {
 			QueryString: "dariush@example.com@something.social",
 			Expected: finger.CreateQueryUserHosts("dariush", "example.com", "something.social"),
 		},
+
+
+
+		{
+			QueryString: "dariush/once",
+			Expected: finger.CreateQueryUserPath("dariush","/once"),
+		},
+		{
+			QueryString: "dariush/once/twice",
+			Expected: finger.CreateQueryUserPath("dariush","/once/twice"),
+		},
+		{
+			QueryString: "dariush/once/twice/thrice",
+			Expected: finger.CreateQueryUserPath("dariush","/once/twice/thrice"),
+		},
+		{
+			QueryString: "dariush/once/twice/thrice/fource",
+			Expected: finger.CreateQueryUserPath("dariush","/once/twice/thrice/fource"),
+		},
+
+
+
+		{
+			QueryString: "dariush/once@example.com",
+			Expected: finger.CreateQueryUserPathHost("dariush", "/once", "example.com"),
+		},
+		{
+			QueryString: "dariush/once/twice@example.com",
+			Expected: finger.CreateQueryUserPathHost("dariush", "/once/twice", "example.com"),
+		},
+		{
+			QueryString: "dariush/once/twice/thrice@example.com",
+			Expected: finger.CreateQueryUserPathHost("dariush", "/once/twice/thrice", "example.com"),
+		},
+		{
+			QueryString: "dariush/once/twice/thrice/fource@example.com",
+			Expected: finger.CreateQueryUserPathHost("dariush", "/once/twice/thrice/fource", "example.com"),
+		},
+
+
+
+		{
+			QueryString: "dariush/once@example.com:1971",
+			Expected: finger.CreateQueryUserPathHostPort("dariush", "/once", "example.com", 1971),
+		},
+		{
+			QueryString: "dariush/once/twice@example.com:1971",
+			Expected: finger.CreateQueryUserPathHostPort("dariush", "/once/twice", "example.com", 1971),
+		},
+		{
+			QueryString: "dariush/once/twice/thrice@example.com:1971",
+			Expected: finger.CreateQueryUserPathHostPort("dariush", "/once/twice/thrice", "example.com", 1971),
+		},
+		{
+			QueryString: "dariush/once/twice/thrice/fource@example.com:1971",
+			Expected: finger.CreateQueryUserPathHostPort("dariush", "/once/twice/thrice/fource", "example.com", 1971),
+		},
+
+
+
+		{
+			QueryString: "dariush/once@example.com@something.social",
+			Expected: finger.CreateQueryUserPathHosts("dariush", "/once", "example.com", "something.social"),
+		},
+		{
+			QueryString: "dariush/once/twice@example.com@something.social",
+			Expected: finger.CreateQueryUserPathHosts("dariush", "/once/twice", "example.com", "something.social"),
+		},
+		{
+			QueryString: "dariush/once/twice/thrice@example.com@something.social",
+			Expected: finger.CreateQueryUserPathHosts("dariush", "/once/twice/thrice", "example.com", "something.social"),
+		},
+		{
+			QueryString: "dariush/once/twice/thrice/fource@example.com@something.social",
+			Expected: finger.CreateQueryUserPathHosts("dariush", "/once/twice/thrice/fource", "example.com", "something.social"),
+		},
 	}
 
 	for testNumber, test := range tests {
@@ -88,6 +164,7 @@ func TestParseQuery(t *testing.T) {
 		if nil != err {
 			t.Errorf("For test #%d, did not expect an error but actually got one.", testNumber)
 			t.Logf("ERROR: (%T) %q", err, err)
+			t.Logf("QUERY-STRING: %q", test.QueryString)
 			continue
 		}
 
@@ -95,6 +172,7 @@ func TestParseQuery(t *testing.T) {
 			t.Errorf("For test #%d, the actual query is not what was expected.", testNumber)
 			t.Logf("EXPECTED: %#v", expected)
 			t.Logf("ACTUAL:   %#v", actual)
+			t.Logf("QUERY-STRING: %q", test.QueryString)
 			continue
 		}
 	}
