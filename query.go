@@ -397,6 +397,10 @@ func (receiver Query) isEmpty() bool {
 	       len(receiver.addresses) < 1
 }
 
+func (receiver Query) LenAddresses() int {
+	return len(receiver.addresses)
+}
+
 func (receiver Query) String() string {
 
 	var buffer strings.Builder
@@ -433,4 +437,8 @@ func (receiver Query) Target() Target {
 	}
 
 	return CreateTarget(receiver.String())
+}
+
+func (receiver Query) User() User {
+	return receiver.user
 }
