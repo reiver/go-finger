@@ -1,14 +1,5 @@
 package finger
 
-import (
-	"io"
-	"os"
-	osuser "os/user"
-	"path/filepath"
-	"strconv"
-	"strings"
-)
-
 // ClassicServer works similar to classic finger servers.
 // And supports user .plan files, etc.
 // As well as adding some modernizations.
@@ -59,96 +50,5 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 		}
 	}
 
-	var homepath string
-	var realname string
-	{
-		u, err := osuser.Lookup(username)
-		if nil != err {
-			switch err.(type) {
-			case osuser.UnknownUserError:
-				WriteResponseServerFailed(responsewriter)
-/////////////////////////////// RETURN
-				return
-			default:
-				WriteResponseServerErred(responsewriter)
-/////////////////////////////// RETURN
-				return
-			}
-		}
-		if nil == u {
-			WriteResponseServerErred(responsewriter)
-/////////////////////// RETURN
-			return
-		}
-
-		homepath = u.HomeDir
-		if "" == homepath {
-			WriteResponseServerFailed(responsewriter)
-/////////////////////// RETURN
-			return
-		}
-
-		realname = u.Name
-	}
-
-
-	var reader io.Reader
-	var contentLength int64
-	{
-		var planpath string = filepath.Join(homepath, ".plan")
-
-		planfile, err := os.Open(planpath)
-		if nil != err {
-			switch {
-			case os.IsNotExist(err):
-				WriteResponseServerFailed(responsewriter)
-			default:
-				WriteResponseServerErred(responsewriter)
-			}
-/////////////////////// RETURN
-			return
-
-		}
-		defer planfile.Close()
-
-		planinfo, err := planfile.Stat()
-		if nil != err {
-			WriteResponseServerErred(responsewriter)
-/////////////////////// RETURN
-			return
-		}
-		if planinfo.IsDir() {
-			WriteResponseServerFailed(responsewriter)
-/////////////////////// RETURN
-			return
-		}
-
-		reader = planfile
-		contentLength = planinfo.Size()
-	}
-
-	{
-		var header strings.Builder
-
-		header.WriteString(magic)
-
-		header.WriteString("Name: ")
-		header.WriteString(realname)
-		header.WriteString("\r\n")
-
-		header.WriteString("User-Name: ")
-		header.WriteString(username)
-		header.WriteString("\r\n")
-
-		header.WriteString("Content-Length: ")
-		header.WriteString(strconv.FormatInt(contentLength, 10))
-		header.WriteString("\r\n")
-
-		header.WriteString("\r\n")
-
-		io.WriteString(responsewriter, header.String())
-		io.Copy(responsewriter, reader)
-/////////////// RETURN
-		return
-	}
+	WriteResponseDotPlan(responsewriter, username)
 }
