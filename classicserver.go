@@ -79,6 +79,11 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 		}
 
 		homepath = u.HomeDir
+		if "" == homepath {
+			WriteResponseServerFailed(responsewriter)
+/////////////////////// RETURN
+			return
+		}
 	}
 
 
