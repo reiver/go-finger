@@ -127,6 +127,8 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 	{
 		var header strings.Builder
 
+		header.WriteString("Magic: finger")
+		header.WriteString("\r\n")
 		header.WriteString("Name: ")
 		header.WriteString(realname)
 		header.WriteString("\r\n")
