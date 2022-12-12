@@ -5,12 +5,10 @@ import (
 	"io"
 )
 
-const responseMagic = "\xEF\xBB\xBF"+ "# FINGER"+"\r\n"
-
-const clientErredString   = responseMagic+ "!ERRED"   +" "+ "client" +"\r\n"+"\r\n"
-const serverErredString   = responseMagic+ "!ERRED"   +" "+ "server" +"\r\n"+"\r\n"
-const serverFailedString  = responseMagic+ "!FAILED"  +" "+ "server" +"\r\n"+"\r\n"
-const serverRefusedString = responseMagic+ "!REFUSED" +" "+ "server" +"\r\n"+"\r\n"
+const clientErredString   = magic+ "!ERRED"   +" "+ "client" +"\r\n"+"\r\n"
+const serverErredString   = magic+ "!ERRED"   +" "+ "server" +"\r\n"+"\r\n"
+const serverFailedString  = magic+ "!FAILED"  +" "+ "server" +"\r\n"+"\r\n"
+const serverRefusedString = magic+ "!REFUSED" +" "+ "server" +"\r\n"+"\r\n"
 
 // WriteResponseClientErred is a helper function that can be used by a finger-protocol server
 // to tell a finger-protocol client that the finger-protocol client erred with its request somehow.
