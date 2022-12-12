@@ -46,11 +46,11 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 		return
 	}
 
-	var user string
+	var username string
 	{
 		var something bool
 
-		user, something = query.User().Unwrap()
+		username, something = query.User().Unwrap()
 		if !something {
 			WriteResponseServerRefused(responsewriter)
 /////////////////////// RETURN
@@ -61,7 +61,7 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 	var homepath string
 	var realname string
 	{
-		u, err := osuser.Lookup(user)
+		u, err := osuser.Lookup(username)
 		if nil != err {
 			switch err.(type) {
 			case osuser.UnknownUserError:
@@ -129,6 +129,9 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 
 		header.WriteString("Name: ")
 		header.WriteString(realname)
+		header.WriteString("\r\n")
+		header.WriteString("User-Name: ")
+		header.WriteString(username)
 		header.WriteString("\r\n")
 		header.WriteString("\r\n")
 
