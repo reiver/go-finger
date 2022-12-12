@@ -29,7 +29,7 @@ const serverRefusedString = magic+ "!REFUSED" +" "+ "server" +"\r\n"+"\r\n"
 //	}
 func WriteResponseClientErred(writer io.Writer) error {
 	if nil == writer {
-		return errNilResponseWriter
+		return errNilWriter
 	}
 
 	const s string = clientErredString
@@ -63,7 +63,7 @@ func WriteResponseClientErred(writer io.Writer) error {
 //	}
 func WriteResponseServerErred(writer io.Writer) error {
 	if nil == writer {
-		return errNilResponseWriter
+		return errNilWriter
 	}
 
 	const s string = serverErredString
@@ -96,7 +96,7 @@ func WriteResponseServerErred(writer io.Writer) error {
 //	}
 func WriteResponseServerFailed(writer io.Writer) error {
 	if nil == writer {
-		return errNilResponseWriter
+		return errNilWriter
 	}
 
 	const s string = serverFailedString
@@ -129,7 +129,7 @@ func WriteResponseServerFailed(writer io.Writer) error {
 //	}
 func WriteResponseServerRefused(writer io.Writer) error {
 	if nil == writer {
-		return errNilResponseWriter
+		return errNilWriter
 	}
 
 	const s string = serverRefusedString
