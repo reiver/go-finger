@@ -144,4 +144,3 @@ func WriteResponseServerRefused(writer io.Writer) error {
 
 	return nil
 }
-
