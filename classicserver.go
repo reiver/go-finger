@@ -5,6 +5,7 @@ import (
 	"os"
 	osuser "os/user"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -92,6 +93,7 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 
 
 	var reader io.Reader
+	var contentLength int64
 	{
 		var planpath string = filepath.Join(homepath, ".plan")
 
@@ -122,18 +124,26 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 		}
 
 		reader = planfile
+		contentLength = planinfo.Size()
 	}
 
 	{
 		var header strings.Builder
 
 		header.WriteString(magic)
+
 		header.WriteString("Name: ")
 		header.WriteString(realname)
 		header.WriteString("\r\n")
+
 		header.WriteString("User-Name: ")
 		header.WriteString(username)
 		header.WriteString("\r\n")
+
+		header.WriteString("Content-Length: ")
+		header.WriteString(strconv.FormatInt(contentLength, 10))
+		header.WriteString("\r\n")
+
 		header.WriteString("\r\n")
 
 		io.WriteString(responsewriter, header.String())
