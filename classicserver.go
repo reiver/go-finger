@@ -5,6 +5,7 @@ import (
 	"os"
 	osuser "os/user"
 	"path/filepath"
+	"strings"
 )
 
 // ClassicServer works similar to classic finger servers.
@@ -58,6 +59,7 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 	}
 
 	var homepath string
+	var realname string
 	{
 		u, err := osuser.Lookup(user)
 		if nil != err {
@@ -84,10 +86,12 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 /////////////////////// RETURN
 			return
 		}
+
+		realname = u.Name
 	}
 
 
-
+	var reader io.Reader
 	{
 		var planpath string = filepath.Join(homepath, ".plan")
 
@@ -117,7 +121,19 @@ func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request
 			return
 		}
 
-		io.Copy(responsewriter, planfile)
+		reader = planfile
+	}
+
+	{
+		var header strings.Builder
+
+		header.WriteString("Name: ")
+		header.WriteString(realname)
+		header.WriteString("\r\n")
+		header.WriteString("\r\n")
+
+		io.WriteString(responsewriter, header.String())
+		io.Copy(responsewriter, reader)
 /////////////// RETURN
 		return
 	}
