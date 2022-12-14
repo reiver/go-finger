@@ -8,15 +8,30 @@ import (
 	"net"
 )
 
-var _ ResponseWriter = internalResponseWriter{}
+var _ ResponseWriter = &internalResponseWriter{}
 
 type internalResponseWriter struct {
-	conn net.Conn
+	conn ConnectedWriteCloser
 }
 
-func (receiver internalResponseWriter) Close() error {
+// NewResponseWriter is used to create a new finger.ResponseWriter.
+//
+// Typically a finger.ResopnseWriter wraps a net.Conn.
+//
+//	var conn net.Conn
+//	
+//	// ...
+//	
+//	var responseWriter finger.ResponseWriter = finger.NewReponseWriter(conn)
+func NewResponseWriter(conn ConnectedWriteCloser) ResponseWriter {
+	return &internalResponseWriter{
+		conn:conn,
+	}
+}
 
-	var conn net.Conn
+func (receiver *internalResponseWriter) Close() error {
+
+	var conn ConnectedWriteCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
@@ -29,7 +44,7 @@ func (receiver internalResponseWriter) Close() error {
 
 func (receiver internalResponseWriter) LocalAddr() net.Addr {
 
-	var conn net.Conn
+	var conn ConnectedWriteCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
@@ -42,7 +57,7 @@ func (receiver internalResponseWriter) LocalAddr() net.Addr {
 
 func (receiver internalResponseWriter) RemoteAddr() net.Addr {
 
-	var conn net.Conn
+	var conn ConnectedWriteCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
@@ -53,9 +68,9 @@ func (receiver internalResponseWriter) RemoteAddr() net.Addr {
 	return conn.RemoteAddr()
 }
 
-func (receiver internalResponseWriter) Write(p []byte) (int, error) {
+func (receiver *internalResponseWriter) Write(p []byte) (int, error) {
 
-	var conn net.Conn
+	var conn ConnectedWriteCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
@@ -66,7 +81,7 @@ func (receiver internalResponseWriter) Write(p []byte) (int, error) {
 	return conn.Write(p)
 }
 
-func (receiver internalResponseWriter) WriteByte(b byte) error {
+func (receiver *internalResponseWriter) WriteByte(b byte) error {
 
 	var buffer [1]byte
 	var p []byte = buffer[:]
@@ -83,25 +98,25 @@ func (receiver internalResponseWriter) WriteByte(b byte) error {
 	return nil
 }
 
-func (receiver internalResponseWriter) WriteRune(r rune) (int, error) {
-
-	var conn net.Conn
-	{
-		conn = receiver.conn
-		if nil == conn {
-			return 0, errNilConnection
-		}
+func (receiver *internalResponseWriter) WriteRune(r rune) (int, error) {
+	if nil == receiver {
+		return 0, errNilReceiver
 	}
 
-	var wrapped utf8.RuneWriter = utf8.RuneWriterWrap(conn)
+	var writer io.Writer = receiver
+
+	var wrapped utf8.RuneWriter = utf8.RuneWriterWrap(writer)
 	var runewriter runeWriter = &wrapped
 
 	return runewriter.WriteRune(r)
 }
 
-func (receiver internalResponseWriter) WriteString(s string) (int, error) {
+func (receiver *internalResponseWriter) WriteString(s string) (int, error) {
+	if nil == receiver {
+		return 0, errNilReceiver
+	}
 
-	var conn net.Conn
+	var conn ConnectedWriteCloser
 	{
 		conn = receiver.conn
 		if nil == conn {

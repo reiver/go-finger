@@ -61,7 +61,7 @@ func handle(conn net.Conn, handler Handler) error {
 		}
 	}
 
-	var responseWriter ResponseWriter = internalResponseWriter{conn:conn}
+	var responseWriter ResponseWriter = NewResponseWriter(conn)
 
 	handler.HandleFinger(responseWriter, request)
 	return nil

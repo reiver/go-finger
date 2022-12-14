@@ -11,12 +11,12 @@ import (
 var _ ResponseReader = internalResponseReader{}
 
 type internalResponseReader struct {
-	conn net.Conn
+	conn ConnectedReadCloser
 }
 
 func (receiver internalResponseReader) Close() error {
 
-	var conn net.Conn
+	var conn ConnectedReadCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
@@ -29,7 +29,7 @@ func (receiver internalResponseReader) Close() error {
 
 func (receiver internalResponseReader) LocalAddr() net.Addr {
 
-	var conn net.Conn
+	var conn ConnectedReadCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
@@ -42,7 +42,7 @@ func (receiver internalResponseReader) LocalAddr() net.Addr {
 
 func (receiver internalResponseReader) Read(p []byte) (int, error) {
 
-	var conn net.Conn
+	var conn ConnectedReadCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
@@ -71,7 +71,7 @@ func (receiver internalResponseReader) ReadByte() (byte, error) {
 
 func (receiver internalResponseReader) ReadRune() (rune, int, error) {
 
-	var conn net.Conn
+	var conn ConnectedReadCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
@@ -87,7 +87,7 @@ func (receiver internalResponseReader) ReadRune() (rune, int, error) {
 
 func (receiver internalResponseReader) RemoteAddr() net.Addr {
 
-	var conn net.Conn
+	var conn ConnectedReadCloser
 	{
 		conn = receiver.conn
 		if nil == conn {
