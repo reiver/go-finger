@@ -1,11 +1,10 @@
 package magicfinger
 
 import (
-	"fmt"
-	"io"
-)
+	"github.com/reiver/go-finger"
 
-const serverRefusedString = magic+ "!REFUSED" +" "+ "server" +"\r\n"+"\r\n"
+	"fmt"
+)
 
 // RespondServerRefused is a helper function that can be used by a finger-protocol server
 // to tell a finger-protocol client that the finger-protocol server refused to handle the
@@ -18,24 +17,22 @@ const serverRefusedString = magic+ "!REFUSED" +" "+ "server" +"\r\n"+"\r\n"
 //		
 //		// ...
 //		
-//		err := finger.WriteResponseServerRefused(rw)
+//		err := finger.WriteResponseServerRefused(object, rw)
 //		
 //		// ...
 //		
 //	}
-func RespondServerRefused(writer io.Writer) error {
-	if nil == writer {
-		return errNilWriter
+func RespondServerRefused(object string, rw finger.ResponseWriter) error {
+	if nil == rw {
+		return errNilResponseWriter
 	}
 
-	const s string = serverRefusedString
+	const punctuation string = "!"
+	const verb        string = "REFUSED"
 
-	n, err := io.WriteString(writer, s)
-	if nil != err {
-		return fmt.Errorf("problem writing server-error finger-protocol response: %w", err)
-	}
-	if expected, actual := len(s), n; expected != actual {
-		return fmt.Errorf("problem writing server-error finger-protocol response: actually wrote %d bytes but expected to write %d bytes", actual, expected)
+	var mrw MagicResponseWriter = NewMagicResponseWriter(punctuation, verb, object, rw)
+	if err := mrw.Flush(); nil != err {
+		return fmt.Errorf("problem sending magic-finger \"%s%s %s\" response to client: %w", punctuation, verb, object, err)
 	}
 
 	return nil
