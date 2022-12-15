@@ -16,15 +16,33 @@ var _ MagicResponseWriter = &internalMagicResponseWriter{}
 type internalMagicResponseWriter struct {
 	rw finger.ResponseWriter
 	buffer strings.Builder
-	magicBuffered bool
 	headerWritten bool
 }
 
 // NewMagicResponseWriter creates a new magicfinger.MagicResponseWriter.
-func NewMagicResponseWriter(rw finger.ResponseWriter) MagicResponseWriter {
-	return &internalMagicResponseWriter{
+//
+// Example usage:
+//
+//	var responsewriter finger.ResponseWriter
+//	
+//	// ...
+//	
+//	var mrw magicfinger.MagicResopnseWriter = magicfinger.NewMagicResponseWriter("!", "GOTTEN", "joeblow/img/photo.jpeg", responsewriter)
+func NewMagicResponseWriter(punctuation string, verb string, object string, rw finger.ResponseWriter) MagicResponseWriter {
+
+	var internal internalMagicResponseWriter = internalMagicResponseWriter{
 		rw:rw,
 	}
+
+	internal.buffer.WriteString(magic)
+	internal.buffer.WriteString(punctuation)
+	internal.buffer.WriteString(verb)
+	internal.buffer.WriteRune(' ')
+	internal.buffer.WriteString(object)
+	internal.buffer.WriteString("\r\n")
+
+
+	return &internal
 }
 
 func (receiver *internalMagicResponseWriter) AddField(name string, body string) error {
@@ -39,25 +57,12 @@ func (receiver *internalMagicResponseWriter) AddField(name string, body string) 
 		return errBadFieldBody
 	}
 
-	receiver.bufferOnceMagic()
-
 	receiver.buffer.WriteString(name)
 	receiver.buffer.WriteString(": ")
 	receiver.buffer.WriteString(body)
 	receiver.buffer.WriteString("\r\n")
 
 	return nil
-}
-
-func (receiver *internalMagicResponseWriter) bufferOnceMagic() {
-	if nil == receiver {
-		return
-	}
-
-	if !receiver.magicBuffered {
-		receiver.buffer.WriteString(magic)
-		receiver.magicBuffered = true
-	}
 }
 
 func (receiver *internalMagicResponseWriter) Close() error {
@@ -73,7 +78,29 @@ func (receiver *internalMagicResponseWriter) Close() error {
 		}
 	}
 
+	{
+		err := receiver.Flush()
+		if nil != err {
+			return err
+		}
+	}
+
 	return rw.Close()
+}
+
+func (receiver *internalMagicResponseWriter) Flush() error {
+	if nil == receiver {
+		return errNilReceiver
+	}
+
+	{
+		err := receiver.writeOnceHeader()
+		if nil != err {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (receiver internalMagicResponseWriter) LocalAddr() net.Addr {
@@ -149,8 +176,6 @@ func (receiver *internalMagicResponseWriter) writeOnceHeader() error {
 	if nil == receiver {
 		return errNilReceiver
 	}
-
-	receiver.bufferOnceMagic()
 
 	var rw finger.ResponseWriter
 	{

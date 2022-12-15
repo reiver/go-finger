@@ -22,4 +22,5 @@ import (
 type MagicResponseWriter interface {
 	finger.ResponseWriter
 	AddField(name string, body string) error
+	Flush() error
 }
