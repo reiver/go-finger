@@ -1,6 +1,8 @@
 package finger
 
 import (
+	"github.com/reiver/go-fck"
+
 	"fmt"
 	"strings"
 )
@@ -308,6 +310,17 @@ func ParseQuery(query string) (Query, error) {
 	return q, nil
 }
 
+// ParseQueryFromTarget parses a target for a finger-protocol query.
+func ParseQueryFromTarget(target Target) (Query, error) {
+
+	value, something := target.Unwrap()
+	if !something {
+		return EmptyQuery(), fck.Error("problem parsing finger-protocol query from target: empty target")
+	}
+
+	return ParseQuery(value)
+}
+
 // ParseRFC1288Query parses a (target) string for an older style finger-protocol query as defined IETF RFC-1288.
 func ParseRFC1288Query(query string) (Query, error) {
 
@@ -372,6 +385,18 @@ func ParseRFC1288Query(query string) (Query, error) {
 
 	return q, nil
 }
+
+// ParseRFC1288Query parses a target for an older style finger-protocol query as defined IETF RFC-1288.
+func ParseRFC1288QueryFromTarget(target Target) (Query, error) {
+
+	value, something := target.Unwrap()
+	if !something {
+		return EmptyQuery(), fck.Error("problem parsing finger-protocol query from target: empty target")
+	}
+
+	return ParseRFC1288Query(value)
+}
+
 
 // ClientParameters returns the information need for a finger-protocol client
 // to make a finger-protocol request.
