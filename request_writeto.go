@@ -18,19 +18,9 @@ func (receiver Request) WriteTo(writer io.Writer) (int64, error) {
 //@TODO: replace with a limited buffer.
 	var buffer strings.Builder
 	{
-		swtch, switchIsSomething  := receiver.swtch.Unwrap()
-		target, targetIsSomething := receiver.target.Unwrap()
-
-		if switchIsSomething {
-			buffer.WriteString(swtch)
-		}
-
-		if switchIsSomething && targetIsSomething {
-			buffer.WriteRune(' ')
-		}
-
-		if targetIsSomething {
-			buffer.WriteString(target)
+		_, err := receiver.writeSentenceTo(&buffer)
+		if nil != err {
+			return 0, errInternalError
 		}
 
 		buffer.WriteString("\r\n")
