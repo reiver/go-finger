@@ -16,36 +16,40 @@ import (
 
 func TestResponseFile(t *testing.T) {
 
+	const filename = "something.txt"
+
 	const s string = "Hello world!"+"\r\n"+"\r\n"+"0123456789"+"\r\n"
 	var content strfs.Content = strfs.CreateContent(s)
 	var regularfile strfs.RegularFile = strfs.RegularFile{
 		FileContent: content,
-		FileName:    "something.txt",
+		FileName:    filename,
 		FileModTime: time.Now(),
 	}
 	var file fs.File = &regularfile
 
+	const swtch  string = "/GET"
+	const target string = "joeblow/something.txt"
 
-	var buffer testfinger.TestConnectedWriteCloser
-	var rw finger.ResponseWriter = finger.NewResponseWriter(&buffer)
-	var mrw magicfinger.MagicResponseWriter = magicfinger.NewMagicResponseWriter(rw)
+	var request finger.Request = finger.CreateRequest(swtch, target)
 
-	magicfinger.RespondFile(mrw, file)
+	var conn testfinger.TestConnectedWriteCloser
+	var rw finger.ResponseWriter = finger.NewResponseWriter(&conn)
 
-	{
-		var expected string = "\xEF\xBB\xBF"+
-		                      "Magic-Finger"                                          +"\r\n"+
-		                      ""                                                      +"\r\n"+
-		                      "Content-Length: "+strconv.FormatInt(int64(len(s)), 10) +"\r\n"+
-		                      ""                                                      +"\r\n"+
-		                      s
-		var actual   string = buffer.String()
+	magicfinger.RespondFile(rw, request, file)
 
-		if expected != actual {
-			t.Errorf("The actual magic-finger file response was not what was expected.")
-			t.Logf("EXPECTED: %q", expected)
-			t.Logf("ACTUAL:   %q", actual)
-			return
-		}
+	var actual string = conn.String()
+	var expected string =
+		"\xEF\xBB\xBF"+
+		"Magic-Finger"                                          +"\r\n"+
+		"!SERVER-SUCCEEDED {/GET joeblow/something.txt}"        +"\r\n"+
+		"Content-Length: "+strconv.FormatInt(int64(len(s)), 10) +"\r\n"+
+		""                                                      +"\r\n"+
+		s
+
+	if expected != actual {
+		t.Errorf("The actual magic-finger file response was not what was expected.")
+		t.Logf("EXPECTED: %q", expected)
+		t.Logf("ACTUAL:   %q", actual)
+		return
 	}
 }

@@ -1,18 +1,41 @@
 package magicfinger
 
 import (
+	"github.com/reiver/go-finger"
+
+	"fmt"
 	"io"
 	"io/fs"
 	"strconv"
 )
 
-func RespondFile(mrw MagicResponseWriter, file fs.File) error {
-	if nil == mrw {
-		return errNilMagicResponseWriter
+func RespondFile(rw finger.ResponseWriter, request finger.Request, file fs.File) (e error) {
+	if nil == rw {
+		return errNilResponseWriter
 	}
+
+	const punctuation string = "!"
+	const verb        string = "SERVER-SUCCEEDED"
+	var   object      string = QuoteSentence(request.Sentence())
+
+	var mrw MagicResponseWriter = NewMagicResponseWriter(rw, punctuation, verb, object)
+	if nil == mrw {
+		return RespondServerErred(rw, request)
+		e = fmt.Errorf("problem creating magic-finger response-writer: %w", errInternalError)
+	}
+
+	defer func(){
+		if err := mrw.Close(); nil != err {
+			if nil == e {
+				e = fmt.Errorf("problem closing magic-finger \"%s%s %s\" connection to client: %w", punctuation, verb, object, err)
+			}
+		}
+	}()
+
 	if nil == file {
 		return errNilFile
 	}
+
 
 	var fileinfo fs.FileInfo
 	{
@@ -20,10 +43,10 @@ func RespondFile(mrw MagicResponseWriter, file fs.File) error {
 
 		fileinfo, err = file.Stat()
 		if nil != err {
-			return RespondServerErred(mrw)
+			return RespondServerErred(rw, request)
 		}
 		if nil == fileinfo {
-			return RespondServerErred(mrw)
+			return RespondServerErred(rw, request)
 		}
 	}
 
@@ -34,7 +57,7 @@ func RespondFile(mrw MagicResponseWriter, file fs.File) error {
 
 	{
 		if !filemode.IsRegular() {
-			return RespondServerFailed(mrw)
+			return RespondServerFailed(rw, request)
 		}
 	}
 
@@ -45,6 +68,7 @@ func RespondFile(mrw MagicResponseWriter, file fs.File) error {
 
 	{
 		mrw.AddField("Content-Length", strconv.FormatInt(contentLength, 10))
+//@TODO: Content-Digest
 	}
 
 	{
