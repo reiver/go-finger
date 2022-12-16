@@ -10,18 +10,22 @@ import (
 
 func TestRespondServerErred(t *testing.T) {
 
-	const object string = "joeblow/something.txt"
+	const swtch  string = "/GET"
+	const target string = "joeblow/something.txt"
 
-	var buffer testfinger.TestConnectedWriteCloser
-	var rw finger.ResponseWriter = finger.NewResponseWriter(&buffer)
+	var request finger.Request = finger.CreateRequest(swtch, target)
 
-	magicfinger.RespondServerErred(object, rw)
+	var conn testfinger.TestConnectedWriteCloser
+	var rw finger.ResponseWriter = finger.NewResponseWriter(&conn)
 
-	var actual   string = buffer.String()
+	magicfinger.RespondServerErred(rw, request)
+
+	var actual   string = conn.String()
 	var expected string =
 		"\xEF\xBB\xBF"+
-		"Magic-Finger"    +"\r\n"+
-		"!ERRED "+ object +"\r\n"
+		"Magic-Finger"                               +"\r\n"+
+		"!SERVER-ERRED {/GET joeblow/something.txt}" +"\r\n"+
+		""                                           +"\r\n"
 
 	if expected != actual {
 		t.Errorf("The actual magic-finger server-erred response is not what was expected.")
