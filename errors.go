@@ -5,6 +5,7 @@ import (
 )
 
 const (
+	errInternalError  = fck.Error("internal error")
 	errNilConnection  = fck.Error("nil connection")
 	errNilHandler     = fck.Error("nil handler")
 	errNilListener    = fck.Error("nil listener")
