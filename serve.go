@@ -6,7 +6,7 @@ import (
 	"io"
 )
 
-// Serve accepts incoming connections from 'listener',
+// ServeHandler accepts incoming connections from 'listener',
 // deals with parsing and validating the finger-protocol request,
 // and hands off the connection to 'handler' to handle.
 //
@@ -14,18 +14,41 @@ import (
 //	
 //	// ...
 //	
+//	err := finger.ServeHandler(listener, handler)
+//	if nil != err {
+//		return err
+//	}
+func ServeHandler(listener net.Listener, handler Handler) error {
+
+	if nil == handler {
+		return errNilHandler
+	}
+
+	var fn func(ResponseWriter, Request) = handler.HandleFinger
+
+	return Serve(listener, fn)
+}
+
+// Serve accepts incoming connections from 'listener',
+// deals with parsing and validating the finger-protocol request,
+// and hands off the connection to 'handlerFunc' to handle.
+//
+//	var handlerFunc func(ResponseWriter, Request)
+//	
+//	// ...
+//	
 //	err := finger.Serve(listener, handler)
 //	if nil != err {
 //		return err
 //	}
-func Serve(listener net.Listener, handler Handler) error {
+func Serve(listener net.Listener, handlerFunc func(ResponseWriter, Request)) error {
 
 	if nil == listener {
 		return errNilListener
 	}
 	defer listener.Close()
 
-	if nil == handler {
+	if nil == handlerFunc {
 		return errNilHandler
 	}
 
@@ -35,13 +58,13 @@ func Serve(listener net.Listener, handler Handler) error {
 			return fmt.Errorf("finger-protocol server had problem accepting incoming connection: %w", err)
 		}
 
-		go handle(conn, handler)
+		go handle(conn, handlerFunc)
 	}
 
 	return nil
 }
 
-func handle(conn net.Conn, handler Handler) error {
+func handle(conn net.Conn, handlerFunc func(ResponseWriter, Request)) error {
 
 	if nil == conn {
 		return errNilConnection
@@ -63,6 +86,6 @@ func handle(conn net.Conn, handler Handler) error {
 
 	var responseWriter ResponseWriter = NewResponseWriter(conn)
 
-	handler.HandleFinger(responseWriter, request)
+	handlerFunc(responseWriter, request)
 	return nil
 }
