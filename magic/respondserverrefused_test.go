@@ -10,21 +10,25 @@ import (
 
 func TestRespondServerRefused(t *testing.T) {
 
-	const object string = "joeblow/something.txt"
+	const swtch  string = "/GET"
+	const target string = "joeblow/something.txt"
 
-	var buffer testfinger.TestConnectedWriteCloser
-	var rw finger.ResponseWriter = finger.NewResponseWriter(&buffer)
+	var request finger.Request = finger.CreateRequest(swtch, target)
 
-	magicfinger.RespondServerRefused(object, rw)
+	var conn testfinger.TestConnectedWriteCloser
+	var rw finger.ResponseWriter = finger.NewResponseWriter(&conn)
 
-	var actual   string = buffer.String()
+	magicfinger.RespondServerRefused(rw, request)
+
+	var actual   string = conn.String()
 	var expected string =
 		"\xEF\xBB\xBF"+
-		"Magic-Finger"      +"\r\n"+
-		"!REFUSED "+ object +"\r\n"
+		"Magic-Finger"                                 +"\r\n"+
+		"!SERVER-REFUSED {/GET joeblow/something.txt}" +"\r\n"+
+		""                                             +"\r\n"
 
 	if expected != actual {
-		t.Errorf("The actual magic-finger server-erred response is not what was expected.")
+		t.Errorf("The actual magic-finger server-refused response is not what was expected.")
 		t.Logf("EXPECTED: %q", expected)
 		t.Logf("ACTUAL:   %q", actual)
 		return

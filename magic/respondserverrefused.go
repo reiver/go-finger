@@ -10,29 +10,39 @@ import (
 // to tell a finger-protocol client that the finger-protocol server refused to handle the
 // finger-protocol client's request.
 //
-// For example, maybe server the server won't handle the "/PULL" switch for a user,
-// for some reason.
+// For example, maybe server the server won't handle the "/PULL" switch for a user, for some reason.
 //
 //	func handleFinger(rw finger.ResponseWriter, request finger.Request) {
 //		
 //		// ...
 //		
-//		err := finger.WriteResponseServerRefused(object, rw)
+//		err := finger.WriteResponseServerRefused(rw, request)
 //		
 //		// ...
 //		
 //	}
-func RespondServerRefused(object string, rw finger.ResponseWriter) error {
+func RespondServerRefused(rw finger.ResponseWriter, request finger.Request) (e error) {
 	if nil == rw {
 		return errNilResponseWriter
 	}
 
 	const punctuation string = "!"
-	const verb        string = "REFUSED"
+	const verb        string = "SERVER-REFUSED"
+	var   object      string = QuoteSentence(request.Sentence())
 
-	var mrw MagicResponseWriter = NewMagicResponseWriter(punctuation, verb, object, rw)
+	var mrw MagicResponseWriter = NewMagicResponseWriter(rw, punctuation, verb, object)
+
+	defer func(){
+		if err := mrw.Close(); nil != err {
+			if nil == e {
+				e = fmt.Errorf("problem closing magic-finger \"%s%s %s\" connection to client: %w", punctuation, verb, object, err)
+			}
+		}
+	}()
+
 	if err := mrw.Flush(); nil != err {
-		return fmt.Errorf("problem sending magic-finger \"%s%s %s\" response to client: %w", punctuation, verb, object, err)
+		e = fmt.Errorf("problem sending magic-finger \"%s%s %s\" response to client: %w", punctuation, verb, object, err)
+		return
 	}
 
 	return nil
