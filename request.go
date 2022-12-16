@@ -1,5 +1,9 @@
 package finger
 
+import (
+	"strings"
+)
+
 // A Request is used to hold a finger-protocol request.
 //
 // Likely, most people would only use a finger.Request when writing
