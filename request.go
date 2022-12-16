@@ -158,6 +158,15 @@ func CreateRequestTarget(target string) Request {
 	}
 }
 
+// String requests the raw finger-protocol request.
+func (receiver Request) String() string {
+	var buffer strings.Builder
+
+	receiver.WriteTo(&buffer)
+
+	return buffer.String()
+}
+
 // The Switch method returns the finger.Request's finger.Switch.
 //
 // For example:
