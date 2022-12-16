@@ -28,7 +28,7 @@ type internalMagicResponseWriter struct {
 //	// ...
 //	
 //	var mrw magicfinger.MagicResopnseWriter = magicfinger.NewMagicResponseWriter("!", "GOTTEN", "joeblow/img/photo.jpeg", responsewriter)
-func NewMagicResponseWriter(punctuation string, verb string, object string, rw finger.ResponseWriter) MagicResponseWriter {
+func NewMagicResponseWriter(rw finger.ResponseWriter, punctuation string, verb string, object string) MagicResponseWriter {
 
 	var internal internalMagicResponseWriter = internalMagicResponseWriter{
 		rw:rw,
@@ -40,7 +40,6 @@ func NewMagicResponseWriter(punctuation string, verb string, object string, rw f
 	internal.buffer.WriteRune(' ')
 	internal.buffer.WriteString(object)
 	internal.buffer.WriteString("\r\n")
-
 
 	return &internal
 }
