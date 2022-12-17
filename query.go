@@ -19,13 +19,13 @@ import (
 //
 // Interpretting this finger-protocol target string, and separating out the:
 //
-// • user (i.e,. "dariush")
+// • actor (i.e,. "dariush")
 //
 // • addresses (i.e., "changelog.ca" and "example.com")
 //
 // Is what makes it a finger-protocol query.
 type Query struct {
-	user User
+	actor Actor
 	path Path
 	addresses []Address
 }
@@ -40,30 +40,30 @@ func AssembleQueryAddresses(addresses ...Address) Query {
 	}
 }
 
-func AssembleQueryUser(user User) Query {
+func AssembleQueryActor(actor Actor) Query {
 	return Query{
-		user: user,
+		actor: actor,
 	}
 }
 
-func AssembleQueryUserPath(user User, path Path) Query {
+func AssembleQueryActorPath(actor Actor, path Path) Query {
 	return Query{
-		user: user,
+		actor: actor,
 		path: path,
 	}
 }
 
-func AssembleQueryUserPathAddresses(user User, path Path, addresses ...Address) Query {
+func AssembleQueryActorPathAddresses(actor Actor, path Path, addresses ...Address) Query {
 	return Query{
-		user: user,
+		actor: actor,
 		path: path,
 		addresses: addresses,
 	}
 }
 
-func AssembleQueryUserAddresses(user User, addresses ...Address) Query {
+func AssembleQueryActorAddresses(actor Actor, addresses ...Address) Query {
 	return Query{
-		user: user,
+		actor: actor,
 		addresses: addresses,
 	}
 }
@@ -103,22 +103,22 @@ func CreateQueryHosts(hosts ...string) Query {
 	}
 }
 
-func CreateQueryUser(user string) Query {
+func CreateQueryActor(actor string) Query {
 	return Query{
-		user: CreateUser(user),
+		actor: CreateActor(actor),
 	}
 }
 
-func CreateQueryUserHost(user string, host string) Query {
+func CreateQueryActorHost(actor string, host string) Query {
 	return Query{
-		user: CreateUser(user),
+		actor: CreateActor(actor),
 		addresses: []Address{
 			CreateAddressHost(host),
 		},
 	}
 }
 
-func CreateQueryUserHosts(user string, hosts ...string) Query {
+func CreateQueryActorHosts(actor string, hosts ...string) Query {
 	var addresses []Address
 
 	for _, hostString := range hosts {
@@ -133,21 +133,21 @@ func CreateQueryUserHosts(user string, hosts ...string) Query {
 	}
 
 	return Query{
-		user: CreateUser(user),
+		actor: CreateActor(actor),
 		addresses: addresses,
 	}
 }
 
-func CreateQueryUserPath(user string, path string) Query {
+func CreateQueryActorPath(actor string, path string) Query {
 	return Query{
-		user: CreateUser(user),
+		actor: CreateActor(actor),
 		path: CreatePath(path),
 	}
 }
 
-func CreateQueryUserPathHost(user string, path string, host string) Query {
+func CreateQueryActorPathHost(actor string, path string, host string) Query {
 	return Query{
-		user: CreateUser(user),
+		actor: CreateActor(actor),
 		path: CreatePath(path),
 		addresses: []Address{
 			CreateAddressHost(host),
@@ -156,7 +156,7 @@ func CreateQueryUserPathHost(user string, path string, host string) Query {
 }
 
 
-func CreateQueryUserPathHosts(user string, path string, hosts ...string) Query {
+func CreateQueryActorPathHosts(actor string, path string, hosts ...string) Query {
 	var addresses []Address
 
 	for _, hostString := range hosts {
@@ -171,24 +171,24 @@ func CreateQueryUserPathHosts(user string, path string, hosts ...string) Query {
 	}
 
 	return Query{
-		user: CreateUser(user),
+		actor: CreateActor(actor),
 		path: CreatePath(path),
 		addresses: addresses,
 	}
 }
 
-func CreateQueryUserHostPort(user string, host string, port uint16) Query {
+func CreateQueryActorHostPort(actor string, host string, port uint16) Query {
 	return Query{
-		user: CreateUser(user),
+		actor: CreateActor(actor),
 		addresses: []Address{
 			CreateAddress(host, port),
 		},
 	}
 }
 
-func CreateQueryUserPathHostPort(user string, path string, host string, port uint16) Query {
+func CreateQueryActorPathHostPort(actor string, path string, host string, port uint16) Query {
 	return Query{
-		user: CreateUser(user),
+		actor: CreateActor(actor),
 		path: CreatePath(path),
 		addresses: []Address{
 			CreateAddress(host, port),
@@ -215,7 +215,7 @@ func ParseQuery(query string) (Query, error) {
 
 			// Ex: "joeblow"
 			if indexSolidus < 0 && indexAt < 0 {
-				q.user = CreateUser(query)
+				q.actor = CreateActor(query)
 /////////////////////////////// RETURN
 				return q, nil
 			}
@@ -236,7 +236,7 @@ func ParseQuery(query string) (Query, error) {
 				}
 			}
 
-			q.user = CreateUser(query[:index])
+			q.actor = CreateActor(query[:index])
 			query = query[index:]
 		}
 	}
@@ -337,9 +337,9 @@ func ParseRFC1288Query(query string) (Query, error) {
 
 			switch {
 			case index < 0 && "" != query:
-				q.user = CreateUser(query)
+				q.actor = CreateActor(query)
 			default:
-				q.user = CreateUser(query[:index])
+				q.actor = CreateActor(query[:index])
 				query = query[index:]
 			}
 		}
@@ -410,14 +410,14 @@ func (receiver Query) ClientParameters() (Address, Query) {
 	}
 
 	return addresses[length-1], Query{
-		user: receiver.user,
+		actor: receiver.actor,
 		path: receiver.path,
 		addresses: addresses[:length-1],
 	}
 }
 
 func (receiver Query) isEmpty() bool {
-	return EmptyUser() == receiver.user &&
+	return EmptyActor() == receiver.actor &&
 	       EmptyPath() == receiver.path &&
 	       len(receiver.addresses) < 1
 }
@@ -431,9 +431,9 @@ func (receiver Query) String() string {
 	var buffer strings.Builder
 
 	{
-		user, userIsSomething := receiver.user.Unwrap()
-		if userIsSomething {
-			buffer.WriteString(user)
+		actor, actorIsSomething := receiver.actor.Unwrap()
+		if actorIsSomething {
+			buffer.WriteString(actor)
 		}
 	}
 
@@ -464,6 +464,6 @@ func (receiver Query) Target() Target {
 	return CreateTarget(receiver.String())
 }
 
-func (receiver Query) User() User {
-	return receiver.user
+func (receiver Query) Actor() Actor {
+	return receiver.actor
 }

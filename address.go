@@ -44,7 +44,7 @@ import (
 //
 // ⁂
 //
-// Here are some example finger-protocol queries with just a finger-protocol user and a single finger-protocol host:
+// Here are some example finger-protocol queries with just a finger-protocol actor and a single finger-protocol host:
 //
 //	"joeblow@example.com"
 //	// finger-protocol address -> "example.com"
@@ -66,7 +66,7 @@ import (
 //	//
 //	// TCP-port not explicitly provided, but defaults to 79 — i.e., is equivalent of "12.23.34.45:79"
 //
-// Here are some example finger-protocol queries with just a finger-protocol user, a single finger-protocol host, and a TCP-port:
+// Here are some example finger-protocol queries with just a finger-protocol actor, a single finger-protocol host, and a TCP-port:
 //
 //	"joeblow@example.com:1971"
 //	// finger-protocol address -> "example.com:1971"
@@ -80,7 +80,7 @@ import (
 //	"janedoe@12.23.34.45:79"
 //	// finger-protocol address -> "12.23.34.45:79"
 //
-// Here are some example finger-protocol queries with just a finger-protocol user, and two finger-protocol host:
+// Here are some example finger-protocol queries with just a finger-protocol actor, and two finger-protocol host:
 //
 //	"joeblow@example.com@something.social"
 //	// finger-protocol addresses -> "example.com", "something.social"

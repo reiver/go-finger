@@ -100,7 +100,7 @@ func AssembleRequestTarget(target Target) Request {
 }
 
 // EmptyRequest is used to create an empty finger.Request.
-// I.e., with no finger-protocol request user or finger-protocol request target.
+// I.e., with no finger-protocol request actor or finger-protocol request target.
 //
 // For example:
 //

@@ -23,7 +23,7 @@ func TestParseQuery(t *testing.T) {
 
 		{
 			QueryString: "dariush",
-			Expected: finger.CreateQueryUser("dariush"),
+			Expected: finger.CreateQueryActor("dariush"),
 		},
 
 
@@ -69,87 +69,87 @@ func TestParseQuery(t *testing.T) {
 
 		{
 			QueryString: "dariush@example.com",
-			Expected: finger.CreateQueryUserHost("dariush", "example.com"),
+			Expected: finger.CreateQueryActorHost("dariush", "example.com"),
 		},
 		{
 			QueryString: "dariush@example.com@something.social",
-			Expected: finger.CreateQueryUserHosts("dariush", "example.com", "something.social"),
+			Expected: finger.CreateQueryActorHosts("dariush", "example.com", "something.social"),
 		},
 
 
 
 		{
 			QueryString: "dariush/once",
-			Expected: finger.CreateQueryUserPath("dariush","/once"),
+			Expected: finger.CreateQueryActorPath("dariush","/once"),
 		},
 		{
 			QueryString: "dariush/once/twice",
-			Expected: finger.CreateQueryUserPath("dariush","/once/twice"),
+			Expected: finger.CreateQueryActorPath("dariush","/once/twice"),
 		},
 		{
 			QueryString: "dariush/once/twice/thrice",
-			Expected: finger.CreateQueryUserPath("dariush","/once/twice/thrice"),
+			Expected: finger.CreateQueryActorPath("dariush","/once/twice/thrice"),
 		},
 		{
 			QueryString: "dariush/once/twice/thrice/fource",
-			Expected: finger.CreateQueryUserPath("dariush","/once/twice/thrice/fource"),
+			Expected: finger.CreateQueryActorPath("dariush","/once/twice/thrice/fource"),
 		},
 
 
 
 		{
 			QueryString: "dariush/once@example.com",
-			Expected: finger.CreateQueryUserPathHost("dariush", "/once", "example.com"),
+			Expected: finger.CreateQueryActorPathHost("dariush", "/once", "example.com"),
 		},
 		{
 			QueryString: "dariush/once/twice@example.com",
-			Expected: finger.CreateQueryUserPathHost("dariush", "/once/twice", "example.com"),
+			Expected: finger.CreateQueryActorPathHost("dariush", "/once/twice", "example.com"),
 		},
 		{
 			QueryString: "dariush/once/twice/thrice@example.com",
-			Expected: finger.CreateQueryUserPathHost("dariush", "/once/twice/thrice", "example.com"),
+			Expected: finger.CreateQueryActorPathHost("dariush", "/once/twice/thrice", "example.com"),
 		},
 		{
 			QueryString: "dariush/once/twice/thrice/fource@example.com",
-			Expected: finger.CreateQueryUserPathHost("dariush", "/once/twice/thrice/fource", "example.com"),
+			Expected: finger.CreateQueryActorPathHost("dariush", "/once/twice/thrice/fource", "example.com"),
 		},
 
 
 
 		{
 			QueryString: "dariush/once@example.com:1971",
-			Expected: finger.CreateQueryUserPathHostPort("dariush", "/once", "example.com", 1971),
+			Expected: finger.CreateQueryActorPathHostPort("dariush", "/once", "example.com", 1971),
 		},
 		{
 			QueryString: "dariush/once/twice@example.com:1971",
-			Expected: finger.CreateQueryUserPathHostPort("dariush", "/once/twice", "example.com", 1971),
+			Expected: finger.CreateQueryActorPathHostPort("dariush", "/once/twice", "example.com", 1971),
 		},
 		{
 			QueryString: "dariush/once/twice/thrice@example.com:1971",
-			Expected: finger.CreateQueryUserPathHostPort("dariush", "/once/twice/thrice", "example.com", 1971),
+			Expected: finger.CreateQueryActorPathHostPort("dariush", "/once/twice/thrice", "example.com", 1971),
 		},
 		{
 			QueryString: "dariush/once/twice/thrice/fource@example.com:1971",
-			Expected: finger.CreateQueryUserPathHostPort("dariush", "/once/twice/thrice/fource", "example.com", 1971),
+			Expected: finger.CreateQueryActorPathHostPort("dariush", "/once/twice/thrice/fource", "example.com", 1971),
 		},
 
 
 
 		{
 			QueryString: "dariush/once@example.com@something.social",
-			Expected: finger.CreateQueryUserPathHosts("dariush", "/once", "example.com", "something.social"),
+			Expected: finger.CreateQueryActorPathHosts("dariush", "/once", "example.com", "something.social"),
 		},
 		{
 			QueryString: "dariush/once/twice@example.com@something.social",
-			Expected: finger.CreateQueryUserPathHosts("dariush", "/once/twice", "example.com", "something.social"),
+			Expected: finger.CreateQueryActorPathHosts("dariush", "/once/twice", "example.com", "something.social"),
 		},
 		{
 			QueryString: "dariush/once/twice/thrice@example.com@something.social",
-			Expected: finger.CreateQueryUserPathHosts("dariush", "/once/twice/thrice", "example.com", "something.social"),
+			Expected: finger.CreateQueryActorPathHosts("dariush", "/once/twice/thrice", "example.com", "something.social"),
 		},
 		{
 			QueryString: "dariush/once/twice/thrice/fource@example.com@something.social",
-			Expected: finger.CreateQueryUserPathHosts("dariush", "/once/twice/thrice/fource", "example.com", "something.social"),
+			Expected: finger.CreateQueryActorPathHosts("dariush", "/once/twice/thrice/fource", "example.com", "something.social"),
 		},
 	}
 
