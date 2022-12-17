@@ -467,3 +467,7 @@ func (receiver Query) Target() Target {
 func (receiver Query) Actor() Actor {
 	return receiver.actor
 }
+
+func (receiver Query) Path() Path {
+	return receiver.path
+}
