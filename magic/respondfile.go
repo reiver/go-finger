@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-func RespondFile(rw finger.ResponseWriter, request finger.Request, file fs.File) (e error) {
+func RespondServerSucceededFile(rw finger.ResponseWriter, request finger.Request, file fs.File) (e error) {
 	if nil == rw {
 		return errNilResponseWriter
 	}

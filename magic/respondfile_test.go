@@ -35,7 +35,7 @@ func TestResponseFile(t *testing.T) {
 	var conn testfinger.TestConnectedWriteCloser
 	var rw finger.ResponseWriter = finger.NewResponseWriter(&conn)
 
-	magicfinger.RespondFile(rw, request, file)
+	magicfinger.RespondServerSucceededFile(rw, request, file)
 
 	var actual string = conn.String()
 	var expected string =
