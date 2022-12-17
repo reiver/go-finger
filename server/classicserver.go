@@ -1,54 +1,60 @@
 package finger
 
+import (
+	"github.com/reiver/go-finger"
+)
+
 // ClassicServer works similar to classic finger servers.
 // And supports user .plan files, etc.
 // As well as adding some modernizations.
 //
 //	finger.Serve(listener, finger.ClassicServer())
-func ClassicServer() Handler {
-	return classicServer(0)
-}
-
-var _ Handler = classicServer(0)
-
-type classicServer int
-
-func (classicServer) HandleFinger(responsewriter ResponseWriter, request Request) {
+func ClassicServer(responsewriter finger.ResponseWriter, request finger.Request) {
 
 	defer responsewriter.Close()
 
-	target, targetIsSomething := request.Target().Unwrap()
+	var target string
+	{
+		var something bool
 
-	if !targetIsSomething {
-		WriteResponseServerRefused(responsewriter)
-/////////////// RETURN
-		return
+		target, something = request.Target().Unwrap()
+
+		if !something {
+			RespondServerRefused(responsewriter, request)
+/////////////////////// RETURN
+			return
+		}
 	}
 
-	query, err := ParseQuery(target)
-	if nil != err {
-		WriteResponseClientErred(responsewriter)
-/////////////// RETURN
-		return
-	}
+	var query finger.Query
+	{
+		var query finger.Query
 
-	if 0 < query.LenAddresses() {
-		WriteResponseServerRefused(responsewriter)
-/////////////// RETURN
-		return
+		query, err := finger.ParseQuery(target)
+		if nil != err {
+			RespondClientErred(responsewriter, request)
+/////////////////////// RETURN
+			return
+		}
+
+		if 0 < query.LenAddresses() {
+			RespondServerRefused(responsewriter, request)
+/////////////////////// RETURN
+			return
+		}
 	}
 
 	var username string
 	{
 		var something bool
 
-		username, something = query.User().Unwrap()
+		username, something = query.Actor().Unwrap()
 		if !something {
-			WriteResponseServerRefused(responsewriter)
+			RespondServerRefused(responsewriter, request)
 /////////////////////// RETURN
 			return
 		}
 	}
 
-	WriteResponseDotPlan(responsewriter, username)
+	RespondServerSucceededDotPlan(responsewriter, username)
 }
