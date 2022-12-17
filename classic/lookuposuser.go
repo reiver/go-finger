@@ -1,12 +1,14 @@
 package classicfinger
 
 import (
+	"github.com/reiver/go-finger"
+
 	osuser "os/user"
 )
 
 // LooupOSUser looks up a user on the operating-system (OS) via their username,
 // and returns their real-name, and the path to their home-directory.
-func LookupOSUser(username string) (realname string, homedirpath string, err error) {
+func LookupOSUser(username string) (OSUser, error) {
 
 	var user *osuser.User
 	{
@@ -19,15 +21,15 @@ func LookupOSUser(username string) (realname string, homedirpath string, err err
 
 			switch err.(type) {
 			case osuser.UnknownUserError:
-				err = errFailed
+				err = finger.ErrServerFailed
 				return
 			default:
-				err = errErred
+				err = finger.ErrServerErred
 				return
 			}
 		}
 		if nil == user {
-			err = errErred
+			err = finger.ErrServerErred
 			return
 		}
 	}
@@ -35,7 +37,7 @@ func LookupOSUser(username string) (realname string, homedirpath string, err err
 	{
 		homedirpath = user.HomeDir
 		if "" == homedirpath {
-			err = errFailed
+			err = finger.ErrServerFailed
 			return
 		}
 	}
