@@ -7,9 +7,10 @@ import (
 	"time"
 )
 
-// TestConnectedWriteCloser is a finger.ConnectedWritCloser that can be used for tsting purposes.
+// TestConnectedWriteCloser is a finger.ConnectedWritCloser that can be used for testing purposes.
+// You can think of it as a "dummy" net.Conn when the net.Conn is only written to.
 //
-// What has been written into it can be retreived with its String method
+// What has been written into it can be retreived with its String method.
 //
 // Example usage:
 //
@@ -20,6 +21,9 @@ import (
 //	// ...
 //
 //	var writtenData string = buffer.String()
+//
+// You can give the responsewriter you make out of one of these to a handler fuction.
+// And check to see what the handler function actually wrote.
 type TestConnectedWriteCloser struct {
 	storage []byte
 	closed bool
