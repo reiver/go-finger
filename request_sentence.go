@@ -1,7 +1,7 @@
 package finger
 
 import (
-	"github.com/reiver/go-utf8"
+	"sourcecode.social/reiver/go-utf8"
 
 	"io"
 	"strings"
