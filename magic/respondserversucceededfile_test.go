@@ -5,7 +5,7 @@ import (
 	"github.com/reiver/go-finger/magic"
 	"github.com/reiver/go-finger/test"
 
-	"github.com/reiver/go-strfs"
+	"sourcecode.social/reiver/go-strfs"
 
 	"io/fs"
 	"strconv"
