@@ -1,7 +1,7 @@
 package testfinger
 
 import (
-	"github.com/reiver/go-arbitrary"
+	"sourcecode.social/reiver/go-arbitrary"
 
 	"net"
 	"time"
