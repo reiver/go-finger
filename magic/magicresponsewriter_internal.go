@@ -3,7 +3,7 @@ package magicfinger
 import (
 	"github.com/reiver/go-finger"
 
-	"github.com/reiver/go-utf8"
+	"sourcecode.social/reiver/go-utf8"
 
 	"fmt"
 	"io"
