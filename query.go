@@ -1,7 +1,7 @@
 package finger
 
 import (
-	"github.com/reiver/go-fck"
+	"sourcecode.social/reiver/go-erorr"
 
 	"fmt"
 	"strings"
@@ -315,7 +315,7 @@ func ParseQueryFromTarget(target Target) (Query, error) {
 
 	value, something := target.Unwrap()
 	if !something {
-		return EmptyQuery(), fck.Error("problem parsing finger-protocol query from target: empty target")
+		return EmptyQuery(), erorr.Error("problem parsing finger-protocol query from target: empty target")
 	}
 
 	return ParseQuery(value)
@@ -391,7 +391,7 @@ func ParseRFC1288QueryFromTarget(target Target) (Query, error) {
 
 	value, something := target.Unwrap()
 	if !something {
-		return EmptyQuery(), fck.Error("problem parsing finger-protocol query from target: empty target")
+		return EmptyQuery(), erorr.Error("problem parsing finger-protocol query from target: empty target")
 	}
 
 	return ParseRFC1288Query(value)

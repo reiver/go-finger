@@ -1,9 +1,9 @@
 package classicfinger
 
 import (
-	"github.com/reiver/go-fck"
+	"sourcecode.social/reiver/go-erorr"
 )
 
 const (
-	errNilResponseWriter = fck.Error("nil response writer")
+	errNilResponseWriter = erorr.Error("nil response writer")
 )

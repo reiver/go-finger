@@ -1,7 +1,7 @@
 package finger
 
 import (
-	"github.com/reiver/go-fck"
+	"sourcecode.social/reiver/go-erorr"
 
 	"fmt"
 	"net"
@@ -226,7 +226,7 @@ func ParseAddress(s string) (Address, error) {
 		var something bool
 		port, something = p.Unwrap()
 		if !something {
-			return EmptyAddress(), fck.Error("unexpected problem when parsing finger-protocol address: empty port")
+			return EmptyAddress(), erorr.Error("unexpected problem when parsing finger-protocol address: empty port")
 		}
 	}
 

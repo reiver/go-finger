@@ -1,10 +1,10 @@
 package testfinger
 
 import (
-	"github.com/reiver/go-fck"
+	"sourcecode.social/reiver/go-erorr"
 )
 
 const (
-	errClosed      = fck.Error("closed")
-	errNilReceiver = fck.Error("nil receiver")
+	errClosed      = erorr.Error("closed")
+	errNilReceiver = erorr.Error("nil receiver")
 )
