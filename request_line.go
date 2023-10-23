@@ -1,7 +1,7 @@
 package finger
 
 import (
-	"github.com/reiver/go-netln"
+	"sourcecode.social/reiver/go-netln"
 
 	"fmt"
 	"io"
