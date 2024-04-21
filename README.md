@@ -85,7 +85,7 @@ TCP-addresses (as a string) look something like:
 
 	"example.com:79"
 
-	"changlog.ca:1971"
+	"reiver.link:1971"
 
 	"181.70.250.13:1079"
 
