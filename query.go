@@ -11,17 +11,17 @@ import (
 //
 // For example, consider the following finger-protocol request:
 //
-//	"/W dariush@changelog.ca@example.com\r\n"
+//	"/W dariush@reiver.link@example.com\r\n"
 //
 // When left as just an uninterpreted string, the finger-protocol target is:
 //
-//	"dariush@changelog.ca@example.com"
+//	"dariush@reiver.link@example.com"
 //
 // Interpretting this finger-protocol target string, and separating out the:
 //
 // • actor (i.e,. "dariush")
 //
-// • addresses (i.e., "changelog.ca" and "example.com")
+// • addresses (i.e., "reiver.link" and "example.com")
 //
 // Is what makes it a finger-protocol query.
 type Query struct {

@@ -46,8 +46,8 @@ func TestRequest_GoString(t *testing.T) {
 			Expected:     `finger.CreateRequestTarget("joeblow@example.com")`,
 		},
 		{
-			FingerRequest: finger.CreateRequestTarget("dariush@changelog.ca"),
-			Expected:     `finger.CreateRequestTarget("dariush@changelog.ca")`,
+			FingerRequest: finger.CreateRequestTarget("dariush@reiver.link"),
+			Expected:     `finger.CreateRequestTarget("dariush@reiver.link")`,
 		},
 
 
@@ -57,8 +57,8 @@ func TestRequest_GoString(t *testing.T) {
 			Expected:     `finger.CreateRequestTarget("joeblow@example.com@something.social")`,
 		},
 		{
-			FingerRequest: finger.CreateRequestTarget("dariush@changelog.ca@example.dev"),
-			Expected:     `finger.CreateRequestTarget("dariush@changelog.ca@example.dev")`,
+			FingerRequest: finger.CreateRequestTarget("dariush@reiver.link@example.dev"),
+			Expected:     `finger.CreateRequestTarget("dariush@reiver.link@example.dev")`,
 		},
 
 

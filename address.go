@@ -51,10 +51,10 @@ import (
 //	//
 //	// TCP-port not explicitly provided, but defaults to 79 — i.e., is equivalent of "example.com:79"
 //
-//	"dariush@changelog.ca"
-//	// finger-protocol address -> "changelog.ca"
+//	"dariush@reiver.link"
+//	// finger-protocol address -> "reiver.link"
 //	//
-//	// TCP-port not explicitly provided, but defaults to 79 — i.e., is equivalent of "changelog.ca:79"
+//	// TCP-port not explicitly provided, but defaults to 79 — i.e., is equivalent of "reiver.link:79"
 //
 //	"someone@127.0.0.1"
 //	// finger-protocol address -> "127.0.0.1"
@@ -71,8 +71,8 @@ import (
 //	"joeblow@example.com:1971"
 //	// finger-protocol address -> "example.com:1971"
 //
-//	"dariush@changelog.ca:12345"
-//	// finger-protocol address -> "changelog.ca:12345"
+//	"dariush@reiver.link:12345"
+//	// finger-protocol address -> "reiver.link:12345"
 //
 //	"someone@127.0.0.1:7979"
 //	// finger-protocol address -> "127.0.0.1:7979"
@@ -85,22 +85,22 @@ import (
 //	"joeblow@example.com@something.social"
 //	// finger-protocol addresses -> "example.com", "something.social"
 //
-//	"dariush@changelog.ca@example.com
-//	// finger-protocol addresses -> "changelog.ca", "example.com"
+//	"dariush@reiver.link@example.com
+//	// finger-protocol addresses -> "reiver.link", "example.com"
 //
 //	"janedoe@12.23.34.45:79:111.222.3.4:7979"
 //	// finger-protocol address -> "12.23.34.45:79", "111.222.3.4:7979"
 //
 // Here are more example finger-protocol queries with various forms:
 //
-//	"dariush@changelog.ca@once.com@twice.net@thrice.org@fource.dev"
-//	// finger-protocol addresses -> "changelog.ca", "once.com", "twice.net", "thrice.org", "fource.dev"
+//	"dariush@reiver.link@once.com@twice.net@thrice.org@fource.dev"
+//	// finger-protocol addresses -> "reiver.link", "once.com", "twice.net", "thrice.org", "fource.dev"
 //
 //	"joeblow@example.com:1971@something.social"
 //	// finger-protocol addresses -> "example.com:1971", "something.social"
 //
-//	"dariush@changelog.ca@once.com:54321@twice.net@thrice.org:1212@fource.dev"
-//	// finger-protocol addresses -> "changelog.ca", "once.com:54321", "twice.net", "thrice.org:1212", "fource.dev"
+//	"dariush@reiver.link@once.com:54321@twice.net@thrice.org:1212@fource.dev"
+//	// finger-protocol addresses -> "reiver.link", "once.com:54321", "twice.net", "thrice.org:1212", "fource.dev"
 //
 // Note that not all of these have a TCP-port.
 //
@@ -187,13 +187,13 @@ func DefaultAddress() Address {
 //
 // Here are some more random examples:
 //
-//	"changelog.ca"
+//	"reiver.link"
 //
-//	"changelog.ca:79"
+//	"reiver.link:79"
 //
-//	"changelog.ca:1971"
+//	"reiver.link:1971"
 //
-//	"changelog.ca:7979"
+//	"reiver.link:7979"
 //
 //	"12.23.34.45"
 //

@@ -41,7 +41,7 @@ func TestReadRequestLine_one(t *testing.T) {
 func TestReadRequestLine_two(t *testing.T) {
 
 	var request1 string = "/W joeblow\r\n"
-	var request2 string = "darius@changelog.ca\r\n"
+	var request2 string = "darius@reiver.link\r\n"
 
 	var inputRequestLine string = request1 + request2
 
@@ -126,9 +126,9 @@ func TestReadRequestLine(t *testing.T) {
 		},
 		{
 			Input:
-				"joeblow@example.com@changelog.ca\r\n",
+				"joeblow@example.com@reiver.link\r\n",
 			Expected: []string{
-				"joeblow@example.com@changelog.ca",
+				"joeblow@example.com@reiver.link",
 			},
 		},
 		{
@@ -154,9 +154,9 @@ func TestReadRequestLine(t *testing.T) {
 		},
 		{
 			Input:
-				"/W joeblow@example.com@changelog.ca\r\n",
+				"/W joeblow@example.com@reiver.link\r\n",
 			Expected: []string{
-				"/W joeblow@example.com@changelog.ca",
+				"/W joeblow@example.com@reiver.link",
 			},
 		},
 		{

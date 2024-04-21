@@ -146,7 +146,7 @@ func CreateSwitch(value string) Switch {
 //
 //	"/W joeblow@example.com\r\n"
 //
-//	"/W dariush@changelog.ca\r\n"
+//	"/W dariush@reiver.link\r\n"
 //
 // Those examples all have the "/W" switch.
 //
