@@ -301,3 +301,23 @@ IETF RFC-1288 indirectly forbids the use of Unicode UTF-8.
 This package does this (supports the Unicode UTF-8 encoding of text) to provide a _more modern_ implementation of the finger-protocol.
 
 Someone in the future can write a new IETF RFC for the finger-protocol that gives permission to use the Unicode UTF-8 text encoding.
+
+## Import
+
+To import package **finger** use import code like the follownig:
+
+```
+import "github.com/reiver/go-finger"
+```
+
+## Installation
+
+To install package **finger** do the following:
+
+```
+GOPROXY=direct go get https://github.com/reiver/go-finger
+```
+
+## Author
+
+Package **finger** was written by [Charles Iliya Krempeaux](http://reiver.link/)
