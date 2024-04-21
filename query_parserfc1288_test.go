@@ -23,7 +23,7 @@ func TestParseRFC1288Query(t *testing.T) {
 
 		{
 			QueryString: "dariush",
-			Expected: finger.CreateQueryUser("dariush"),
+			Expected: finger.CreateQueryActor("dariush"),
 		},
 
 
@@ -69,11 +69,11 @@ func TestParseRFC1288Query(t *testing.T) {
 
 		{
 			QueryString: "dariush@example.com",
-			Expected: finger.CreateQueryUserHost("dariush", "example.com"),
+			Expected: finger.CreateQueryActorHost("dariush", "example.com"),
 		},
 		{
 			QueryString: "dariush@example.com@something.social",
-			Expected: finger.CreateQueryUserHosts("dariush", "example.com", "something.social"),
+			Expected: finger.CreateQueryActorHosts("dariush", "example.com", "something.social"),
 		},
 	}
 

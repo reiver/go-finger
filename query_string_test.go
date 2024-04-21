@@ -20,64 +20,64 @@ func TestQuery_String(t *testing.T) {
 
 
 		{
-			Query: finger.CreateQueryUser("dariush"),
+			Query: finger.CreateQueryActor("dariush"),
 			Expected: "dariush",
 		},
 
 
 
 		{
-			Query: finger.CreateQueryUserPath("dariush", "/path/to/file.ext"),
+			Query: finger.CreateQueryActorPath("dariush", "/path/to/file.ext"),
 			Expected: "dariush/path/to/file.ext",
 		},
 
 
 
 		{
-			Query: finger.CreateQueryUserHost("dariush", "example.com"),
+			Query: finger.CreateQueryActorHost("dariush", "example.com"),
 			Expected: "dariush@example.com",
 		},
 		{
-			Query: finger.CreateQueryUserHostPort("dariush", "example.com", 1971),
+			Query: finger.CreateQueryActorHostPort("dariush", "example.com", 1971),
 			Expected: "dariush@example.com:1971",
 		},
 
 
 
 		{
-			Query: finger.CreateQueryUserPathHost("dariush", "/path/to/file.ext", "example.com"),
+			Query: finger.CreateQueryActorPathHost("dariush", "/path/to/file.ext", "example.com"),
 			Expected: "dariush/path/to/file.ext@example.com",
 		},
 		{
-			Query: finger.CreateQueryUserPathHostPort("dariush", "/path/to/file.ext", "example.com", 1971),
+			Query: finger.CreateQueryActorPathHostPort("dariush", "/path/to/file.ext", "example.com", 1971),
 			Expected: "dariush/path/to/file.ext@example.com:1971",
 		},
 
 
 
 		{
-			Query: finger.CreateQueryUserHosts("dariush", "example.com", "something.social"),
+			Query: finger.CreateQueryActorHosts("dariush", "example.com", "something.social"),
 			Expected: "dariush@example.com@something.social",
 		},
 		{
-			Query: finger.AssembleQueryUserAddresses(
-				finger.CreateUser("dariush"),
+			Query: finger.AssembleQueryActorAddresses(
+				finger.CreateActor("dariush"),
 				finger.CreateAddress("example.com", 1971),
 				finger.CreateAddressHost("something.social"),
 			),
 			Expected: "dariush@example.com:1971@something.social",
 		},
 		{
-			Query: finger.AssembleQueryUserAddresses(
-				finger.CreateUser("dariush"),
+			Query: finger.AssembleQueryActorAddresses(
+				finger.CreateActor("dariush"),
 				finger.CreateAddressHost("example.com"),
 				finger.CreateAddress("something.social", 1234),
 			),
 			Expected: "dariush@example.com@something.social:1234",
 		},
 		{
-			Query: finger.AssembleQueryUserAddresses(
-				finger.CreateUser("dariush"),
+			Query: finger.AssembleQueryActorAddresses(
+				finger.CreateActor("dariush"),
 				finger.CreateAddress("example.com", 1971),
 				finger.CreateAddress("something.social", 1234),
 			),

@@ -105,7 +105,7 @@ func (receiver *internalResponseWriter) WriteRune(r rune) (int, error) {
 
 	var writer io.Writer = receiver
 
-	var wrapped utf8.RuneWriter = utf8.RuneWriterWrap(writer)
+	var wrapped utf8.RuneWriter = utf8.WrapRuneWriter(writer)
 	var runewriter runeWriter = &wrapped
 
 	return runewriter.WriteRune(r)

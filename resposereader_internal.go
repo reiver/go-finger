@@ -79,7 +79,7 @@ func (receiver internalResponseReader) ReadRune() (rune, int, error) {
 		}
 	}
 
-	var wrapped utf8.RuneReader = utf8.RuneReaderWrap(conn)
+	var wrapped utf8.RuneReader = utf8.WrapRuneReader(conn)
 	var runereader io.RuneReader = &wrapped
 
 	return runereader.ReadRune()
